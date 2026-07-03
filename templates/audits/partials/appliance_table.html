@@ -1,0 +1,99 @@
+<div class="card shadow-sm">
+
+    <div class="card-header d-flex justify-content-between">
+
+        <strong>
+
+            Appliances
+
+        </strong>
+
+        <a
+            href="#"
+            class="btn btn-success btn-sm">
+
+            <i class="bi bi-plus-circle"></i>
+
+            Add Appliance
+
+        </a>
+
+    </div>
+
+    <div class="card-body p-0">
+
+        <table class="table table-hover mb-0">
+
+            <thead>
+
+            <tr>
+
+                <th>Name</th>
+
+                <th>Qty</th>
+
+                <th>Power</th>
+
+                <th>Hours</th>
+
+                <th>Critical</th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for appliance in appliances %}
+
+            <tr>
+
+                <td>{{ appliance.appliance_name }}</td>
+
+                <td>{{ appliance.quantity }}</td>
+
+                <td>{{ appliance.power_rating }} W</td>
+
+                <td>{{ appliance.hours_per_day }}</td>
+
+                <td>
+
+                    {% if appliance.critical_load %}
+
+                        <span class="badge bg-danger">
+
+                            Yes
+
+                        </span>
+
+                    {% else %}
+
+                        No
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+
+                <td colspan="5" class="text-center py-5">
+
+                    No appliances added yet.
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

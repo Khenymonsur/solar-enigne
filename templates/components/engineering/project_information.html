@@ -1,0 +1,157 @@
+<div class="col-lg-6">
+
+<div class="card shadow-sm mb-4">
+
+<div class="card-header bg-success text-white">
+
+<h5 class="mb-0">
+
+Project Information
+
+</h5>
+
+</div>
+
+<div class="card-body">
+
+<table class="table table-borderless align-middle">
+
+<tr>
+
+<th width="45%">
+
+Customer
+
+</th>
+
+<td>
+
+{{ object.customer.full_name }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Project
+
+</th>
+
+<td>
+
+{{ object.project_name }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Building
+
+</th>
+
+<td>
+
+{{ object.customer.building_type }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Voltage
+
+</th>
+
+<td>
+
+{{ object.system_voltage }}V
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Backup
+
+</th>
+
+<td>
+
+{{ object.backup_hours }} Hours
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Peak Sun Hours
+
+</th>
+
+<td>
+
+{{ object.peak_sun_hours }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Total Appliances
+
+</th>
+
+<td>
+
+{{ object.total_appliances }}
+
+</td>
+
+</tr>
+
+<tr>
+
+<th>
+
+Status
+
+</th>
+
+<td>
+
+<span class="badge bg-success">
+
+Draft
+
+</span>
+
+</td>
+
+</tr>
+
+</table>
+
+</div>
+
+</div>
+
+</div>

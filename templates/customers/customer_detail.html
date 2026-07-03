@@ -1,0 +1,133 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+{{ object.full_name }}
+{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title=object.full_name subtitle=object.building_type %}
+
+<div class="row">
+
+<div class="col-lg-4">
+
+<div class="card">
+
+<div class="card-body">
+
+<h5>Customer Information</h5>
+
+<hr>
+
+<p><strong>Phone:</strong> {{ object.phone }}</p>
+
+<p><strong>Email:</strong> {{ object.email }}</p>
+
+<p><strong>State:</strong> {{ object.state }}</p>
+
+<p><strong>City:</strong> {{ object.city }}</p>
+
+<p><strong>Address:</strong> {{ object.address }}</p>
+
+<a
+href="{% url 'audits:create' object.pk %}"
+class="btn btn-success w-100">
+
+New Assessment
+
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+<div class="col-lg-8">
+
+<div class="card">
+
+<div class="card-header">
+
+Assessment History
+
+</div>
+
+<div class="card-body">
+
+<table class="table">
+
+<thead>
+
+<tr>
+
+<th>Project</th>
+
+<th>Date</th>
+
+<th></th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for assessment in object.assessments.all %}
+
+<tr>
+
+<td>
+
+{{ assessment.project_name }}
+
+</td>
+
+<td>
+
+{{ assessment.created_at|date:"d M Y" }}
+
+</td>
+
+<td>
+
+<a
+href="{% url 'audits:detail' assessment.pk %}"
+class="btn btn-sm btn-primary">
+
+Open
+
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="3">
+
+No assessments yet.
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+{% endblock %}

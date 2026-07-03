@@ -1,0 +1,39 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Assessment Workspace
+{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title=assessment.project_name subtitle=assessment.customer.full_name %}
+
+<div class="row mb-4">
+
+    {% include "components/metric_card.html" with title="Connected Load" value=connected_load icon="bi-lightning-fill" footer="Watts" %}
+
+    {% include "components/metric_card.html" with title="Daily Energy" value=daily_energy icon="bi-battery-full" footer="Wh/day" %}
+
+    {% include "components/metric_card.html" with title="Peak Load" value=peak_load icon="bi-speedometer2" footer="Watts" %}
+
+    {% include "components/metric_card.html" with title="Appliances" value=total_appliances icon="bi-list-ul" footer="Connected" %}
+
+</div>
+
+<div class="row">
+
+    <div class="col-lg-8">
+
+        {% include "audits/partials/appliance_table.html" %}
+
+    </div>
+
+    <div class="col-lg-4">
+
+        {% include "audits/partials/recommendation_panel.html" %}
+
+    </div>
+
+</div>
+
+{% endblock %}

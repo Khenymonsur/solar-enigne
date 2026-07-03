@@ -1,0 +1,368 @@
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-lightning-charge-fill"></i>
+
+            Cloud Energy Engineering Recommendation
+
+        </h5>
+
+        <span class="badge bg-success">
+
+            Auto Generated
+
+        </span>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <!-- Inverter -->
+
+            <div class="col-xl-3 col-md-6 mb-4">
+
+                <div class="equipment-card">
+
+                    <div class="equipment-icon inverter">
+
+                        <i class="bi bi-lightning-charge-fill"></i>
+
+                    </div>
+
+                    <h5>
+
+                        Hybrid Inverter
+
+                    </h5>
+
+                    <h4>
+
+                        {% if recommendation.inverter %}
+
+                            {{ recommendation.inverter.model }}
+
+                        {% else %}
+
+                            No suitable inverter found.
+                            Please add a larger inverter to the equipment database.
+
+                        {% endif %}
+
+                    </h4>
+
+                    <p>
+
+                        {% if recommendation.inverter %}
+
+                            {{ recommendation.inverter.capacity_watts }} W
+
+                        {% else %}
+
+                            --
+
+                        {% endif %}
+
+                    </p>
+
+                    {% if recommendation.inverter %}
+
+                    <span class="badge bg-success">
+
+                        ✓ Recommended
+
+                    </span>
+
+                    {% else %}
+
+                    <span class="badge bg-danger">
+
+                        ✕ Not Available
+
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <!-- Battery -->
+
+            <div class="col-xl-3 col-md-6 mb-4">
+
+                <div class="equipment-card">
+
+                    <div class="equipment-icon battery">
+
+                        <i class="bi bi-battery-charging"></i>
+
+                    </div>
+
+                    <h5>
+
+                        Battery Bank
+
+                    </h5>
+
+                    <h4>
+
+                        {% if recommendation.battery %}
+
+                            {{ recommendation.battery.model }}
+
+                        {% else %}
+
+                            No suitable Battery found.
+
+                        {% endif %}
+
+                    </h4>
+
+                    <p>
+
+                        Required Capacity
+
+                        <br>
+
+                        <strong>
+
+                        {{ recommendation.battery_ah|floatformat:0 }} Ah
+
+                        </strong>
+
+                    </p>
+
+                    {% if recommendation.battery %}
+
+                    <small>
+
+                    {{ recommendation.battery.voltage }}V
+
+                    {{ recommendation.battery.capacity_ah }}Ah
+
+                    </small>
+
+                    {% endif %}
+
+                    {% if recommendation.battery %}
+
+                    <span class="badge bg-primary">
+
+                        {{ recommendation.battery.battery_type }}
+
+                    </span>
+
+                    {% else %}
+
+                    <span class="badge bg-danger">
+
+                        Not Available
+
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <!-- Solar -->
+
+            <div class="col-xl-3 col-md-6 mb-4">
+
+                <div class="equipment-card">
+
+                    <div class="equipment-icon solar">
+
+                        <i class="bi bi-sun-fill"></i>
+
+                    </div>
+
+                    <h5>
+
+                        Solar Panels
+
+                    </h5>
+
+                    <h4>
+
+                        {% if recommendation.panel %}
+
+                            {{ recommendation.panel.model }}
+
+                        {% else %}
+
+                            No suitable Panel found.
+
+                        {% endif %}
+
+                    </h4>
+
+                    <p>
+
+                        {{ recommendation.panel_quantity }}
+
+                        Panels Required
+
+                    </p>
+
+                    {% if recommendation.panel %}
+
+                    <small>
+
+                    {{ recommendation.panel.wattage }}W Each
+
+                    </small>
+
+                    {% endif %}
+
+                    {% if recommendation.panel %}
+
+                    <span class="badge bg-warning text-dark">
+
+                        {{ recommendation.panel.panel_type }}
+
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <!-- Controller -->
+
+            <div class="col-xl-3 col-md-6 mb-4">
+
+                <div class="equipment-card">
+
+                    <div class="equipment-icon controller">
+
+                        <i class="bi bi-cpu-fill"></i>
+
+                    </div>
+
+                    <h5>
+
+                        Charge Controller
+
+                    </h5>
+
+                    <h4>
+
+                        {% if recommendation.controller %}
+
+                            {{ recommendation.controller.model }}
+
+                        {% else %}
+
+                            No suitable Controller found.
+
+                        {% endif %}
+
+                    </h4>
+
+                    <p>
+
+                        Required Rating
+
+                    <br>
+
+                    <strong>
+
+                    {{ recommendation.controller_current }}
+
+                    A
+
+                    </strong>
+
+                    </p>
+
+                    {% if recommendation.controller %}
+
+                    <small>
+
+                    {{ recommendation.controller.current_rating }}A MPPT
+
+                    </small>
+
+                    {% endif %}
+
+                    {% if recommendation.controller %}
+
+                    <span class="badge bg-info">
+
+                        {{ recommendation.controller.controller_type }}
+
+                    </span>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr class="my-4">
+
+        <div class="row text-center">
+
+            <div class="col-md-3">
+
+                <h6>Connected Load</h6>
+
+                <h4 class="text-success">
+
+                    {{ recommendation.connected_load|floatformat:0 }} W
+
+                </h4>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h6>Daily Energy</h6>
+
+                <h4 class="text-primary">
+
+                    {{ recommendation.daily_energy|floatformat:0 }} Wh
+
+                </h4>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h6>Solar Array</h6>
+
+                <h4 class="text-warning">
+
+                    {{ recommendation.required_solar|floatformat:0 }} W
+
+                </h4>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h6>Controller</h6>
+
+                <h4 class="text-info">
+
+                    {{ recommendation.controller_current|floatformat:0 }} A
+
+                </h4>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

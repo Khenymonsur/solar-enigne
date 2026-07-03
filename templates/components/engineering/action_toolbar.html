@@ -1,0 +1,67 @@
+<div class="card mb-4 shadow-sm">
+
+    <div class="card-body">
+
+        <div class="d-flex flex-wrap gap-2">
+
+            <a
+                href="{% url 'audits:update' object.pk %}"
+                class="btn btn-warning">
+
+                <i class="bi bi-pencil-square"></i>
+
+                Edit Assessment
+
+            </a>
+
+            <a
+                href="{% url 'audits:add_appliance' object.pk %}"
+                class="btn btn-success">
+
+                <i class="bi bi-plus-circle"></i>
+
+                Add Appliance
+
+            </a>
+
+            <button
+                class="btn btn-primary">
+
+                <i class="bi bi-calculator-fill"></i>
+
+                Calculate
+
+            </button>
+
+            <button
+                class="btn btn-dark">
+
+                <i class="bi bi-lightning-charge-fill"></i>
+
+                Recommendation
+
+            </button>
+
+            <button
+                class="btn btn-info text-white">
+
+                <i class="bi bi-file-earmark-text-fill"></i>
+
+                Generate Quotation
+
+            </button>
+
+            <button
+                class="btn btn-danger">
+
+                <i class="bi bi-file-earmark-pdf-fill"></i>
+
+                Export PDF
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,241 @@
+.metric-card{
+
+    background:white;
+
+    border-radius:18px;
+
+    padding:25px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+    transition:.3s;
+
+    border:1px solid #edf1f5;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.04);
+
+}
+
+.metric-card:hover{
+
+    transform:translateY(-5px);
+
+    box-shadow:0 20px 45px rgba(0,0,0,.08);
+
+}
+
+.metric-icon{
+
+    width:70px;
+
+    height:70px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:18px;
+
+    background:#EAF8EF;
+
+}
+
+.metric-icon i{
+
+    font-size:34px;
+
+    color:#0B8F4D;
+
+}
+
+.metric-content{
+
+    flex:1;
+
+}
+
+.metric-content h6{
+
+    color:#777;
+
+    margin-bottom:8px;
+
+    font-weight:500;
+
+}
+
+.metric-content h3{
+
+    margin:0;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    color:#17352A;
+
+}
+
+.metric-content small{
+
+    color:#999;
+
+}
+
+.page-title{
+
+    font-weight:700;
+
+    margin-bottom:5px;
+
+}
+
+.metric-box{
+
+    background:#F8FAFC;
+
+    border-radius:12px;
+
+    padding:18px;
+
+    text-align:center;
+
+    border:1px solid #EEF2F7;
+
+}
+
+.metric-box h2{
+
+    margin-top:8px;
+
+    color:#0B8F4D;
+
+    font-weight:700;
+
+}
+
+.metric-box h3{
+
+    margin-top:8px;
+
+    font-weight:700;
+
+}
+
+.metric-box small{
+
+    color:#666;
+
+}
+
+.metric-box.success{
+
+    background:#EAF8EF;
+
+}
+
+.equipment-card{
+
+    border-radius:18px;
+
+    background:white;
+
+    text-align:center;
+
+    padding:25px;
+
+    border:1px solid #ECECEC;
+
+    transition:.3s;
+
+    height:100%;
+
+}
+
+.equipment-card:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+
+}
+
+.equipment-icon{
+
+    width:80px;
+
+    height:80px;
+
+    border-radius:50%;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin:0 auto 20px;
+
+    color:white;
+
+}
+
+.equipment-icon i{
+
+    font-size:34px;
+
+}
+
+.inverter{
+
+    background:#F39C12;
+
+}
+
+.battery{
+
+    background:#3498DB;
+
+}
+
+.solar{
+
+    background:#F1C40F;
+
+}
+
+.controller{
+
+    background:#16A085;
+
+}
+
+.equipment-card h5{
+
+    color:#777;
+
+    font-size:15px;
+
+}
+
+.equipment-card h4{
+
+    font-weight:700;
+
+    color:#17352A;
+
+    margin:15px 0;
+
+}
+
+.equipment-card p{
+
+    color:#888;
+
+}

@@ -1,0 +1,195 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+{% if object %}
+Edit Assessment
+{% else %}
+New Assessment
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title="Assessment Wizard" subtitle="Create a new solar engineering assessment" %}
+
+<div class="card shadow border-0">
+
+    <div class="card-header bg-white">
+
+        <div class="row text-center">
+
+            <div class="col">
+
+                <div class="fw-bold text-success">
+                    1
+                </div>
+
+                <small>
+                    Project
+                </small>
+
+            </div>
+
+            <div class="col">
+
+                <div class="fw-bold text-secondary">
+                    2
+                </div>
+
+                <small>
+                    Appliances
+                </small>
+
+            </div>
+
+            <div class="col">
+
+                <div class="fw-bold text-secondary">
+                    3
+                </div>
+
+                <small>
+                    Engineering
+                </small>
+
+            </div>
+
+            <div class="col">
+
+                <div class="fw-bold text-secondary">
+                    4
+                </div>
+
+                <small>
+                    Recommendation
+                </small>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card-body">
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="row">
+
+                <div class="col-lg-6 mb-4">
+
+                    <label class="form-label">
+
+                        Customer
+
+                    </label>
+
+                    {{ form.customer }}
+
+                </div>
+
+                <div class="col-lg-6 mb-4">
+
+                    <label class="form-label">
+
+                        Project Name
+
+                    </label>
+
+                    {{ form.project_name }}
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-md-4 mb-4">
+
+                    <label class="form-label">
+
+                        Backup Hours
+
+                    </label>
+
+                    {{ form.backup_hours }}
+
+                </div>
+
+                <div class="col-md-4 mb-4">
+
+                    <label class="form-label">
+
+                        Peak Sun Hours
+
+                    </label>
+
+                    {{ form.peak_sun_hours }}
+
+                </div>
+
+                <div class="col-md-4 mb-4">
+
+                    <label class="form-label">
+
+                        System Voltage
+
+                    </label>
+
+                    {{ form.system_voltage }}
+
+                </div>
+
+            </div>
+
+            <div class="row">
+
+                <div class="col-lg-12">
+
+                    <label class="form-label">
+
+                        Status
+
+                    </label>
+
+                    {{ form.status }}
+
+                </div>
+
+            </div>
+
+            <hr class="my-4">
+
+            <div class="d-flex justify-content-between">
+
+                <a
+                    href="{% url 'audits:list' %}"
+                    class="btn btn-outline-secondary">
+
+                    <i class="bi bi-arrow-left"></i>
+
+                    Back
+
+                </a>
+
+                <button
+                    type="submit"
+                    class="btn btn-success">
+
+                    <i class="bi bi-save-fill"></i>
+
+                    Save & Continue
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

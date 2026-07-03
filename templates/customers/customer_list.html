@@ -1,0 +1,155 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Customers
+{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title="Customers" subtitle="Manage all customers" %}
+
+<div class="mb-4">
+
+    <a
+        href="{% url 'customers:create' %}"
+        class="btn btn-success">
+
+        <i class="bi bi-person-plus-fill"></i>
+
+        New Customer
+
+    </a>
+
+</div>
+
+{% include "components/search_box.html" %}
+
+<div class="row">
+
+{% include "components/metric_card.html" with title="Customers" value=customer_count icon="bi-people-fill" footer="Registered" %}
+
+{% include "components/metric_card.html" with title="Residential" value=residential_count icon="bi-house-fill" footer="Buildings" %}
+
+{% include "components/metric_card.html" with title="Commercial" value=commercial_count icon="bi-building" footer="Projects" %}
+
+{% include "components/metric_card.html" with title="Industrial" value=industrial_count icon="bi-factory" footer="Projects" %}
+
+</div>
+
+<div class="card">
+
+<div class="card-header">
+
+Customer Directory
+
+</div>
+
+<div class="card-body p-0">
+
+<table class="table table-hover align-middle mb-0">
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Phone</th>
+
+<th>State</th>
+
+<th>Building</th>
+
+<th>Assessments</th>
+
+<th></th>
+
+</tr>
+
+</thead>
+
+<tbody>
+
+{% for customer in customers %}
+
+<tr>
+
+<td>
+
+<strong>
+
+{{ customer.full_name }}
+
+</strong>
+
+</td>
+
+<td>
+
+{{ customer.phone }}
+
+</td>
+
+<td>
+
+{{ customer.state }}
+
+</td>
+
+<td>
+
+{{ customer.building_type }}
+
+</td>
+
+<td>
+
+{{ customer.assessments.count }}
+
+</td>
+
+<td class="text-end">
+
+<a
+href="{% url 'customers:detail' customer.pk %}"
+class="btn btn-sm btn-primary">
+
+View
+
+</a>
+
+<a
+href="{% url 'customers:update' customer.pk %}"
+class="btn btn-sm btn-warning">
+
+Edit
+
+</a>
+
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+
+<td colspan="6">
+
+No customers found.
+
+</td>
+
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+{% endblock %}

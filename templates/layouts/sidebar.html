@@ -1,0 +1,215 @@
+<div id="sidebar" class="sidebar">
+
+    <!-- Logo -->
+
+    <div class="sidebar-header">
+
+        <a href="{% url 'dashboard:index' %}" class="logo">
+
+            <i class="bi bi-lightning-charge-fill"></i>
+
+            <div>
+
+                <h4>Cloud Energy</h4>
+
+                <small>Solar Engineering</small>
+
+            </div>
+
+        </a>
+
+    </div>
+
+    <!-- Menu -->
+
+    <ul class="sidebar-menu">
+
+        <li class="menu-title">
+
+            MAIN
+
+        </li>
+
+        <li>
+
+            <a href="{% url 'dashboard:index' %}">
+
+                <i class="bi bi-speedometer2"></i>
+
+                <span>Dashboard</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="{% url 'customers:list' %}">
+
+                <i class="bi bi-people-fill"></i>
+
+                <span>Customers</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="{% url 'audits:list' %}">
+
+                <i class="bi bi-clipboard-data"></i>
+
+                <span>Assessments</span>
+
+            </a>
+
+        </li>
+
+        <li class="menu-title">
+
+            ENGINEERING
+
+        </li>
+
+        <li>
+
+            <a href="#">
+
+                <i class="bi bi-lightbulb"></i>
+
+                <span>Appliance Library</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="#">
+
+                <i class="bi bi-lightning"></i>
+
+                <span>Inverters</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="#">
+
+                <i class="bi bi-battery-charging"></i>
+
+                <span>Batteries</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="#">
+
+                <i class="bi bi-sun"></i>
+
+                <span>Solar Panels</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="#">
+
+                <i class="bi bi-cpu"></i>
+
+                <span>Charge Controllers</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="#">
+
+                <i class="bi bi-box-seam"></i>
+
+                <span>Equipment</span>
+
+            </a>
+
+        </li>
+
+        <li class="menu-title">
+
+            BUSINESS
+
+        </li>
+
+        <li>
+
+            <a href="#">
+
+                <i class="bi bi-file-earmark-text"></i>
+
+                <span>Quotations</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="#">
+
+                <i class="bi bi-file-earmark-pdf"></i>
+
+                <span>Reports</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="#">
+
+                <i class="bi bi-graph-up-arrow"></i>
+
+                <span>Analytics</span>
+
+            </a>
+
+        </li>
+
+        <li>
+
+            <a href="#">
+
+                <i class="bi bi-gear-fill"></i>
+
+                <span>Settings</span>
+
+            </a>
+
+        </li>
+
+    </ul>
+
+    <!-- Footer -->
+
+    <div class="sidebar-footer">
+
+        <small>
+
+            Cloud Energy © {% now "Y" %}
+
+        </small>
+
+    </div>
+
+</div>
