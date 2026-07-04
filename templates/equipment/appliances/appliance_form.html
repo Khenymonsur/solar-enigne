@@ -1,0 +1,70 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Appliance{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title="Appliance" subtitle="Create or update appliance" %}
+
+<div class="card shadow-sm">
+
+    <div class="card-body">
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <div class="row">
+
+                {% for field in form %}
+
+                <div class="col-md-6 mb-3">
+
+                    <label class="form-label">
+
+                        {{ field.label }}
+
+                    </label>
+
+                    {{ field }}
+
+                    {% if field.errors %}
+
+                        <div class="text-danger small">
+
+                            {{ field.errors }}
+
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+            <hr>
+
+            <button class="btn btn-success">
+
+                <i class="bi bi-check-circle"></i>
+
+                Save Appliance
+
+            </button>
+
+            <a href="{% url 'equipment:appliance-list' %}"
+               class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

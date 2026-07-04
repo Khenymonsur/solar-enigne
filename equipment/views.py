@@ -1,3 +1,10 @@
+from django.db.models import Count
+from django.db.models import Q
+
+from .models import Appliance
+from .forms import ApplianceForm
+
+
 from django.contrib import messages
 from django.urls import reverse_lazy
 from django.views.generic import (
@@ -420,3 +427,99 @@ class ChargeControllerDeleteView(DeleteView):
     )
 
     success_url = reverse_lazy("equipment:controller-list")
+
+
+
+
+
+class ApplianceListView(ListView):
+    model = Appliance
+    template_name = "equipment/appliances/appliance_list.html"
+    context_object_name = "appliances"
+    paginate_by = 15
+
+    def get_queryset(self):
+        queryset = Appliance.objects.order_by("category", "name")
+
+        q = self.request.GET.get("q")
+
+        if q:
+            queryset = queryset.filter(
+                Q(name__icontains=q)
+                | Q(category__icontains=q)
+            )
+
+        return queryset
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        queryset = Appliance.objects.all()
+
+        context["active_count"] = queryset.filter(active=True).count()
+
+        context["categories_count"] = (
+            queryset.values("category")
+            .distinct()
+            .count()
+        )
+
+        context["average_wattage"] = (
+            queryset.aggregate(
+                Avg("default_wattage")
+            )["default_wattage__avg"]
+            or 0
+        )
+
+        return context
+
+
+class ApplianceDetailView(DetailView):
+    model = Appliance
+    template_name = "equipment/appliances/appliance_detail.html"
+
+
+
+class ApplianceCreateView(CreateView):
+    model = Appliance
+    form_class = ApplianceForm
+    template_name = "equipment/appliances/appliance_form.html"
+    success_url = reverse_lazy("equipment:appliance-list")
+
+    def form_valid(self, form):
+        messages.success(
+            self.request,
+            "Appliance created successfully."
+        )
+        return super().form_valid(form)
+
+
+
+class ApplianceUpdateView(UpdateView):
+    model = Appliance
+    form_class = ApplianceForm
+    template_name = "equipment/appliances/appliance_form.html"
+    success_url = reverse_lazy("equipment:appliance-list")
+
+    def form_valid(self, form):
+        messages.success(
+            self.request,
+            "Appliance updated successfully."
+        )
+        return super().form_valid(form)
+
+
+
+class ApplianceDeleteView(DeleteView):
+    model = Appliance
+    template_name = (
+        "equipment/appliances/appliance_confirm_delete.html"
+    )
+    success_url = reverse_lazy("equipment:appliance-list")
+
+    def delete(self, request, *args, **kwargs):
+        messages.success(
+            request,
+            "Appliance deleted successfully."
+        )
+        return super().delete(request, *args, **kwargs)

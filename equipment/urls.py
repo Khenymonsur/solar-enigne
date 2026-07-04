@@ -167,4 +167,38 @@ urlpatterns = [
         views.ChargeControllerDeleteView.as_view(),
         name="controller-delete",
     ),
+
+# ===============================
+# APPLIANCES
+# ===============================
+
+    path(
+        "appliances/",
+        views.ApplianceListView.as_view(),
+        name="appliance-list",
+    ),
+
+    path(
+        "appliances/add/",
+        views.ApplianceCreateView.as_view(),
+        name="appliance-create",
+    ),
+
+    path(
+        "appliances/<int:pk>/",
+        views.ApplianceDetailView.as_view(),
+        name="appliance-detail",
+    ),
+
+    path(
+        "appliances/<int:pk>/edit/",
+        views.ApplianceUpdateView.as_view(),
+        name="appliance-update",
+    ),
+
+    path(
+        "appliances/<int:pk>/delete/",
+        views.ApplianceDeleteView.as_view(),
+        name="appliance-delete",
+    ),
 ]

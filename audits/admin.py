@@ -1,7 +1,9 @@
 from django.contrib import admin
 
-from .models import Assessment, Appliance
-
+from .models import (
+    Assessment,
+    Appliance,
+)
 
 class ApplianceInline(admin.TabularInline):
     model = Appliance

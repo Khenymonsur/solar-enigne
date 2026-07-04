@@ -1,0 +1,104 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Appliance Details{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title=object.name subtitle="Appliance Details" %}
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6">
+
+                <table class="table table-borderless">
+
+                    <tr>
+                        <th width="180">Category</th>
+                        <td>{{ object.category }}</td>
+                    </tr>
+
+                    <tr>
+                        <th>Power Rating</th>
+                        <td>{{ object.default_wattage }} W</td>
+                    </tr>
+
+                    <tr>
+                        <th>Surge Factor</th>
+                        <td>{{ object.surge_factor }}x</td>
+                    </tr>
+
+                    <tr>
+                        <th>Daily Usage</th>
+                        <td>{{ object.default_hours }} Hours</td>
+                    </tr>
+
+                    <tr>
+                        <th>Energy Efficient</th>
+
+                        <td>
+
+                            {% if object.energy_efficient %}
+
+                                <span class="badge bg-success">
+
+                                    Yes
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-secondary">
+
+                                    No
+
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>Status</th>
+
+                        <td>
+
+                            {% if object.active %}
+
+                                <span class="badge bg-success">
+
+                                    Active
+
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-danger">
+
+                                    Inactive
+
+                                </span>
+
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

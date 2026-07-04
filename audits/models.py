@@ -3,7 +3,7 @@ from decimal import Decimal
 from django.db import models
 
 from customers.models import Customer
-
+from equipment.models import Appliance as LibraryAppliance
 
 class Assessment(models.Model):
     """
@@ -191,6 +191,14 @@ class Appliance(models.Model):
         related_name="appliances",
     )
 
+    library_appliance = models.ForeignKey(
+        LibraryAppliance,
+        on_delete=models.PROTECT,
+        null=True,
+        blank=True,
+        related_name="assessment_appliances",
+    )
+
     category = models.CharField(
         max_length=30,
         choices=APPLIANCE_CATEGORIES,
@@ -251,6 +259,22 @@ class Appliance(models.Model):
         default=True,
     )
 
+    def save(self, *args, **kwargs):
+        if self.library_appliance:
+            self.appliance_name = self.library_appliance.name
+            self.category = self.library_appliance.category
+            self.power_rating = self.library_appliance.default_wattage
+
+            self.surge_power = (
+                    self.library_appliance.default_wattage
+                    * self.library_appliance.surge_factor
+            )
+
+            self.hours_per_day = self.library_appliance.default_hours
+
+        super().save(*args, **kwargs)
+
+
     class Meta:
         ordering = ["id"]
         verbose_name = "Appliance"
@@ -258,3 +282,59 @@ class Appliance(models.Model):
 
     def __str__(self):
         return self.appliance_name
+
+
+
+
+# from equipment.models import Appliance
+#
+#
+# class AssessmentItem(models.Model):
+#
+#     assessment = models.ForeignKey(
+#         Assessment,
+#         on_delete=models.CASCADE,
+#         related_name="items",
+#     )
+#
+#     appliance = models.ForeignKey(
+#         Appliance,
+#         on_delete=models.PROTECT,
+#     )
+#
+#     quantity = models.PositiveIntegerField(default=1)
+#
+#     wattage = models.PositiveIntegerField()
+#
+#     surge_factor = models.DecimalField(
+#         max_digits=4,
+#         decimal_places=2,
+#     )
+#
+#     daily_hours = models.DecimalField(
+#         max_digits=4,
+#         decimal_places=1,
+#     )
+#
+#     def save(self, *args, **kwargs):
+#         if self.appliance:
+#             self.wattage = self.appliance.default_wattage
+#             self.surge_factor = self.appliance.surge_factor
+#             self.daily_hours = self.appliance.default_hours
+#
+#         super().save(*args, **kwargs)
+#
+#     class Meta:
+#         ordering = ["id"]
+#
+#     def connected_load(self):
+#         return self.quantity * self.wattage
+#
+#     def surge_load(self):
+#         return self.connected_load() * self.surge_factor
+#
+#     def daily_energy(self):
+#         return (
+#             self.connected_load()
+#             * self.daily_hours
+#         )

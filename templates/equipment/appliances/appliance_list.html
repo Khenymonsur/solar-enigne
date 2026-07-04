@@ -1,0 +1,189 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Appliance Library{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title="Appliance Library" subtitle="Manage engineering appliance catalogue" %}
+
+<div class="row mb-4">
+
+        {% include "components/metric_card.html" with title="Total Appliances" value=page_obj.paginator.count icon="bi-lightbulb-fill" footer="Registered Appliances" %}
+
+        {% include "components/metric_card.html" with title="Categories" value=categories_count icon="bi-grid-fill" footer="Appliance Groups" %}
+
+        {% include "components/metric_card.html" with title="Active" value=active_count icon="bi-check-circle-fill" footer="Available Appliances" %}
+
+        {% include "components/metric_card.html" with title="Average Wattage" value=average_wattage|floatformat:0 icon="bi-lightning-charge-fill" footer="Watts" %}
+
+</div>
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-8">
+
+                <form method="get">
+
+                    <div class="input-group">
+
+                        <input
+                            type="text"
+                            class="form-control"
+                            name="q"
+                            placeholder="Search appliance..."
+                            value="{{ request.GET.q }}">
+
+                        <button class="btn btn-success">
+
+                            <i class="bi bi-search"></i>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="col-md-4 text-end">
+
+                <a href="{% url 'equipment:appliance-create' %}"
+                   class="btn btn-success">
+
+                    <i class="bi bi-plus-circle"></i>
+
+                    Add Appliance
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle mb-0">
+
+            <thead class="table-light">
+
+                <tr>
+
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Power</th>
+                    <th>Surge</th>
+                    <th>Hours</th>
+                    <th>Efficient</th>
+                    <th>Status</th>
+                    <th width="170">Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for appliance in appliances %}
+
+                <tr>
+
+                    <td><strong>{{ appliance.name }}</strong></td>
+
+                    <td>{{ appliance.category }}</td>
+
+                    <td>{{ appliance.default_wattage }} W</td>
+
+                    <td>{{ appliance.surge_factor }}x</td>
+
+                    <td>{{ appliance.default_hours }} hrs</td>
+
+                    <td>
+
+                        {% if appliance.energy_efficient %}
+                            <span class="badge bg-success">Yes</span>
+                        {% else %}
+                            <span class="badge bg-secondary">No</span>
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {% if appliance.active %}
+                            <span class="badge bg-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Inactive</span>
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <div class="btn-group">
+
+                            <a href="{% url 'equipment:appliance-detail' appliance.pk %}" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-eye"></i>
+                            </a>
+
+                            <a href="{% url 'equipment:appliance-update' appliance.pk %}" class="btn btn-outline-warning btn-sm">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+
+                            <a href="{% url 'equipment:appliance-delete' appliance.pk %}" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-trash"></i>
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="8">
+
+                        <div class="text-center py-5">
+
+                            <i class="bi bi-lightbulb display-1 text-warning"></i>
+
+                            <h4>No Appliances Found</h4>
+
+                            <p class="text-muted">
+
+                                Build your engineering appliance library by adding the first appliance.
+
+                            </p>
+
+                            <a href="{% url 'equipment:appliance-create' %}"
+                               class="btn btn-success">
+
+                                Add Appliance
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,6 +1,9 @@
 from django import forms
 
-from .models import Assessment
+from .models import (
+    Assessment,
+    Appliance,
+)
 
 
 class AssessmentForm(forms.ModelForm):
@@ -89,35 +92,44 @@ class AssessmentForm(forms.ModelForm):
 
 
 
+class ApplianceForm(forms.ModelForm):
 
+    class Meta:
 
+        model = Appliance
 
-# from django import forms
-#
-# from .models import Appliance
-#
-#
-# class ApplianceForm(forms.ModelForm):
-#
-#     class Meta:
-#         model = Appliance
-#
-#         fields = [
-#             "category",
-#             "appliance_name",
-#             "quantity",
-#             "power_rating",
-#             "surge_power",
-#             "hours_per_day",
-#             "critical_load",
-#         ]
-#
-#     def __init__(self, *args, **kwargs):
-#
-#         super().__init__(*args, **kwargs)
-#
-#         for field in self.fields.values():
-#
-#             field.widget.attrs["class"] = "form-control"
-#
-#         self.fields["critical_load"].widget.attrs["class"] = "form-check-input"
+        fields = (
+            "library_appliance",
+            "quantity",
+            "critical_load",
+            "simultaneous",
+        )
+
+        widgets = {
+
+            "library_appliance": forms.Select(
+                attrs={
+                    "class": "form-select",
+                }
+            ),
+
+            "quantity": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "min": 1,
+                }
+            ),
+
+            "critical_load": forms.CheckboxInput(
+                attrs={
+                    "class": "form-check-input",
+                }
+            ),
+
+            "simultaneous": forms.CheckboxInput(
+                attrs={
+                    "class": "form-check-input",
+                }
+            ),
+
+        }

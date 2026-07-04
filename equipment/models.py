@@ -1,6 +1,10 @@
 from django.db import models
 
 
+    # ===============================
+    # MANUFACTURER CLASS
+    # ===============================
+
 class Manufacturer(models.Model):
     """
     Equipment manufacturer.
@@ -48,6 +52,9 @@ class Manufacturer(models.Model):
         return self.name
 
 
+    # ===============================
+    # INVERTER CLASS
+    # ===============================
 
 class Inverter(models.Model):
 
@@ -87,6 +94,9 @@ class Inverter(models.Model):
         return f"{self.manufacturer} {self.model}"
 
 
+    # ===============================
+    # BATTERY CLASS
+    # ===============================
 
 class Battery(models.Model):
 
@@ -126,7 +136,9 @@ class Battery(models.Model):
         return f"{self.manufacturer} {self.model}"
 
 
-
+    # ===============================
+    # SOLAR PANEL CLASS
+    # ===============================
 
 class SolarPanel(models.Model):
 
@@ -159,6 +171,9 @@ class SolarPanel(models.Model):
         return f"{self.manufacturer} {self.model}"
 
 
+    # ===============================
+    # CHARGE CONTROLLER CLASS
+    # ===============================
 
 class ChargeController(models.Model):
 
@@ -192,3 +207,59 @@ class ChargeController(models.Model):
 
     def __str__(self):
         return f"{self.manufacturer} {self.model}"
+
+    # ===============================
+    # APPLIANCE LIBRARY
+    # ===============================
+
+from django.db import models
+
+
+class ApplianceCategory(models.TextChoices):
+    LIGHTING = "Lighting", "Lighting"
+    COOLING = "Cooling", "Cooling"
+    KITCHEN = "Kitchen", "Kitchen"
+    ENTERTAINMENT = "Entertainment", "Entertainment"
+    OFFICE = "Office", "Office"
+    INDUSTRIAL = "Industrial", "Industrial"
+    AGRICULTURE = "Agriculture", "Agriculture"
+    MEDICAL = "Medical", "Medical"
+    OTHER = "Other", "Other"
+
+
+class Appliance(models.Model):
+    category = models.CharField(
+        max_length=30,
+        choices=ApplianceCategory.choices,
+        default=ApplianceCategory.OTHER,
+    )
+
+    name = models.CharField(max_length=120)
+
+    default_wattage = models.PositiveIntegerField()
+
+    surge_factor = models.DecimalField(
+        max_digits=4,
+        decimal_places=2,
+        default=1.00,
+    )
+
+    default_hours = models.DecimalField(
+        max_digits=4,
+        decimal_places=1,
+        default=8,
+    )
+
+    energy_efficient = models.BooleanField(default=False)
+
+    active = models.BooleanField(default=True)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ["category", "name"]
+
+    def __str__(self):
+        return f"{self.name} ({self.default_wattage}W)"
