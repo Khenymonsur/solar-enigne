@@ -9,9 +9,12 @@ from django.views.generic import (
     DeleteView,
 )
 
+
 from .forms import AssessmentForm
 from .models import Assessment
 from services.recommendation import RecommendationEngine
+
+from services.bom import BillOfMaterialsService
 
 
 class AssessmentListView(ListView):
@@ -100,6 +103,17 @@ class AssessmentDetailView(DetailView):
         context["critical_load"] = (
             assessment.total_critical_load
         )
+
+        recommendation = RecommendationEngine(
+            assessment
+        ).recommend()
+
+        bom = BillOfMaterialsService(
+            recommendation
+        ).generate()
+
+        context["recommendation"] = recommendation
+        context["bom"] = bom
 
         return context
 

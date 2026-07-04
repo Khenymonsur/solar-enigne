@@ -69,3 +69,151 @@ class SolarPanelForm(forms.ModelForm):
             ),
 
         }
+
+
+
+class BatteryForm(forms.ModelForm):
+
+    class Meta:
+        model = Battery
+        fields = "__all__"
+
+        widgets = {
+
+            "manufacturer": forms.Select(
+                attrs={"class": "form-select"}
+            ),
+
+            "model": forms.TextInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "battery_type": forms.Select(
+                attrs={"class": "form-select"}
+            ),
+
+            "voltage": forms.NumberInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "capacity_ah": forms.NumberInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "cycle_life": forms.NumberInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "price": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "step": "0.01",
+                }
+            ),
+
+            "active": forms.CheckboxInput(
+                attrs={"class": "form-check-input"}
+            ),
+
+        }
+
+
+
+class InverterForm(forms.ModelForm):
+
+    class Meta:
+        model = Inverter
+        fields = "__all__"
+
+        widgets = {
+
+            "manufacturer": forms.Select(
+                attrs={"class": "form-select"}
+            ),
+
+            "model": forms.TextInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "capacity_kva": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "step": "0.1",
+                }
+            ),
+
+            "hybrid": forms.CheckboxInput(
+                attrs={"class": "form-check-input"}
+            ),
+
+            "voltage": forms.NumberInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "efficiency": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "step": "0.01",
+                }
+            ),
+
+            "warranty": forms.NumberInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "price": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "step": "0.01",
+                }
+            ),
+
+            "active": forms.CheckboxInput(
+                attrs={"class": "form-check-input"}
+            ),
+
+        }
+
+
+
+
+class ChargeControllerForm(forms.ModelForm):
+
+    class Meta:
+        model = ChargeController
+        fields = "__all__"
+
+        widgets = {
+
+            "manufacturer": forms.Select(
+                attrs={"class": "form-select"}
+            ),
+
+            "model": forms.TextInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "controller_type": forms.Select(
+                attrs={"class": "form-select"}
+            ),
+
+            "current_rating": forms.NumberInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "voltage": forms.NumberInput(
+                attrs={"class": "form-control"}
+            ),
+
+            "price": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "step": "0.01",
+                }
+            ),
+
+            "active": forms.CheckboxInput(
+                attrs={"class": "form-check-input"}
+            ),
+
+        }

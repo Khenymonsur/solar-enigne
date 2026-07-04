@@ -1,0 +1,47 @@
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header">
+
+        <strong>Project Information</strong>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-3">
+                <strong>Customer</strong><br>
+                {{ assessment.customer.full_name }}
+            </div>
+
+            <div class="col-md-3">
+                <strong>Project</strong><br>
+                {{ assessment.project_name }}
+            </div>
+
+            <div class="col-md-3">
+                <strong>Building</strong><br>
+                {{ assessment.customer.building_type }}
+            </div>
+
+            <div class="col-md-3">
+                <strong>Status</strong><br>
+
+                {% if assessment.status == "Completed" %}
+                    <span class="badge bg-success">
+                        {{ assessment.status }}
+                    </span>
+                {% else %}
+                    <span class="badge bg-warning">
+                        {{ assessment.status }}
+                    </span>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

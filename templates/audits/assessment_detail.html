@@ -6,6 +6,8 @@ Assessment Workspace
 
 {% block content %}
 
+{% include "audits/partials/assessment_summary.html" %}
+
 {% include "components/page_header.html" with title=assessment.project_name subtitle=assessment.customer.full_name %}
 
 <div class="row mb-4">
@@ -31,6 +33,17 @@ Assessment Workspace
     <div class="col-lg-4">
 
         {% include "audits/partials/recommendation_panel.html" %}
+
+    </div>
+
+</div>
+
+<!-- Bill of Materials -->
+<div class="row mt-4">
+
+    <div class="col-12">
+
+        {% include "audits/partials/bom_panel.html" %}
 
     </div>
 

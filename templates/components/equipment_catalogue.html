@@ -1,0 +1,105 @@
+<div class="row mb-4">
+
+    {% for card in metric_cards %}
+
+    <div class="col-xl-3 col-md-6 mb-3">
+
+        {% include "components/metric_card.html"
+            with
+            title=card.title
+            value=card.value
+            icon=card.icon
+            footer=card.footer %}
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-8">
+
+                <form method="get">
+
+                    <div class="input-group">
+
+                        <input
+                            class="form-control"
+                            type="text"
+                            name="q"
+                            value="{{ request.GET.q }}"
+                            placeholder="{{ search_placeholder }}">
+
+                        <button class="btn btn-success">
+
+                            <i class="bi bi-search"></i>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="col-md-4 text-end">
+
+                <a
+                    href="{{ create_url }}"
+                    class="btn btn-success">
+
+                    <i class="bi bi-plus-circle"></i>
+
+                    {{ create_text }}
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle mb-0">
+
+            <thead>
+
+            <tr>
+
+                {% for col in columns %}
+
+                    <th>{{ col }}</th>
+
+                {% endfor %}
+
+                <th width="160">
+
+                    Actions
+
+                </th>
+
+            </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% block equipment_rows %}
+                {% endblock %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

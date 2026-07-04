@@ -36,6 +36,9 @@ urlpatterns = [
         name="manufacturer-delete",
     ),
 
+# ===============================
+# SOLAR PANEL
+# ===============================
 
     path(
         "solar-panels/",
@@ -61,4 +64,107 @@ urlpatterns = [
         name="panel-delete",
     ),
 
+# ===============================
+# BATTERIES
+# ===============================
+
+    path(
+        "batteries/",
+        views.BatteryListView.as_view(),
+        name="battery-list",
+    ),
+
+    path(
+        "batteries/add/",
+        views.BatteryCreateView.as_view(),
+        name="battery-create",
+    ),
+
+    path(
+        "batteries/<int:pk>/",
+        views.BatteryDetailView.as_view(),
+        name="battery-detail",
+    ),
+
+    path(
+        "batteries/<int:pk>/edit/",
+        views.BatteryUpdateView.as_view(),
+        name="battery-update",
+    ),
+
+    path(
+        "batteries/<int:pk>/delete/",
+        views.BatteryDeleteView.as_view(),
+        name="battery-delete",
+    ),
+
+
+# ===============================
+# INVERTERS
+# ===============================
+
+    path(
+        "inverters/",
+        views.InverterListView.as_view(),
+        name="inverter-list",
+    ),
+
+    path(
+        "inverters/add/",
+        views.InverterCreateView.as_view(),
+        name="inverter-create",
+    ),
+
+    path(
+        "inverters/<int:pk>/",
+        views.InverterDetailView.as_view(),
+        name="inverter-detail",
+    ),
+
+    path(
+        "inverters/<int:pk>/edit/",
+        views.InverterUpdateView.as_view(),
+        name="inverter-update",
+    ),
+
+    path(
+        "inverters/<int:pk>/delete/",
+        views.InverterDeleteView.as_view(),
+        name="inverter-delete",
+    ),
+
+
+# ===============================
+# CHARGE CONTROLLERS
+# ===============================
+
+    path(
+        "controllers/",
+        views.ChargeControllerListView.as_view(),
+        name="controller-list",
+    ),
+
+    path(
+        "controllers/add/",
+        views.ChargeControllerCreateView.as_view(),
+        name="controller-create",
+    ),
+
+    path(
+        "controllers/<int:pk>/",
+        views.ChargeControllerDetailView.as_view(),
+        name="controller-detail",
+    ),
+
+    path(
+        "controllers/<int:pk>/edit/",
+        views.ChargeControllerUpdateView.as_view(),
+        name="controller-update",
+    ),
+
+    path(
+        "controllers/<int:pk>/delete/",
+        views.ChargeControllerDeleteView.as_view(),
+        name="controller-delete",
+    ),
 ]

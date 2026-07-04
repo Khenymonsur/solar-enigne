@@ -1,0 +1,48 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Delete Inverter{% endblock %}
+
+{% block content %}
+
+<div class="card shadow-sm">
+
+    <div class="card-body text-center">
+
+        <h3 class="text-danger">
+
+            Delete Inverter
+
+        </h3>
+
+        <p>
+
+            Are you sure you want to delete
+
+            <strong>{{ object }}</strong>?
+
+        </p>
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            <button class="btn btn-danger">
+
+                Delete
+
+            </button>
+
+            <a href="{% url 'equipment:inverter-list' %}"
+               class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

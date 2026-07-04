@@ -5,6 +5,7 @@ from .views import (
     AssessmentDetailView,
     AssessmentListView,
     AssessmentUpdateView,
+    AssessmentDeleteView,
 )
 
 app_name = "audits"
@@ -33,5 +34,11 @@ urlpatterns = [
         "<int:pk>/edit/",
         AssessmentUpdateView.as_view(),
         name="update",
+    ),
+
+    path(
+        "<int:pk>/delete/",
+        AssessmentDeleteView.as_view(),
+        name="delete",
     ),
 ]

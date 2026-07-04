@@ -1,0 +1,42 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Controller{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title="Controller" subtitle="Add or update Controller" %}
+
+<div class="card shadow-sm">
+
+    <div class="card-body">
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <hr>
+
+            <button class="btn btn-success">
+
+                <i class="bi bi-check-circle"></i>
+
+                Save Controller
+
+            </button>
+
+            <a href="{% url 'equipment:controller-list' %}"
+               class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

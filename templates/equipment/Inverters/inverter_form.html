@@ -1,0 +1,42 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}inverter{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title="inverter" subtitle="Add or update inverter" %}
+
+<div class="card shadow-sm">
+
+    <div class="card-body">
+
+        <form method="post">
+
+            {% csrf_token %}
+
+            {{ form.as_p }}
+
+            <hr>
+
+            <button class="btn btn-success">
+
+                <i class="bi bi-check-circle"></i>
+
+                Save Inverter
+
+            </button>
+
+            <a href="{% url 'equipment:inverter-list' %}"
+               class="btn btn-secondary">
+
+                Cancel
+
+            </a>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

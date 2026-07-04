@@ -194,3 +194,35 @@
 }
 
 }
+
+/* ======================================
+   Active Sidebar Menu
+====================================== */
+
+.sidebar-menu li a.active{
+
+    background:#159947;
+
+    color:#fff;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+}
+
+.sidebar-menu li a.active i{
+
+    color:#fff;
+
+}
+
+.sidebar-menu li a:hover{
+
+    background:#1d5b43;
+
+    border-radius:12px;
+
+    transition:.3s;
+
+}

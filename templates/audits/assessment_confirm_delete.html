@@ -1,0 +1,160 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Delete Assessment
+{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title="Delete Assessment" subtitle="Confirm deletion" %}
+
+<div class="row justify-content-center">
+
+    <div class="col-lg-6">
+
+        <div class="card shadow border-0">
+
+            <div class="card-header bg-danger text-white">
+
+                <h5 class="mb-0">
+                    <i class="bi bi-exclamation-triangle-fill"></i>
+                    Delete Assessment
+                </h5>
+
+            </div>
+
+            <div class="card-body">
+
+                <div class="text-center mb-4">
+
+                    <i class="bi bi-trash display-1 text-danger"></i>
+
+                </div>
+
+                <h4 class="text-center">
+
+                    Are you sure?
+
+                </h4>
+
+                <p class="text-center text-muted">
+
+                    You are about to permanently delete this engineering assessment.
+
+                </p>
+
+                <hr>
+
+                <table class="table table-borderless">
+
+                    <tr>
+
+                        <th width="35%">
+                            Customer
+                        </th>
+
+                        <td>
+                            {{ object.customer.full_name }}
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+                            Project
+                        </th>
+
+                        <td>
+                            {{ object.project_name }}
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+                            Status
+                        </th>
+
+                        <td>
+
+                            {% if object.status == "Completed" %}
+                                <span class="badge bg-success">
+                                    {{ object.status }}
+                                </span>
+                            {% elif object.status == "Draft" %}
+                                <span class="badge bg-secondary">
+                                    {{ object.status }}
+                                </span>
+                            {% else %}
+                                <span class="badge bg-warning text-dark">
+                                    {{ object.status }}
+                                </span>
+                            {% endif %}
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+                            Created
+                        </th>
+
+                        <td>
+                            {{ object.created_at|date:"d M Y" }}
+                        </td>
+
+                    </tr>
+
+                </table>
+
+                <div class="alert alert-warning">
+
+                    <strong>Warning:</strong>
+
+                    This action cannot be undone.
+
+                </div>
+
+                <form method="post">
+
+                    {% csrf_token %}
+
+                    <div class="d-flex justify-content-between">
+
+                        <a
+                            href="{% url 'audits:detail' object.pk %}"
+                            class="btn btn-secondary">
+
+                            <i class="bi bi-arrow-left"></i>
+
+                            Cancel
+
+                        </a>
+
+                        <button
+                            type="submit"
+                            class="btn btn-danger">
+
+                            <i class="bi bi-trash-fill"></i>
+
+                            Delete Assessment
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

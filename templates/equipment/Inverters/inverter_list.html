@@ -1,0 +1,287 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Inverter Catalogue{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title="Inverter Catalogue" subtitle="Manage available inverters" %}
+
+<!-- Metric Cards -->
+<div class="row mb-4">
+
+        {% include "components/metric_card.html" with title="Total Inverters" value=page_obj.paginator.count icon="bi-lightning-charge-fill" footer="Registered Inverters" %}
+
+        {% include "components/metric_card.html" with title="Manufacturers" value=manufacturers_count icon="bi-building" footer="Active Brands" %}
+
+        {% include "components/metric_card.html" with title="Active Inverters" value=active_count icon="bi-check-circle-fill" footer="Available Products" %}
+
+        {% include "components/metric_card.html" with title="Largest Capacity" value=max_capacity icon="bi-battery-half" footer="kVA" %}
+
+
+</div>
+
+<!-- Catalogue -->
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-8">
+
+                <form method="get">
+
+                    <div class="input-group">
+
+                        <input
+                            type="text"
+                            name="q"
+                            class="form-control"
+                            placeholder="Search manufacturer or model..."
+                            value="{{ request.GET.q }}">
+
+                        <button class="btn btn-success">
+
+                            <i class="bi bi-search"></i>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="col-md-4 text-end">
+
+                <a href="{% url 'equipment:inverter-create' %}"
+                   class="btn btn-success">
+
+                    <i class="bi bi-plus-circle"></i>
+
+                    Add Inverter
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle mb-0">
+
+            <thead class="table-light">
+
+                <tr>
+
+                    <th>Manufacturer</th>
+                    <th>Model</th>
+                    <th>Type</th>
+                    <th>Voltage</th>
+                    <th>Capacity</th>
+                    <th>Efficiency</th>
+                    <th>Warranty</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th width="170">Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for inverter in inverters %}
+
+                <tr>
+
+                    <td>{{ inverter.manufacturer }}</td>
+
+                    <td>
+                        <strong>{{ inverter.model }}</strong>
+                    </td>
+
+                    <td>
+
+                        {% if inverter.hybrid %}
+
+                            <span class="badge bg-success">
+                                Hybrid
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-secondary">
+                                Off Grid
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>{{ inverter.voltage }} V</td>
+
+                    <td>{{ inverter.capacity_kva }} kVA</td>
+
+                    <td>{{ inverter.efficiency }}%</td>
+
+                    <td>{{ inverter.warranty }} Years</td>
+
+                    <td>₦{{ inverter.price }}</td>
+
+                    <td>
+
+                        {% if inverter.active %}
+
+                            <span class="badge bg-success">
+                                Active
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge bg-secondary">
+                                Inactive
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <div class="btn-group">
+
+                            <a href="{% url 'equipment:inverter-detail' inverter.pk %}"
+                               class="btn btn-sm btn-outline-primary">
+
+                                <i class="bi bi-eye"></i>
+
+                            </a>
+
+                            <a href="{% url 'equipment:inverter-update' inverter.pk %}"
+                               class="btn btn-sm btn-outline-warning">
+
+                                <i class="bi bi-pencil"></i>
+
+                            </a>
+
+                            <a href="{% url 'equipment:inverter-delete' inverter.pk %}"
+                               class="btn btn-sm btn-outline-danger">
+
+                                <i class="bi bi-trash"></i>
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="10">
+
+                        <div class="text-center py-5">
+
+                            <i class="bi bi-lightning-charge display-1 text-warning"></i>
+
+                            <h4 class="mt-3">
+
+                                No Inverters Found
+
+                            </h4>
+
+                            <p class="text-muted">
+
+                                Add your first inverter product.
+
+                            </p>
+
+                            <a href="{% url 'equipment:inverter-create' %}"
+                               class="btn btn-success">
+
+                                <i class="bi bi-plus-circle"></i>
+
+                                Add Inverter
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% if is_paginated %}
+
+    <div class="card-footer bg-white">
+
+        <nav>
+
+            <ul class="pagination justify-content-end mb-0">
+
+                {% if page_obj.has_previous %}
+
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           href="?page={{ page_obj.previous_page_number }}">
+
+                            Previous
+
+                        </a>
+
+                    </li>
+
+                {% endif %}
+
+                <li class="page-item active">
+
+                    <span class="page-link">
+
+                        {{ page_obj.number }}
+
+                    </span>
+
+                </li>
+
+                {% if page_obj.has_next %}
+
+                    <li class="page-item">
+
+                        <a class="page-link"
+                           href="?page={{ page_obj.next_page_number }}">
+
+                            Next
+
+                        </a>
+
+                    </li>
+
+                {% endif %}
+
+            </ul>
+
+        </nav>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,177 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}Charge Controller Catalogue{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title="Charge Controller Catalogue" subtitle="Manage available charge controllers" %}
+
+<div class="row mb-4">
+
+        {% include "components/metric_card.html" with title="Total Controllers" value=page_obj.paginator.count icon="bi-cpu" footer="Registered Controllers" %}
+
+        {% include "components/metric_card.html" with title="Manufacturers" value=manufacturers_count icon="bi-building" footer="Active Brands" %}
+
+        {% include "components/metric_card.html" with title="Active Controllers" value=active_count icon="bi-check-circle-fill" footer="Available Products" %}
+
+        {% include "components/metric_card.html" with title="Highest Current" value=max_current icon="bi-lightning-charge-fill" footer="Amps" %}
+
+</div>
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header bg-white">
+
+        <div class="row align-items-center">
+
+            <div class="col-md-8">
+
+                <form method="get">
+
+                    <div class="input-group">
+
+                        <input type="text"
+                               class="form-control"
+                               name="q"
+                               placeholder="Search manufacturer or model..."
+                               value="{{ request.GET.q }}">
+
+                        <button class="btn btn-success">
+
+                            <i class="bi bi-search"></i>
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+            <div class="col-md-4 text-end">
+
+                <a href="{% url 'equipment:controller-create' %}"
+                   class="btn btn-success">
+
+                    <i class="bi bi-plus-circle"></i>
+
+                    Add Controller
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle mb-0">
+
+            <thead class="table-light">
+
+                <tr>
+
+                    <th>Manufacturer</th>
+                    <th>Model</th>
+                    <th>Type</th>
+                    <th>Current</th>
+                    <th>Voltage</th>
+                    <th>Price</th>
+                    <th>Status</th>
+                    <th width="170">Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for controller in controllers %}
+
+                <tr>
+
+                    <td>{{ controller.manufacturer }}</td>
+
+                    <td><strong>{{ controller.model }}</strong></td>
+
+                    <td>{{ controller.controller_type }}</td>
+
+                    <td>{{ controller.current_rating }} A</td>
+
+                    <td>{{ controller.voltage }} V</td>
+
+                    <td>₦{{ controller.price }}</td>
+
+                    <td>
+
+                        {% if controller.active %}
+                            <span class="badge bg-success">Active</span>
+                        {% else %}
+                            <span class="badge bg-secondary">Inactive</span>
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        <div class="btn-group">
+
+                            <a href="{% url 'equipment:controller-detail' controller.pk %}" class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-eye"></i>
+                            </a>
+
+                            <a href="{% url 'equipment:controller-update' controller.pk %}" class="btn btn-outline-warning btn-sm">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+
+                            <a href="{% url 'equipment:controller-delete' controller.pk %}" class="btn btn-outline-danger btn-sm">
+                                <i class="bi bi-trash"></i>
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="8">
+
+                        <div class="text-center py-5">
+
+                            <i class="bi bi-cpu display-1 text-success"></i>
+
+                            <h4 class="mt-3">No Charge Controllers Found</h4>
+
+                            <p class="text-muted">
+                                Add your first charge controller.
+                            </p>
+
+                            <a href="{% url 'equipment:controller-create' %}" class="btn btn-success">
+
+                                Add Controller
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
