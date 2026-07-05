@@ -274,6 +274,39 @@ class Appliance(models.Model):
 
         super().save(*args, **kwargs)
 
+    @property
+    def connected_load(self):
+        """
+        Running load for this appliance.
+        """
+        return self.quantity * self.power_rating
+
+    @property
+    def daily_energy(self):
+        """
+        Daily energy consumption (Wh).
+        """
+        return (
+                self.quantity
+                * self.power_rating
+                * self.hours_per_day
+        )
+
+    @property
+    def surge_load(self):
+        """
+        Starting load (surge).
+        """
+        return self.quantity * self.surge_power
+
+
+    @property
+    def daily_energy_kwh(self):
+        """
+        Daily energy in kWh.
+        """
+        return self.daily_energy / Decimal("1000")
+
 
     class Meta:
         ordering = ["id"]
@@ -282,59 +315,3 @@ class Appliance(models.Model):
 
     def __str__(self):
         return self.appliance_name
-
-
-
-
-# from equipment.models import Appliance
-#
-#
-# class AssessmentItem(models.Model):
-#
-#     assessment = models.ForeignKey(
-#         Assessment,
-#         on_delete=models.CASCADE,
-#         related_name="items",
-#     )
-#
-#     appliance = models.ForeignKey(
-#         Appliance,
-#         on_delete=models.PROTECT,
-#     )
-#
-#     quantity = models.PositiveIntegerField(default=1)
-#
-#     wattage = models.PositiveIntegerField()
-#
-#     surge_factor = models.DecimalField(
-#         max_digits=4,
-#         decimal_places=2,
-#     )
-#
-#     daily_hours = models.DecimalField(
-#         max_digits=4,
-#         decimal_places=1,
-#     )
-#
-#     def save(self, *args, **kwargs):
-#         if self.appliance:
-#             self.wattage = self.appliance.default_wattage
-#             self.surge_factor = self.appliance.surge_factor
-#             self.daily_hours = self.appliance.default_hours
-#
-#         super().save(*args, **kwargs)
-#
-#     class Meta:
-#         ordering = ["id"]
-#
-#     def connected_load(self):
-#         return self.quantity * self.wattage
-#
-#     def surge_load(self):
-#         return self.connected_load() * self.surge_factor
-#
-#     def daily_energy(self):
-#         return (
-#             self.connected_load()
-#             * self.daily_hours
-#         )

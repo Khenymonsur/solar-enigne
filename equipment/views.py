@@ -36,16 +36,6 @@ from .models import (
 
 
 
-# class ManufacturerListView(ListView):
-#     model = Manufacturer
-#     template_name = "equipment/manufacturers/manufacturer_list.html"
-#     context_object_name = "manufacturers"
-#     paginate_by = 15
-#
-#     queryset = Manufacturer.objects.order_by("name")
-
-
-
 class ManufacturerListView(ListView):
 
     model = Manufacturer

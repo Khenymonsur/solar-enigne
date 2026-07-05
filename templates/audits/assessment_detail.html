@@ -6,9 +6,9 @@ Assessment Workspace
 
 {% block content %}
 
-{% include "audits/partials/assessment_summary.html" %}
-
 {% include "components/page_header.html" with title=assessment.project_name subtitle=assessment.customer.full_name %}
+
+{% include "audits/partials/assessment_summary.html" %}
 
 <div class="row mb-4">
 
@@ -19,6 +19,54 @@ Assessment Workspace
     {% include "components/metric_card.html" with title="Peak Load" value=peak_load icon="bi-speedometer2" footer="Watts" %}
 
     {% include "components/metric_card.html" with title="Appliances" value=total_appliances icon="bi-list-ul" footer="Connected" %}
+
+</div>
+
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-3">
+
+                <h6>Customer</h6>
+
+                <strong>{{ assessment.customer.name }}</strong>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h6>Location</h6>
+
+                {{ assessment.customer.city }}
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h6>Status</h6>
+
+                <span class="badge bg-success">
+
+                    {{ assessment.status }}
+
+                </span>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h6>Date</h6>
+
+                {{ assessment.created_at|date:"d M Y" }}
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 

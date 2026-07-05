@@ -76,6 +76,7 @@ class AssessmentListView(ListView):
         return context
 
 
+
 class AssessmentDetailView(DetailView):
     model = Assessment
     template_name = "audits/assessment_detail.html"
@@ -87,34 +88,10 @@ class AssessmentDetailView(DetailView):
 
         assessment = self.object
 
-        recommendation = RecommendationEngine(
-            assessment
-        ).recommend()
-
-        context["recommendation"] = recommendation
-
-        context["appliances"] = (
-            assessment.appliances.all()
-        )
-
-        context["total_appliances"] = (
-            assessment.total_appliances
-        )
-
-        context["connected_load"] = (
-            assessment.connected_load
-        )
-
-        context["daily_energy"] = (
-            assessment.daily_energy
-        )
-
-        context["peak_load"] = (
-            assessment.peak_load
-        )
-
-        context["critical_load"] = (
-            assessment.total_critical_load
+        items = (
+            assessment.appliances
+            .select_related("library_appliance")
+            .all()
         )
 
         recommendation = RecommendationEngine(
@@ -125,11 +102,33 @@ class AssessmentDetailView(DetailView):
             recommendation
         ).generate()
 
+        context["items"] = items
+
+        context["total_appliances"] = (
+            assessment.total_appliances
+        )
+
+        context["connected_load"] = (
+            assessment.connected_load
+        )
+
+        context["peak_load"] = (
+            assessment.total_surge_load
+        )
+
+        context["daily_energy"] = (
+            assessment.daily_energy
+        )
+
+        context["critical_load"] = (
+            assessment.total_critical_load
+        )
+
         context["recommendation"] = recommendation
+
         context["bom"] = bom
 
         return context
-
 
 
 class AssessmentCreateView(CreateView):

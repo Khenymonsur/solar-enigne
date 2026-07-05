@@ -1,44 +1,223 @@
-<div class="card shadow-sm mb-4">
+<div class="card shadow-sm border-0 mb-4">
 
-    <div class="card-header">
+    <div class="card-header bg-white">
 
-        <strong>Project Information</strong>
+        <div class="d-flex justify-content-between align-items-center">
+
+            <div>
+
+                <h4 class="mb-1">
+
+                    {{ assessment.project_name }}
+
+                </h4>
+
+                <small class="text-muted">
+
+                    Assessment Overview
+
+                </small>
+
+            </div>
+
+            <div>
+
+                {% if assessment.status == "Completed" %}
+
+                    <span class="badge bg-success">
+
+                        {{ assessment.status }}
+
+                    </span>
+
+                {% elif assessment.status == "In Progress" %}
+
+                    <span class="badge bg-warning text-dark">
+
+                        {{ assessment.status }}
+
+                    </span>
+
+                {% else %}
+
+                    <span class="badge bg-secondary">
+
+                        {{ assessment.status }}
+
+                    </span>
+
+                {% endif %}
+
+            </div>
+
+        </div>
 
     </div>
 
     <div class="card-body">
 
-        <div class="row">
+        <div class="row g-4">
 
             <div class="col-md-3">
-                <strong>Customer</strong><br>
-                {{ assessment.customer.full_name }}
+
+                <small class="text-muted">
+
+                    Customer
+
+                </small>
+
+                <h6 class="mb-0">
+
+                    {{ assessment.customer.full_name }}
+
+                </h6>
+
             </div>
 
             <div class="col-md-3">
-                <strong>Project</strong><br>
-                {{ assessment.project_name }}
+
+                <small class="text-muted">
+
+                    Phone
+
+                </small>
+
+                <h6 class="mb-0">
+
+                    {{ assessment.customer.phone_number }}
+
+                </h6>
+
             </div>
 
             <div class="col-md-3">
-                <strong>Building</strong><br>
-                {{ assessment.customer.building_type }}
+
+                <small class="text-muted">
+
+                    Location
+
+                </small>
+
+                <h6 class="mb-0">
+
+                    {{ assessment.customer.city }},
+                    {{ assessment.customer.state }}
+
+                </h6>
+
             </div>
 
             <div class="col-md-3">
-                <strong>Status</strong><br>
 
-                {% if assessment.status == "Completed" %}
-                    <span class="badge bg-success">
-                        {{ assessment.status }}
-                    </span>
-                {% else %}
-                    <span class="badge bg-warning">
-                        {{ assessment.status }}
-                    </span>
-                {% endif %}
+                <small class="text-muted">
+
+                    Backup Hours
+
+                </small>
+
+                <h6 class="mb-0">
+
+                    {{ assessment.backup_hours }} hrs
+
+                </h6>
 
             </div>
+
+        </div>
+
+        <hr>
+
+        <div class="row g-4">
+
+            <div class="col-md-3">
+
+                <small class="text-muted">
+
+                    System Voltage
+
+                </small>
+
+                <h6>
+
+                    {{ assessment.system_voltage }}V
+
+                </h6>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <small class="text-muted">
+
+                    Peak Sun Hours
+
+                </small>
+
+                <h6>
+
+                    {{ assessment.peak_sun_hours }}
+
+                </h6>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <small class="text-muted">
+
+                    Created
+
+                </small>
+
+                <h6>
+
+                    {{ assessment.created_at|date:"d M Y" }}
+
+                </h6>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <small class="text-muted">
+
+                    Last Updated
+
+                </small>
+
+                <h6>
+
+                    {{ assessment.updated_at|date:"d M Y H:i" }}
+
+                </h6>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card-footer bg-white">
+
+        <div class="d-flex justify-content-end gap-2">
+
+            <a href="{% url 'audits:update' assessment.pk %}"
+               class="btn btn-warning">
+
+                <i class="bi bi-pencil-square"></i>
+
+                Edit
+
+            </a>
+
+            <a href="{% url 'audits:delete' assessment.pk %}"
+               class="btn btn-danger">
+
+                <i class="bi bi-trash"></i>
+
+                Delete
+
+            </a>
 
         </div>
 

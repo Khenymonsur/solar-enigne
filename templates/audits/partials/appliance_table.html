@@ -1,98 +1,215 @@
-<div class="card shadow-sm">
+<div class="card shadow-sm border-0">
 
-    <div class="card-header d-flex justify-content-between">
+    <div class="card-header bg-white">
 
-        <strong>
+        <div class="d-flex justify-content-between align-items-center">
 
-            Appliances
+            <div>
 
-        </strong>
+                <h5 class="mb-0">
 
-        <a
-            href="#"
-            class="btn btn-success btn-sm">
+                    <i class="bi bi-plug-fill text-success"></i>
 
-            <i class="bi bi-plus-circle"></i>
+                    Connected Appliances
 
-            Add Appliance
+                </h5>
 
-        </a>
+                <small class="text-muted">
+
+                    Appliances used for system sizing
+
+                </small>
+
+            </div>
+
+            <a href="{% url 'audits:appliance-add' assessment.pk %}"
+               class="btn btn-success">
+
+                <i class="bi bi-plus-circle"></i>
+
+                Add Appliance
+
+            </a>
+
+        </div>
 
     </div>
 
-    <div class="card-body p-0">
+    <div class="card-body">
 
-        <table class="table table-hover mb-0">
+        <div class="row mb-3">
 
-            <thead>
+            <div class="col-md-4">
 
-            <tr>
+                <input
+                    type="search"
+                    class="form-control"
+                    placeholder="Search appliance...">
 
-                <th>Name</th>
+            </div>
 
-                <th>Qty</th>
+        </div>
 
-                <th>Power</th>
+        <div class="table-responsive">
 
-                <th>Hours</th>
+            <table class="table table-hover align-middle">
 
-                <th>Critical</th>
+                <thead class="table-light">
 
-            </tr>
+                    <tr>
 
-            </thead>
+                        <th>Appliance</th>
 
-            <tbody>
+                        <th class="text-center">Qty</th>
 
-            {% for appliance in appliances %}
+                        <th class="text-end">Power (W)</th>
 
-            <tr>
+                        <th class="text-end">Surge Load (W)</th>
 
-                <td>{{ appliance.appliance_name }}</td>
+                        <th class="text-center">Hours</th>
 
-                <td>{{ appliance.quantity }}</td>
+                        <th class="text-end">Daily Energy (KWh)</th>
 
-                <td>{{ appliance.power_rating }} W</td>
+                        <th width="120"></th>
 
-                <td>{{ appliance.hours_per_day }}</td>
+                    </tr>
 
-                <td>
+                </thead>
 
-                    {% if appliance.critical_load %}
+                <tbody>
 
-                        <span class="badge bg-danger">
+                    {% for item in items %}
 
-                            Yes
+                    <tr>
 
-                        </span>
+                        <td>
 
-                    {% else %}
+                            <strong>
 
-                        No
+                                {{ item.library_appliance.name }}
 
-                    {% endif %}
+                            </strong>
 
-                </td>
+                            <br>
 
-            </tr>
+                            <small class="text-muted">
 
-            {% empty %}
+                                {{ item.library_appliance.category }}
 
-            <tr>
+                            </small>
 
-                <td colspan="5" class="text-center py-5">
+                        </td>
 
-                    No appliances added yet.
+                        <td class="text-center">
 
-                </td>
+                            {{ item.quantity }}
 
-            </tr>
+                        </td>
 
-            {% endfor %}
+                        <td class="text-end">
 
-            </tbody>
+                           {{ item.power_rating }} W
 
-        </table>
+                        </td>
+
+                        <td class="text-end">
+
+                            {{ item.surge_load }}
+
+                        </td>
+
+                        <td class="text-center">
+
+                            {{ item.hours_per_day }} hrs
+
+                        </td>
+
+                        <td class="text-end">
+
+                             {{ item.daily_energy_kwh|floatformat:2 }} kWh
+
+                        </td>
+
+                        <td class="text-end">
+
+                            <div class="btn-group">
+
+                                <a
+                                    href="{% url 'audits:appliance-update' item.pk %}"
+                                    class="btn btn-sm btn-warning">
+
+                                    <i class="bi bi-pencil"></i>
+
+                                </a>
+
+                                <a
+                                    href="{% url 'audits:appliance-delete' item.pk %}"
+                                    class="btn btn-sm btn-danger">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </a>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+                    {% empty %}
+
+                    <tr>
+
+                        <td colspan="7" class="text-center py-5">
+
+                            <i class="bi bi-lightning-charge display-4 text-secondary"></i>
+
+                            <h5 class="mt-3">
+
+                                No appliances added
+
+                            </h5>
+
+                            <p class="text-muted">
+
+                                Click <strong>Add Appliance</strong> to begin
+                                calculating your solar system.
+
+                            </p>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+                <tfoot class="table-light">
+
+                <tr>
+
+                    <th colspan="5" class="text-end">
+
+                        Total Daily Energy
+
+                    </th>
+
+                    <th class="text-end">
+
+                        {{ daily_energy|floatformat:0|divisibleby:1000 }}
+
+                    </th>
+
+                    <th></th>
+
+                </tr>
+
+                </tfoot>
+
+            </table>
+
+        </div>
 
     </div>
 
