@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     "reports",
     "settings_app",
     "api",
+
+    "django.contrib.humanize",
 ]
 
 # -------------------------------------------------

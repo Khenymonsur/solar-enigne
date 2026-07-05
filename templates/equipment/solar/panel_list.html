@@ -6,6 +6,8 @@ Solar Panel Catalogue
 
 {% block content %}
 
+{% load humanize %}
+
 {% include "components/page_header.html" with title="Solar Panel Catalogue" subtitle="Manage available solar panels" %}
 
 <div class="row mb-4">
@@ -135,7 +137,7 @@ Solar Panel Catalogue
 
                 <td>
 
-                    ₦{{ panel.price }}
+                    ₦{{ panel.price|floatformat:2|intcomma }}
 
                 </td>
 

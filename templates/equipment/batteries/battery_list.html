@@ -4,6 +4,8 @@
 
 {% block content %}
 
+{% load humanize %}
+
 {% include "components/page_header.html" with title="Battery Catalogue" subtitle="Manage available batteries" %}
 
 <div class="row mb-4">
@@ -105,7 +107,9 @@
 
                     <td>{{ battery.cycle_life }}</td>
 
-                    <td>₦{{ battery.price }}</td>
+                    <td>₦{{ battery.price|floatformat:2|intcomma }}</td>
+
+
 
                     <td>
 

@@ -4,6 +4,8 @@
 
 {% block content %}
 
+{% load humanize %}
+
 {% include "components/page_header.html" with title="Inverter Catalogue" subtitle="Manage available inverters" %}
 
 <!-- Metric Cards -->
@@ -130,7 +132,7 @@
 
                     <td>{{ inverter.warranty }} Years</td>
 
-                    <td>₦{{ inverter.price }}</td>
+                    <td>₦{{ inverter.price|floatformat:2|intcomma }}</td>
 
                     <td>
 
