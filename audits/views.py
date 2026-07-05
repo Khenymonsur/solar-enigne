@@ -9,9 +9,22 @@ from django.views.generic import (
     DeleteView,
 )
 
+from .models import (
+    Assessment,
+    Appliance,
+)
 
-from .forms import AssessmentForm
-from .models import Assessment
+from .forms import (
+    AssessmentForm,
+    ApplianceForm,
+)
+
+from django.shortcuts import (
+    get_object_or_404,
+    redirect,
+    render,
+)
+
 from services.recommendation import RecommendationEngine
 
 from services.bom import BillOfMaterialsService
@@ -180,3 +193,150 @@ class AssessmentDeleteView(DeleteView):
         )
 
         return super().delete(request, *args, **kwargs)
+
+
+# -----------------------------
+# Appliance Views
+# -----------------------------
+
+def ApplianceCreateView(request, assessment_id):
+
+    assessment = get_object_or_404(
+        Assessment,
+        pk=assessment_id,
+    )
+
+    if request.method == "POST":
+
+        form = ApplianceForm(request.POST)
+
+        if form.is_valid():
+
+            appliance = form.save(commit=False)
+
+            appliance.assessment = assessment
+
+            appliance.save()
+
+            messages.success(
+                request,
+                "Appliance added successfully.",
+            )
+
+            return redirect(
+                "audits:detail",
+                pk=assessment.pk,
+            )
+
+    else:
+
+        form = ApplianceForm()
+
+    return render(
+
+        request,
+
+        "audits/appliance_form.html",
+
+        {
+
+            "assessment": assessment,
+
+            "form": form,
+
+        },
+
+    )
+
+
+
+def ApplianceUpdateView(request, pk):
+
+    appliance = get_object_or_404(
+        Appliance,
+        pk=pk,
+    )
+
+    if request.method == "POST":
+
+        form = ApplianceForm(
+            request.POST,
+            instance=appliance,
+        )
+
+        if form.is_valid():
+
+            form.save()
+
+            messages.success(
+                request,
+                "Appliance updated successfully.",
+            )
+
+            return redirect(
+                "audits:detail",
+                pk=appliance.assessment.pk,
+            )
+
+    else:
+
+        form = ApplianceForm(
+            instance=appliance,
+        )
+
+    return render(
+
+        request,
+
+        "audits/appliance_form.html",
+
+        {
+
+            "assessment": appliance.assessment,
+
+            "form": form,
+
+        },
+
+    )
+
+
+
+def ApplianceDeleteView(request, pk):
+
+    appliance = get_object_or_404(
+        Appliance,
+        pk=pk,
+    )
+
+    assessment = appliance.assessment
+
+    if request.method == "POST":
+
+        appliance.delete()
+
+        messages.success(
+            request,
+            "Appliance deleted.",
+        )
+
+        return redirect(
+            "audits:detail",
+            pk=assessment.pk,
+        )
+
+    return render(
+
+        request,
+
+        "audits/appliance_confirm_delete.html",
+
+        {
+
+            "object": appliance,
+
+        },
+
+    )
+
+

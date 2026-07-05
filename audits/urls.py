@@ -1,11 +1,14 @@
 from django.urls import path
 
 from .views import (
-    AssessmentCreateView,
-    AssessmentDetailView,
     AssessmentListView,
+    AssessmentDetailView,
+    AssessmentCreateView,
     AssessmentUpdateView,
     AssessmentDeleteView,
+    ApplianceCreateView,
+    ApplianceUpdateView,
+    ApplianceDeleteView,
 )
 
 app_name = "audits"
@@ -40,5 +43,23 @@ urlpatterns = [
         "<int:pk>/delete/",
         AssessmentDeleteView.as_view(),
         name="delete",
+    ),
+
+    path(
+        "<int:assessment_id>/appliances/add/",
+        ApplianceCreateView,
+        name="appliance-add",
+    ),
+
+    path(
+        "appliances/<int:pk>/edit/",
+        ApplianceUpdateView,
+        name="appliance-update",
+    ),
+
+    path(
+        "appliances/<int:pk>/delete/",
+        ApplianceDeleteView,
+        name="appliance-delete",
     ),
 ]

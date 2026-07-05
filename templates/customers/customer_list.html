@@ -106,25 +106,35 @@ Customer Directory
 
 {{ customer.assessments.count }}
 
-</td>
-
 <td class="text-end">
 
-<a
-href="{% url 'customers:detail' customer.pk %}"
-class="btn btn-sm btn-primary">
+<div class="btn-group">
 
-View
+    <a
+        href="{% url 'customers:detail' customer.pk %}"
+        class="btn btn-sm btn-primary">
 
-</a>
+        <i class="bi bi-eye"></i>
 
-<a
-href="{% url 'customers:update' customer.pk %}"
-class="btn btn-sm btn-warning">
+    </a>
 
-Edit
+    <a
+        href="{% url 'customers:update' customer.pk %}"
+        class="btn btn-sm btn-warning">
 
-</a>
+        <i class="bi bi-pencil"></i>
+
+    </a>
+
+    <a
+        href="{% url 'customers:delete' customer.pk %}"
+        class="btn btn-sm btn-danger">
+
+        <i class="bi bi-trash"></i>
+
+    </a>
+
+</div>
 
 </td>
 

@@ -36,13 +36,60 @@ from .models import (
 
 
 
+# class ManufacturerListView(ListView):
+#     model = Manufacturer
+#     template_name = "equipment/manufacturers/manufacturer_list.html"
+#     context_object_name = "manufacturers"
+#     paginate_by = 15
+#
+#     queryset = Manufacturer.objects.order_by("name")
+
+
+
 class ManufacturerListView(ListView):
+
     model = Manufacturer
+
     template_name = "equipment/manufacturers/manufacturer_list.html"
+
     context_object_name = "manufacturers"
+
     paginate_by = 15
 
     queryset = Manufacturer.objects.order_by("name")
+
+    def get_context_data(self, **kwargs):
+
+        context = super().get_context_data(**kwargs)
+
+        queryset = Manufacturer.objects.all()
+
+        context["manufacturers_count"] = queryset.count()
+
+        context["countries_count"] = (
+            queryset.exclude(country="")
+            .values("country")
+            .distinct()
+            .count()
+        )
+
+        context["products_count"] = (
+            SolarPanel.objects.count()
+            + Battery.objects.count()
+            + Inverter.objects.count()
+            + ChargeController.objects.count()
+        )
+
+        context["active_products"] = (
+            SolarPanel.objects.filter(active=True).count()
+            + Battery.objects.filter(active=True).count()
+            + Inverter.objects.filter(active=True).count()
+            + ChargeController.objects.filter(active=True).count()
+        )
+
+        return context
+
+
 
 
 class ManufacturerDetailView(DetailView):
@@ -67,7 +114,7 @@ class ManufacturerCreateView(CreateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy("equipment:manufacturers")
+        return reverse_lazy("equipment:manufacturers-list")
 
 
 class ManufacturerUpdateView(UpdateView):
@@ -87,7 +134,7 @@ class ManufacturerUpdateView(UpdateView):
         return super().form_valid(form)
 
     def get_success_url(self):
-        return reverse_lazy("equipment:manufacturers")
+        return reverse_lazy("equipment:manufacturers-list")
 
 
 
@@ -96,7 +143,7 @@ class ManufacturerDeleteView(DeleteView):
 
     template_name = "equipment/manufacturers/manufacturer_confirm_delete.html"
 
-    success_url = reverse_lazy("equipment:manufacturers")
+    success_url = reverse_lazy("equipment:manufacturers-list")
 
 
 

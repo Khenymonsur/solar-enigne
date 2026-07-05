@@ -1,0 +1,77 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+{{ object.name }}
+{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title=object.name subtitle=object.country %}
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-body">
+
+        <table class="table">
+
+            <tr>
+
+                <th>Name</th>
+
+                <td>{{ object.name }}</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Country</th>
+
+                <td>{{ object.country }}</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Website</th>
+
+                <td>
+
+                    {% if object.website %}
+
+                        <a href="{{ object.website }}" target="_blank">
+
+                            {{ object.website }}
+
+                        </a>
+
+                    {% else %}
+
+                        -
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+        </table>
+
+        <a href="{% url 'equipment:manufacturer-update' object.pk %}"
+           class="btn btn-warning">
+
+            Edit
+
+        </a>
+
+        <a href="{% url 'equipment:manufacturers-list' %}"
+           class="btn btn-secondary">
+
+            Back
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

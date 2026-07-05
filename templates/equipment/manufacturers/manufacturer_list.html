@@ -1,0 +1,141 @@
+{% extends "layouts/base.html" %}
+
+{% block title %}
+Manufacturers
+{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title="Manufacturers" subtitle="Manage equipment manufacturers" %}
+
+<div class="mb-4">
+
+    <a href="{% url 'equipment:manufacturer-create' %}"
+       class="btn btn-success">
+
+        <i class="bi bi-plus-circle"></i>
+
+        New Manufacturer
+
+    </a>
+
+</div>
+
+<div class="row mb-4">
+
+    {% include "components/metric_card.html" with title="Manufacturers" value=manufacturers_count icon="bi-building" footer="Registered" %}
+
+    {% include "components/metric_card.html" with title="Countries" value=countries_count icon="bi-globe" footer="Represented" %}
+
+    {% include "components/metric_card.html" with title="Products" value=products_count icon="bi-box-seam" footer="Equipment" %}
+
+    {% include "components/metric_card.html" with title="Active Models" value=active_products icon="bi-check-circle-fill" footer="Available" %}
+
+</div>
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-header">
+
+        <h5 class="mb-0">Manufacturer Directory</h5>
+
+    </div>
+
+    <div class="card-body p-0">
+
+        <table class="table table-hover align-middle mb-0">
+
+            <thead>
+
+                <tr>
+
+                    <th>Name</th>
+
+                    <th>Country</th>
+
+                    <th>Website</th>
+
+                    <th width="180"></th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for manufacturer in manufacturers %}
+
+                <tr>
+
+                    <td>
+
+                        <strong>{{ manufacturer.name }}</strong>
+
+                    </td>
+
+                    <td>
+
+                        {{ manufacturer.country }}
+
+                    </td>
+
+                    <td>
+
+                        {{ manufacturer.website }}
+
+                    </td>
+
+                    <td class="text-end">
+
+                        <div class="btn-group">
+
+                            <a href="{% url 'equipment:manufacturer-detail' manufacturer.pk %}"
+                               class="btn btn-sm btn-primary">
+
+                                <i class="bi bi-eye"></i>
+
+                            </a>
+
+                            <a href="{% url 'equipment:manufacturer-update' manufacturer.pk %}"
+                               class="btn btn-sm btn-warning">
+
+                                <i class="bi bi-pencil"></i>
+
+                            </a>
+
+                            <a href="{% url 'equipment:manufacturer-delete' manufacturer.pk %}"
+                               class="btn btn-sm btn-danger">
+
+                                <i class="bi bi-trash"></i>
+
+                            </a>
+
+                        </div>
+
+                    </td>
+
+                </tr>
+
+                {% empty %}
+
+                <tr>
+
+                    <td colspan="4" class="text-center py-5">
+
+                        No manufacturers found.
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

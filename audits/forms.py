@@ -99,6 +99,78 @@ class ApplianceForm(forms.ModelForm):
         model = Appliance
 
         fields = (
+
+            "library_appliance",
+            "quantity",
+            "critical_load",
+            "simultaneous",
+
+        )
+
+        widgets = {
+
+            "library_appliance": forms.Select(
+                attrs={
+                    "class": "form-select",
+                    "id": "id_library_appliance",
+                }
+            ),
+
+            "quantity": forms.NumberInput(
+                attrs={
+                    "class": "form-control",
+                    "min": 1,
+                }
+            ),
+
+            "critical_load": forms.CheckboxInput(
+                attrs={
+                    "class": "form-check-input",
+                }
+            ),
+
+            "simultaneous": forms.CheckboxInput(
+                attrs={
+                    "class": "form-check-input",
+                }
+            ),
+
+        }
+
+
+    def clean_backup_hours(self):
+
+        value = self.cleaned_data["backup_hours"]
+
+        if value <= 0:
+
+            raise forms.ValidationError(
+                "Backup hours must be greater than zero."
+            )
+
+        return value
+
+    def clean_peak_sun_hours(self):
+
+        value = self.cleaned_data["peak_sun_hours"]
+
+        if value <= 0:
+
+            raise forms.ValidationError(
+                "Peak sun hours must be greater than zero."
+            )
+
+        return value
+
+
+
+class ApplianceForm(forms.ModelForm):
+
+    class Meta:
+
+        model = Appliance
+
+        fields = (
             "library_appliance",
             "quantity",
             "critical_load",

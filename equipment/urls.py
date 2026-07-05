@@ -9,7 +9,7 @@ urlpatterns = [
     path(
         "manufacturers/",
         views.ManufacturerListView.as_view(),
-        name="manufacturers",
+        name="manufacturers-list",
     ),
 
     path(

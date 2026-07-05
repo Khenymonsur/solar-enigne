@@ -1,17 +1,14 @@
 {% extends "layouts/base.html" %}
 
 {% block title %}
-Add Appliance
+Manufacturer
 {% endblock %}
 
 {% block content %}
 
-{% include "components/page_header.html"
-with
-title="Add Appliance"
-subtitle=assessment.project_name %}
+{% include "components/page_header.html" with title="Manufacturer" subtitle="Create or Update Manufacturer" %}
 
-<div class="card shadow-sm">
+<div class="card shadow-sm border-0">
 
     <div class="card-body">
 
@@ -26,15 +23,21 @@ subtitle=assessment.project_name %}
                 <div class="col-md-6 mb-3">
 
                     <label class="form-label">
+
                         {{ field.label }}
+
                     </label>
 
                     {{ field }}
 
                     {% if field.errors %}
-                    <div class="text-danger small">
-                        {{ field.errors }}
-                    </div>
+
+                        <div class="text-danger small">
+
+                            {{ field.errors }}
+
+                        </div>
+
                     {% endif %}
 
                 </div>
@@ -46,13 +49,18 @@ subtitle=assessment.project_name %}
             <hr>
 
             <button class="btn btn-success">
+
                 <i class="bi bi-check-circle"></i>
-                Save Appliance
+
+                Save Manufacturer
+
             </button>
 
-            <a href="{% url 'audits:detail' assessment.pk %}"
+            <a href="{% url 'equipment:manufacturers-list' %}"
                class="btn btn-secondary">
+
                 Cancel
+
             </a>
 
         </form>
