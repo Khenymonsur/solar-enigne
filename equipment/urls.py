@@ -4,6 +4,10 @@ from . import views
 
 app_name = "equipment"
 
+
+# ===============================
+# MANUFACTURER
+# ===============================
 urlpatterns = [
 
     path(

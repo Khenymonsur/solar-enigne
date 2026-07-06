@@ -1,3 +1,5 @@
+{% load humanize %}
+
 <div class="card shadow-sm mt-4">
 
     <div class="card-header">
@@ -37,11 +39,11 @@
                 </td>
 
                 <td class="text-end">
-                    ₦{{ item.unit_price }}
+                    ₦{{ item.unit_price|floatformat:2|intcomma }}
                 </td>
 
                 <td class="text-end">
-                    ₦{{ item.total }}
+                    ₦{{ item.total|floatformat:2|intcomma }}
                 </td>
 
             </tr>
@@ -74,7 +76,7 @@
 
                 <th class="text-end">
 
-                    ₦{{ bom.subtotal }}
+                    ₦{{ bom.subtotal|floatformat:2|intcomma }}
 
                 </th>
 
@@ -90,7 +92,7 @@
 
                 <th class="text-end">
 
-                    ₦{{ bom.vat }}
+                    ₦{{ bom.vat|floatformat:2|intcomma }}
 
                 </th>
 
@@ -106,7 +108,7 @@
 
                 <th class="text-end">
 
-                    ₦{{ bom.grand_total }}
+                    ₦{{ bom.grand_total|floatformat:2|intcomma }}
 
                 </th>
 

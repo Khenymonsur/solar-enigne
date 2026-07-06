@@ -6,7 +6,7 @@
 
             <i class="bi bi-cpu"></i>
 
-            Equipment Recommendation
+            Engineering Recommendations
 
         </h5>
 
@@ -14,34 +14,282 @@
 
     <div class="card-body">
 
-        <table class="table table-sm">
+        <div class="row g-4">
 
-            <tr>
-                <th>Inverter</th>
-                <td>{{ recommended_inverter|default:"Pending" }}</td>
-            </tr>
+            <!-- SOLAR ARRAY -->
 
-            <tr>
-                <th>Battery</th>
-                <td>{{ recommended_battery|default:"Pending" }}</td>
-            </tr>
+            <div class="col-lg-6">
 
-            <tr>
-                <th>Solar Panel</th>
-                <td>{{ recommended_panel|default:"Pending" }}</td>
-            </tr>
+                <div class="card border-success h-100">
 
-            <tr>
-                <th>Charge Controller</th>
-                <td>{{ recommended_controller|default:"Pending" }}</td>
-            </tr>
+                    <div class="card-header bg-light">
 
-        </table>
+                        <strong>☀ Solar Array</strong>
 
-        <div class="alert alert-info mt-3 mb-0">
+                    </div>
 
-            Recommendations will be calculated automatically
-            after appliances are added to the assessment.
+                    <div class="card-body">
+
+                        <p>
+
+                            <strong>Required Capacity</strong><br>
+
+                            {{ recommendation.required_solar|floatformat:0 }} W
+
+                        </p>
+
+                        {% if recommendation.panel %}
+
+                            <p>
+
+                                <strong>Selected Panel</strong><br>
+
+                                {{ recommendation.panel }}
+
+                            </p>
+
+                            <p>
+
+                                <strong>Panel Rating</strong><br>
+
+                                {{ recommendation.panel.wattage }} W
+
+                            </p>
+
+                            <p>
+
+                                <strong>Panels Required</strong><br>
+
+                                {{ recommendation.panel_quantity }} pcs
+
+                            </p>
+
+                            <p>
+
+                                <strong>Installed Capacity</strong><br>
+
+                                {{ recommendation.panel_capacity|floatformat:0 }} W
+
+                            </p>
+
+                            <span class="badge bg-success">
+
+                                ✔ Suitable
+
+                            </span>
+
+                        {% else %}
+
+                            <div class="alert alert-danger mb-0">
+
+                                No active solar panel available.
+
+                            </div>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- INVERTER -->
+
+            <div class="col-lg-6">
+
+                <div class="card border-primary h-100">
+
+                    <div class="card-header bg-light">
+
+                        <strong>⚡ Inverter</strong>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <p>
+
+                            <strong>Required</strong><br>
+
+                            {{ recommendation.required_inverter_kva|floatformat:2 }} kVA
+
+                        </p>
+
+                        {% if recommendation.inverter %}
+
+                            <p>
+
+                                <strong>Selected</strong><br>
+
+                                {{ recommendation.inverter }}
+
+                            </p>
+
+                            <span class="badge bg-success">
+
+                                ✔ Suitable
+
+                            </span>
+
+                        {% else %}
+
+                            <div class="alert alert-warning">
+
+                                {{ recommendation.inverter_message }}
+
+                            </div>
+
+                            <a href="{% url 'equipment:inverter-create' %}"
+                               class="btn btn-primary btn-sm">
+
+                                <i class="bi bi-plus-circle"></i>
+
+                                Add Inverter
+
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- BATTERY -->
+
+            <div class="col-lg-6">
+
+                <div class="card border-warning h-100">
+
+                    <div class="card-header bg-light">
+
+                        <strong>🔋 Battery Bank</strong>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <p>
+
+                            <strong>Required</strong><br>
+
+                            {{ recommendation.required_battery_ah|floatformat:0 }} Ah
+
+                        </p>
+
+                        <p>
+
+                            <strong>System Voltage</strong><br>
+
+                            {{ assessment.system_voltage }} V
+
+                        </p>
+
+                        {% if recommendation.battery %}
+
+                            <p>
+
+                                <strong>Selected</strong><br>
+
+                                {{ recommendation.battery }}
+
+                            </p>
+
+                            <span class="badge bg-success">
+
+                                ✔ Suitable
+
+                            </span>
+
+                        {% else %}
+
+                            <div class="alert alert-warning">
+
+                                {{ recommendation.battery_message }}
+
+                            </div>
+
+                            <a href="{% url 'equipment:battery-create' %}"
+                               class="btn btn-warning btn-sm">
+
+                                <i class="bi bi-plus-circle"></i>
+
+                                Add Battery
+
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- CONTROLLER -->
+
+            <div class="col-lg-6">
+
+                <div class="card border-info h-100">
+
+                    <div class="card-header bg-light">
+
+                        <strong>🔌 Charge Controller</strong>
+
+                    </div>
+
+                    <div class="card-body">
+
+                        <p>
+
+                            <strong>Required Current</strong><br>
+
+                            {{ recommendation.required_controller_current|floatformat:0 }} A
+
+                        </p>
+
+                        {% if recommendation.controller %}
+
+                            <p>
+
+                                <strong>Selected</strong><br>
+
+                                {{ recommendation.controller }}
+
+                            </p>
+
+                            <span class="badge bg-success">
+
+                                ✔ Suitable
+
+                            </span>
+
+                        {% else %}
+
+                            <div class="alert alert-warning">
+
+                                {{ recommendation.controller_message }}
+
+                            </div>
+
+                            <a href="{% url 'equipment:controller-create' %}"
+                               class="btn btn-info btn-sm">
+
+                                <i class="bi bi-plus-circle"></i>
+
+                                Add Controller
+
+                            </a>
+
+                        {% endif %}
+
+                    </div>
+
+                </div>
+
+            </div>
 
         </div>
 

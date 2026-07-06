@@ -15,7 +15,12 @@ class ControllerCalculator:
         """
         Returns the minimum controller current (Amps).
         """
-        return math.ceil(self.solar_watts / self.voltage)
+        from decimal import Decimal
+
+        return math.ceil(
+            Decimal(self.solar_watts)
+            / Decimal(self.voltage)
+        )
 
     def recommended_controller(self):
         """

@@ -1,12 +1,11 @@
+from decimal import Decimal
+
 from services.calculations import LoadCalculator
-
 from services.battery import BatteryCalculator
-
 from services.controller import ControllerCalculator
-
 from services.solar import SolarCalculator
-
 from services.equipment_selector import EquipmentSelector
+
 
 class RecommendationEngine:
 
@@ -54,6 +53,7 @@ class RecommendationEngine:
 
         panel_data = selector.get_panel(solar_required)
 
+
         battery = selector.get_battery(
             voltage,
             battery_ah,
@@ -69,15 +69,54 @@ class RecommendationEngine:
         )
 
         return {
+
+            # =====================================================
+            # ENGINEERING CALCULATIONS
+            # =====================================================
+
             "connected_load": connected_load,
             "daily_energy": daily_energy,
+
             "required_solar": solar_required,
-            "battery_ah": battery_ah,
-            "controller_current": controller_current,
-            "panel_quantity": panel_data["quantity"] if panel_data else 0,
+            "required_battery_ah": battery_ah,
+            "required_controller_current": controller_current,
+
+            "required_inverter_kva": (
+                                             connected_load * Decimal("1.25")
+                                     ) / Decimal("1000"),
+
+            # =====================================================
+            # SOLAR PANEL
+            # =====================================================
+
             "panel": panel_data["panel"] if panel_data else None,
+            "panel_quantity": panel_data["quantity"] if panel_data else 0,
             "panel_capacity": panel_data["capacity"] if panel_data else 0,
-            "battery": battery,
-            "inverter": inverter,
-            "controller": controller,
+
+            # =====================================================
+            # BATTERY
+            # =====================================================
+
+            "battery": battery["item"],
+            "battery_required": battery["required"],
+            "battery_message": battery["message"],
+
+            # =====================================================
+            # INVERTER
+            # =====================================================
+
+            "inverter": inverter["item"],
+            "inverter_required": inverter["required"],
+            "inverter_message": inverter["message"],
+
+            # =====================================================
+            # CONTROLLER
+            # =====================================================
+
+            "controller": controller["item"],
+            "controller_required": controller["required"],
+            "controller_message": controller["message"],
+
         }
+
+

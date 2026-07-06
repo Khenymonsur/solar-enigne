@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 import math
 
 from equipment.models import (
@@ -32,9 +34,11 @@ class EquipmentSelector:
             "capacity": quantity * panel.wattage,
         }
 
+
+
     def get_battery(self, voltage, required_ah):
 
-        return (
+        battery = (
             Battery.objects
             .filter(
                 active=True,
@@ -45,15 +49,35 @@ class EquipmentSelector:
             .first()
         )
 
+        if battery:
+            return {
+                "found": True,
+                "item": battery,
+                "required": required_ah,
+                "message": None,
+            }
+
+        return {
+            "found": False,
+            "item": None,
+            "required": required_ah,
+            "message": (
+                f"No active {voltage}V battery "
+                f"≥ {required_ah:.0f}Ah found."
+            ),
+        }
+
+
+
+
     def get_inverter(self, required_watts):
-        """
-        Select the smallest inverter that can safely handle
-        the required load.
-        """
 
-        required_kva = (required_watts * 1.25) / 1000
+        required_kva = (
+                               Decimal(required_watts)
+                               * Decimal("1.25")
+                       ) / Decimal("1000")
 
-        return (
+        inverter = (
             Inverter.objects
             .filter(
                 active=True,
@@ -63,9 +87,30 @@ class EquipmentSelector:
             .first()
         )
 
+        if inverter:
+            return {
+                "found": True,
+                "item": inverter,
+                "required": required_kva,
+                "message": None,
+            }
+
+        return {
+            "found": False,
+            "item": None,
+            "required": required_kva,
+            "message": (
+                f"No active inverter "
+                f"≥ {required_kva:.2f} kVA found."
+            ),
+        }
+
+
+
+
     def get_controller(self, voltage, current):
 
-        return (
+        controller = (
             ChargeController.objects
             .filter(
                 active=True,
@@ -75,3 +120,21 @@ class EquipmentSelector:
             .order_by("current_rating")
             .first()
         )
+
+        if controller:
+            return {
+                "found": True,
+                "item": controller,
+                "required": current,
+                "message": None,
+            }
+
+        return {
+            "found": False,
+            "item": None,
+            "required": current,
+            "message": (
+                f"No active {voltage}V controller "
+                f"≥ {current}A found."
+            ),
+        }

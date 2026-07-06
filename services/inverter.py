@@ -1,4 +1,6 @@
+from decimal import Decimal
 import math
+
 
 
 class InverterCalculator:
@@ -31,7 +33,11 @@ class InverterCalculator:
         80% loading rule.
         """
 
-        kva = self.connected_load / 800
+
+        kva = (
+                Decimal(self.connected_load)
+                / Decimal("800")
+        )
 
         for size in self.STANDARD_SIZES:
 

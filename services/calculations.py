@@ -20,10 +20,12 @@ class LoadCalculator:
         """
         Total running load (Watts)
         """
-
         return sum(
-            appliance.quantity * appliance.power_rating
-            for appliance in self.appliances
+            (
+                appliance.quantity * appliance.power_rating
+                for appliance in self.appliances
+            ),
+            Decimal("0"),
         )
 
     def surge_load(self):
@@ -32,20 +34,25 @@ class LoadCalculator:
         """
 
         return sum(
-            appliance.quantity * appliance.surge_power
-            for appliance in self.appliances
+            (
+                appliance.quantity * appliance.surge_power
+                for appliance in self.appliances
+            ),
+            Decimal("0"),
         )
 
     def critical_load(self):
         """
         Total critical appliances
         """
-
         return sum(
-            appliance.quantity * appliance.power_rating
-            for appliance in self.appliances.filter(
-                critical_load=True
-            )
+            (
+                appliance.quantity * appliance.power_rating
+                for appliance in self.appliances.filter(
+                    critical_load=True
+                )
+            ),
+            Decimal("0"),
         )
 
     def daily_energy(self):
@@ -54,10 +61,13 @@ class LoadCalculator:
         """
 
         return sum(
-            appliance.quantity
-            * appliance.power_rating
-            * appliance.hours_per_day
-            for appliance in self.appliances
+            (
+                appliance.quantity
+                * appliance.power_rating
+                * appliance.hours_per_day
+                for appliance in self.appliances
+            ),
+            Decimal("0"),
         )
 
     def total_appliances(self):
