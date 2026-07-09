@@ -2,6 +2,15 @@ from decimal import Decimal
 
 
 class BatteryCalculator:
+    """
+    Calculates the required battery bank capacity.
+
+    Input:
+        daily_energy (Wh/day)
+        backup_hours
+        system_voltage
+        depth_of_discharge
+    """
 
     def __init__(
         self,
@@ -11,23 +20,30 @@ class BatteryCalculator:
         dod=Decimal("0.80"),
     ):
 
-        self.load = Decimal(load)
-
-        self.hours = Decimal(backup_hours)
-
+        self.daily_energy = Decimal(load)
+        self.backup_hours = Decimal(backup_hours)
         self.voltage = Decimal(voltage)
-
         self.dod = Decimal(dod)
+
+    @property
+    def average_hourly_energy(self):
+        """
+        Average energy consumed every hour.
+        """
+        return self.daily_energy / Decimal("24")
 
     def required_wh(self):
         """
-        Required energy in Watt-hours.
+        Energy required during the backup period.
         """
-        return self.load * self.hours
+        return (
+            self.average_hourly_energy
+            * self.backup_hours
+        )
 
     def required_ah(self):
         """
-        Required battery capacity in Amp-hours.
+        Required battery capacity.
         """
         return (
             self.required_wh()
@@ -38,6 +54,6 @@ class BatteryCalculator:
     @property
     def required_kwh(self):
         """
-        Required energy in kWh.
+        Required backup energy.
         """
         return self.required_wh() / Decimal("1000")

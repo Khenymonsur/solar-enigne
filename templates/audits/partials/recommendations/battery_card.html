@@ -1,0 +1,141 @@
+{% load humanize %}
+
+<div class="card border-primary shadow-sm h-100">
+
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+
+        <strong>
+            <i class="bi bi-battery-half"></i>
+            Battery Bank
+        </strong>
+
+        {% if recommendation.battery_status == "OK" %}
+            <span class="badge bg-light text-primary">
+                <i class="bi bi-check-circle-fill"></i> OK
+            </span>
+        {% elif recommendation.battery_status == "UNDERSIZED" %}
+            <span class="badge bg-warning text-dark">
+                <i class="bi bi-exclamation-triangle-fill"></i> UNDERSIZED
+            </span>
+        {% else %}
+            <span class="badge bg-danger">
+                <i class="bi bi-x-circle-fill"></i> NOT FOUND
+            </span>
+        {% endif %}
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="row text-center mb-3">
+
+            <div class="col-4">
+
+                <small class="text-muted d-block">
+                    Required
+                </small>
+
+                <strong>
+                    {{ recommendation.battery_required|floatformat:0 }} Ah
+                </strong>
+
+            </div>
+
+            <div class="col-4">
+
+                <small class="text-muted d-block">
+                    Installed
+                </small>
+
+                <strong>
+                    {{ recommendation.battery_installed_capacity|floatformat:0 }} Ah
+                </strong>
+
+            </div>
+
+            <div class="col-4">
+
+                <small class="text-muted d-block">
+                    Reserve
+                </small>
+
+                <strong class="text-success">
+                    {{ recommendation.battery_reserve_capacity|floatformat:0 }} Ah
+                </strong>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        {% if recommendation.battery %}
+
+            <small class="text-muted">
+
+                Selected Battery
+
+            </small>
+
+            <h6 class="mb-1">
+
+                {{ recommendation.battery.manufacturer }}
+
+            </h6>
+
+            <div class="text-muted">
+
+                {{ recommendation.battery.model }}
+
+            </div>
+
+            <span class="badge bg-light text-dark mt-2">
+
+                {{ recommendation.battery.voltage }}V /
+                {{ recommendation.battery.capacity_ah }}Ah
+
+            </span>
+
+            <div class="d-flex justify-content-between mt-3">
+
+                <span>Quantity</span>
+
+                <strong>
+
+                    {{ recommendation.battery_quantity }}
+
+                    Unit{{ recommendation.battery_quantity|pluralize }}
+
+                </strong>
+
+            </div>
+
+        {% else %}
+
+            <div class="text-center py-4">
+
+                <i class="bi bi-battery text-danger fs-1"></i>
+
+                <h6 class="mt-2">
+
+                    No Battery Found
+
+                </h6>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <div class="card-footer bg-light">
+
+        <small class="text-muted">
+
+            {{ recommendation.battery_note|default:recommendation.battery_message }}
+
+        </small>
+
+    </div>
+
+</div>

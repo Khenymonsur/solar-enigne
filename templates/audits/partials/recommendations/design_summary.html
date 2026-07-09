@@ -1,0 +1,111 @@
+<div class="card mb-4 border-secondary shadow-sm">
+
+    <div class="card-header bg-light d-flex justify-content-between align-items-center">
+
+        <div>
+
+            <strong>
+
+                <i class="bi bi-clipboard-data"></i>
+
+                Design Summary
+
+            </strong>
+
+            <div class="small text-muted">
+
+                Generated automatically from the assessment load.
+
+            </div>
+
+        </div>
+
+        <span class="badge bg-success">
+
+            {{ assessment.system_voltage }}V System
+
+        </span>
+
+    </div>
+
+    <div class="card-body py-3">
+
+        <div class="row text-center g-3">
+
+            <div class="col-md-3">
+
+                <i class="bi bi-lightning-charge fs-4 text-warning"></i>
+
+                <small class="text-muted d-block mt-1">
+
+                    Connected Load
+
+                </small>
+
+                <h5 class="mb-0">
+
+                    {{ recommendation.connected_load|floatformat:0 }} W
+
+                </h5>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <i class="bi bi-battery-charging fs-4 text-success"></i>
+
+                <small class="text-muted d-block mt-1">
+
+                    Daily Energy
+
+                </small>
+
+                <h5 class="mb-0">
+
+                    {{ recommendation.daily_energy|floatformat:2 }} kWh
+
+                </h5>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <i class="bi bi-clock-history fs-4 text-primary"></i>
+
+                <small class="text-muted d-block mt-1">
+
+                    Backup Time
+
+                </small>
+
+                <h5 class="mb-0">
+
+                    {{ assessment.backup_hours }} hrs
+
+                </h5>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <i class="bi bi-plug fs-4 text-danger"></i>
+
+                <small class="text-muted d-block mt-1">
+
+                    System Voltage
+
+                </small>
+
+                <h5 class="mb-0">
+
+                    {{ assessment.system_voltage }} V
+
+                </h5>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

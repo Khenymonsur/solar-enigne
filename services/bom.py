@@ -24,12 +24,50 @@ class BillOfMaterialsService:
         total = Decimal(str(unit_price)) * quantity
 
         return {
-            "product": product,
+
+            "category": (
+                product._meta.verbose_name.title()
+                if hasattr(product, "_meta")
+                else product.__class__.__name__
+            ),
+            "manufacturer": (
+                str(product.manufacturer)
+                if getattr(product, "manufacturer", None)
+                else ""
+            ),
+            "model": getattr(product, "model", ""),
             "description": str(product),
+            "specification": self._get_specification(product),
             "quantity": quantity,
             "unit_price": Decimal(str(unit_price)),
             "total": total,
+
         }
+
+    def _get_specification(self, product):
+
+        if hasattr(product, "wattage"):
+            return f"{product.wattage}W"
+
+        if hasattr(product, "capacity_ah"):
+            return (
+                f"{product.voltage}V / "
+                f"{product.capacity_ah}Ah"
+            )
+
+        if hasattr(product, "capacity_kva"):
+            return f"{product.capacity_kva} kVA"
+
+        if hasattr(product, "current_rating"):
+            return (
+                f"{product.voltage}V / "
+                f"{product.current_rating}A"
+            )
+
+        return "-"
+
+
+
 
     def generate(self):
 
@@ -71,8 +109,11 @@ class BillOfMaterialsService:
 
         grand_total = subtotal + vat
 
+        item_count = len(items)
+
         return {
             "items": items,
+            "item_count": item_count,
             "subtotal": subtotal,
             "vat": vat,
             "grand_total": grand_total,

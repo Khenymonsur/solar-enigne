@@ -29,9 +29,25 @@ class Customer(models.Model):
 
     address = models.TextField()
 
-    state = models.CharField(max_length=100)
+    state = models.CharField(
+        max_length=100
+    )
 
-    city = models.CharField(max_length=100)
+    lga = models.CharField(
+        max_length=100,
+        blank=True
+    )
+
+    area = models.CharField(
+        max_length=100,
+        blank=True,
+        help_text="Town, district or estate (e.g. Lekki Phase 1, GRA, Wuse II)"
+    )
+
+    city = models.CharField(
+        max_length=100,
+        blank=True
+    )
 
     building_type = models.CharField(
         max_length=20,

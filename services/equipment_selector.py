@@ -1,5 +1,4 @@
 from decimal import Decimal
-
 import math
 
 from equipment.models import (
@@ -22,16 +21,35 @@ class EquipmentSelector:
         )
 
         if panel is None:
-            return None
+            return {
+                "found": False,
+                "item": None,
+                "quantity": 0,
+                "required": Decimal(required_watts),
+                "installed": Decimal("0"),
+                "reserve": Decimal("0"),
+                "status": "NOT_FOUND",
+                "message": "No active solar panel found.",
+            }
 
         quantity = math.ceil(
-            required_watts / panel.wattage
+            Decimal(required_watts)
+            / Decimal(panel.wattage)
         )
 
+        installed = Decimal(quantity) * Decimal(panel.wattage)
+
+        reserve = installed - Decimal(required_watts)
+
         return {
-            "panel": panel,
+            "found": True,
+            "item": panel,
             "quantity": quantity,
-            "capacity": quantity * panel.wattage,
+            "required": Decimal(required_watts),
+            "installed": installed,
+            "reserve": reserve,
+            "status": "OK",
+            "message": None,
         }
 
 
@@ -43,66 +61,103 @@ class EquipmentSelector:
             .filter(
                 active=True,
                 voltage=voltage,
-                capacity_ah__gte=required_ah,
             )
-            .order_by("capacity_ah")
+            .order_by("-capacity_ah")
             .first()
         )
 
-        if battery:
+        if battery is None:
             return {
-                "found": True,
-                "item": battery,
-                "required": required_ah,
-                "message": None,
+
+                "found": False,
+                "item": None,
+                "quantity": 0,
+                "required": Decimal(required_ah),
+                "installed": Decimal("0"),
+                "reserve": Decimal("0"),
+                "status": "NOT_FOUND",
+                "message": f"No active {voltage}V battery found.",
+
             }
 
-        return {
-            "found": False,
-            "item": None,
-            "required": required_ah,
-            "message": (
-                f"No active {voltage}V battery "
-                f"≥ {required_ah:.0f}Ah found."
-            ),
-        }
+        quantity = math.ceil(
+            Decimal(required_ah)
+            / Decimal(battery.capacity_ah)
+        )
 
+        installed = (
+                Decimal(quantity)
+                * Decimal(battery.capacity_ah)
+        )
+
+        reserve = installed - Decimal(required_ah)
+
+        return {
+
+            "found": True,
+            "item": battery,
+            "quantity": quantity,
+            "required": Decimal(required_ah),
+            "installed": installed,
+            "reserve": reserve,
+            "status": "OK",
+            "message": None,
+
+        }
 
 
 
     def get_inverter(self, required_watts):
 
         required_kva = (
-                               Decimal(required_watts)
-                               * Decimal("1.25")
-                       ) / Decimal("1000")
+            Decimal(required_watts) * Decimal("1.25")
+        ) / Decimal("1000")
 
         inverter = (
             Inverter.objects
-            .filter(
-                active=True,
-                capacity_kva__gte=required_kva,
-            )
-            .order_by("capacity_kva")
+            .filter(active=True)
+            .order_by("-capacity_kva")
             .first()
         )
 
-        if inverter:
+        if inverter is None:
             return {
-                "found": True,
-                "item": inverter,
+                "found": False,
+                "item": None,
+                "quantity": 0,
                 "required": required_kva,
-                "message": None,
+                "installed": Decimal("0"),
+                "reserve": Decimal("0"),
+                "status": "NOT_FOUND",
+                "message": "No active inverter found.",
             }
 
+        installed = Decimal(inverter.capacity_kva)
+        reserve = installed - required_kva
+
+        status = (
+            "OK"
+            if installed >= required_kva
+            else "UNDERSIZED"
+        )
+
+        message = None
+
+        if status == "UNDERSIZED":
+            message = (
+                f"Required: {required_kva:.2f} kVA. "
+                f"Largest available: {installed:.2f} kVA."
+            )
+
         return {
-            "found": False,
-            "item": None,
+            "found": True,
+            "item": inverter,
+            "quantity": 1,
             "required": required_kva,
-            "message": (
-                f"No active inverter "
-                f"≥ {required_kva:.2f} kVA found."
-            ),
+            "installed": installed,
+            "reserve": reserve,
+            "status": status,
+            "message": message,
         }
 
 
@@ -115,26 +170,47 @@ class EquipmentSelector:
             .filter(
                 active=True,
                 voltage=voltage,
-                current_rating__gte=current,
             )
-            .order_by("current_rating")
+            .order_by("-current_rating")
             .first()
         )
 
-        if controller:
+        if controller is None:
             return {
-                "found": True,
-                "item": controller,
-                "required": current,
-                "message": None,
+                "found": False,
+                "item": None,
+                "quantity": 0,
+                "required": Decimal(current),
+                "installed": Decimal("0"),
+                "reserve": Decimal("0"),
+                "status": "NOT_FOUND",
+                "message": f"No active {voltage}V controller found.",
             }
 
+        installed = Decimal(controller.current_rating)
+        reserve = installed - Decimal(current)
+
+        status = (
+            "OK"
+            if installed >= Decimal(current)
+            else "UNDERSIZED"
+        )
+
+        message = None
+
+        if status == "UNDERSIZED":
+            message = (
+                f"Required: {Decimal(current):.0f}A. "
+                f"Largest available: {installed:.0f}A."
+            )
+
         return {
-            "found": False,
-            "item": None,
-            "required": current,
-            "message": (
-                f"No active {voltage}V controller "
-                f"≥ {current}A found."
-            ),
+            "found": True,
+            "item": controller,
+            "quantity": 1,
+            "required": Decimal(current),
+            "installed": installed,
+            "reserve": reserve,
+            "status": status,
+            "message": message,
         }

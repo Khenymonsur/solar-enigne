@@ -26,13 +26,17 @@ Customers
 
 <div class="row">
 
-{% include "components/metric_card.html" with title="Customers" value=customer_count icon="bi-people-fill" footer="Registered" %}
+{% include "components/metric_card.html" with title="Customers" value=customer_count icon="bi-people-fill" footer="Registered Customers" %}
 
-{% include "components/metric_card.html" with title="Residential" value=residential_count icon="bi-house-fill" footer="Buildings" %}
+{% include "components/metric_card.html" with title="Assessments" value=assessment_count icon="bi-clipboard-data-fill" footer="Total Assessments" %}
 
-{% include "components/metric_card.html" with title="Commercial" value=commercial_count icon="bi-building" footer="Projects" %}
+{% include "components/metric_card.html" with title="Residential" value=residential_count icon="bi-house-fill" footer="Residential Buildings" %}
 
-{% include "components/metric_card.html" with title="Industrial" value=industrial_count icon="bi-factory" footer="Projects" %}
+{% include "components/metric_card.html" with title="Commercial" value=commercial_count icon="bi-building-fill" footer="Commercial Projects" %}
+
+{% include "components/metric_card.html" with title="Industrial" value=industrial_count icon="bi-factory" footer="Industrial Projects" %}
+
+{% include "components/metric_card.html" with title="Completed" value=completed_designs icon="bi-patch-check-fill" footer="Design Ready" %}
 
 </div>
 
@@ -46,7 +50,7 @@ Customer Directory
 
 <div class="card-body p-0">
 
-<table class="table table-hover align-middle mb-0">
+<table class="table table-hover align-middle mb-0 clickable-table">
 
 <thead>
 
@@ -57,6 +61,8 @@ Customer Directory
 <th>Phone</th>
 
 <th>State</th>
+
+<th>LGA</th>
 
 <th>Building</th>
 
@@ -72,71 +78,87 @@ Customer Directory
 
 {% for customer in customers %}
 
-<tr>
+<tr
+    ondblclick="window.location='{% url 'customers:detail' customer.pk %}'"
+    style="cursor:pointer;">
 
-<td>
+    <td>
 
-<strong>
+        <a
+            href="{% url 'customers:detail' customer.pk %}"
+            class="text-decoration-none fw-bold">
 
-{{ customer.full_name }}
+            {{ customer.full_name }}
 
-</strong>
+        </a>
 
-</td>
+    </td>
 
-<td>
+    <td>
 
-{{ customer.phone }}
+        {{ customer.phone }}
 
-</td>
+    </td>
 
-<td>
+    <td>
 
-{{ customer.state }}
+        {{ customer.state }}
 
-</td>
+    </td>
 
-<td>
+    <td>
 
-{{ customer.building_type }}
+        {{ customer.lga|default:"—" }}
 
-</td>
 
-<td>
+    </td>
 
-{{ customer.assessments.count }}
+    <td>
 
-<td class="text-end">
+        {{ customer.building_type }}
 
-<div class="btn-group">
+    </td>
 
-    <a
-        href="{% url 'customers:detail' customer.pk %}"
-        class="btn btn-sm btn-primary">
+    <td>
 
-        <i class="bi bi-eye"></i>
+        {{ customer.assessment_total }}
 
-    </a>
+    </td>
 
-    <a
-        href="{% url 'customers:update' customer.pk %}"
-        class="btn btn-sm btn-warning">
+    <td class="text-end">
 
-        <i class="bi bi-pencil"></i>
+        <div class="btn-group">
 
-    </a>
+            <a
+                href="{% url 'customers:detail' customer.pk %}"
+                class="btn btn-sm btn-primary"
+                title="View">
 
-    <a
-        href="{% url 'customers:delete' customer.pk %}"
-        class="btn btn-sm btn-danger">
+                <i class="bi bi-eye"></i>
 
-        <i class="bi bi-trash"></i>
+            </a>
 
-    </a>
+            <a
+                href="{% url 'customers:update' customer.pk %}"
+                class="btn btn-sm btn-warning"
+                title="Edit">
 
-</div>
+                <i class="bi bi-pencil"></i>
 
-</td>
+            </a>
+
+            <a
+                href="{% url 'customers:delete' customer.pk %}"
+                class="btn btn-sm btn-danger"
+                title="Delete">
+
+                <i class="bi bi-trash"></i>
+
+            </a>
+
+        </div>
+
+    </td>
 
 </tr>
 
@@ -144,11 +166,31 @@ Customer Directory
 
 <tr>
 
-<td colspan="6">
+    <td colspan="7" class="text-center py-5">
 
-No customers found.
+            <i class="bi bi-people display-4 text-muted"></i>
 
-</td>
+            <h5 class="mt-3">
+
+                No Customers Yet
+
+            </h5>
+
+            <p class="text-muted">
+
+                Create your first customer to begin a solar assessment.
+
+            </p>
+
+            <a href="{% url 'customers:create' %}" class="btn btn-success">
+
+                <i class="bi bi-person-plus-fill"></i>
+
+                Add Customer
+
+            </a>
+
+        </td>
 
 </tr>
 

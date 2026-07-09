@@ -1,0 +1,145 @@
+{% load humanize %}
+
+<div class="card border-success shadow-sm h-100">
+
+    <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+
+        <div>
+            <strong>
+                <i class="bi bi-sun-fill"></i>
+                Solar Array
+            </strong>
+        </div>
+
+        {% if recommendation.panel_status == "OK" %}
+            <span class="badge bg-light text-success">
+                <i class="bi bi-check-circle-fill"></i> OK
+            </span>
+        {% elif recommendation.panel_status == "UNDERSIZED" %}
+            <span class="badge bg-warning text-dark">
+                <i class="bi bi-exclamation-triangle-fill"></i> UNDERSIZED
+            </span>
+        {% else %}
+            <span class="badge bg-danger">
+                <i class="bi bi-x-circle-fill"></i> NOT FOUND
+            </span>
+        {% endif %}
+
+    </div>
+
+    <div class="card-body">
+
+        <!-- Engineering Values -->
+        <div class="row text-center mb-3">
+
+            <div class="col-4">
+
+                <small class="text-muted d-block">
+                    Required
+                </small>
+
+                <strong>
+                    {{ recommendation.panel_required|floatformat:0 }} W
+                </strong>
+
+            </div>
+
+            <div class="col-4">
+
+                <small class="text-muted d-block">
+                    Installed
+                </small>
+
+                <strong>
+                    {{ recommendation.panel_installed|floatformat:0 }} W
+                </strong>
+
+            </div>
+
+            <div class="col-4">
+
+                <small class="text-muted d-block">
+                    Reserve
+                </small>
+
+                <strong class="text-success">
+                    {{ recommendation.panel_reserve|floatformat:0 }} W
+                </strong>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        {% if recommendation.panel %}
+
+            <div class="mb-3">
+
+                <small class="text-muted">
+                    Selected Panel
+                </small>
+
+                <h6 class="mb-1">
+
+                    {{ recommendation.panel.manufacturer }}
+
+                </h6>
+
+                <div class="text-muted">
+
+                    {{ recommendation.panel.model }}
+
+                </div>
+
+                <span class="badge bg-light text-dark mt-2">
+
+                    {{ recommendation.panel.wattage }} W
+
+                </span>
+
+            </div>
+
+            <div class="d-flex justify-content-between">
+
+                <span>Quantity</span>
+
+                <strong>
+
+                    {{ recommendation.panel_quantity }}
+
+                    Panel{{ recommendation.panel_quantity|pluralize }}
+
+                </strong>
+
+            </div>
+
+        {% else %}
+
+            <div class="text-center py-3">
+
+                <i class="bi bi-exclamation-circle text-danger fs-1"></i>
+
+                <p class="mt-2 mb-0">
+
+                    No suitable solar panel found.
+
+                </p>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <div class="card-footer bg-light">
+
+        <small class="text-muted">
+
+            {{ recommendation.solar_note|default:"No engineering note available." }}
+
+        </small>
+
+    </div>
+
+</div>

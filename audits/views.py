@@ -117,7 +117,7 @@ class AssessmentDetailView(DetailView):
         )
 
         context["daily_energy"] = (
-            assessment.daily_energy
+            recommendation["daily_energy"]
         )
 
         context["critical_load"] = (

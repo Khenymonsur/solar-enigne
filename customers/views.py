@@ -9,7 +9,9 @@ from django.views.generic import (
     UpdateView,
 )
 
+from .forms import CustomerForm
 from .models import Customer
+from audits.models import Assessment
 
 
 class CustomerListView(ListView):
@@ -19,8 +21,12 @@ class CustomerListView(ListView):
     paginate_by = 20
 
     def get_queryset(self):
-        queryset = Customer.objects.annotate(
-            assessment_total=Count("assessments")
+        queryset = (
+            Customer.objects
+            .annotate(
+                assessment_total=Count("assessments")
+            )
+            .order_by("full_name")
         )
 
         search = self.request.GET.get("q")
@@ -33,26 +39,42 @@ class CustomerListView(ListView):
                 | Q(phone__icontains=search)
                 | Q(state__icontains=search)
                 | Q(city__icontains=search)
+                | Q(lga__icontains=search)
+                | Q(area__icontains=search)
             )
 
-        return queryset.order_by("full_name")
+        return queryset
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
 
-        context["customer_count"] = Customer.objects.count()
+        customers = Customer.objects.all()
 
-        context["residential_count"] = Customer.objects.filter(
-            building_type=Customer.RESIDENTIAL
-        ).count()
+        context.update({
 
-        context["commercial_count"] = Customer.objects.filter(
-            building_type=Customer.COMMERCIAL
-        ).count()
+            "customer_count": customers.count(),
 
-        context["industrial_count"] = Customer.objects.filter(
-            building_type=Customer.INDUSTRIAL
-        ).count()
+            "assessment_count": Assessment.objects.count(),
+
+            "residential_count": customers.filter(
+                building_type=Customer.RESIDENTIAL
+            ).count(),
+
+            "commercial_count": customers.filter(
+                building_type=Customer.COMMERCIAL
+            ).count(),
+
+            "industrial_count": customers.filter(
+                building_type=Customer.INDUSTRIAL
+            ).count(),
+
+            # "completed_designs": Assessment.objects.filter(
+            #     design_ready=True
+            # ).count(),
+
+            "completed_designs": 0,
+
+        })
 
         return context
 
@@ -65,68 +87,40 @@ class CustomerDetailView(DetailView):
 
 class CustomerCreateView(CreateView):
     model = Customer
-
-    fields = [
-        "full_name",
-        "company_name",
-        "email",
-        "phone",
-        "whatsapp",
-        "address",
-        "state",
-        "city",
-        "building_type",
-    ]
-
+    form_class = CustomerForm
     template_name = "customers/customer_form.html"
-
     success_url = reverse_lazy("customers:list")
 
     def form_valid(self, form):
         messages.success(
             self.request,
-            "Customer created successfully.",
+            "Customer created successfully."
         )
         return super().form_valid(form)
 
 
 class CustomerUpdateView(UpdateView):
     model = Customer
-
-    fields = [
-        "full_name",
-        "company_name",
-        "email",
-        "phone",
-        "whatsapp",
-        "address",
-        "state",
-        "city",
-        "building_type",
-    ]
-
+    form_class = CustomerForm
     template_name = "customers/customer_form.html"
-
     success_url = reverse_lazy("customers:list")
 
     def form_valid(self, form):
         messages.success(
             self.request,
-            "Customer updated successfully.",
+            "Customer updated successfully."
         )
         return super().form_valid(form)
 
 
 class CustomerDeleteView(DeleteView):
     model = Customer
-
     template_name = "customers/customer_confirm_delete.html"
-
     success_url = reverse_lazy("customers:list")
 
     def form_valid(self, form):
         messages.success(
             self.request,
-            "Customer deleted successfully.",
+            "Customer deleted successfully."
         )
         return super().form_valid(form)
