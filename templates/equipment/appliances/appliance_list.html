@@ -79,6 +79,7 @@
                     <th>Power</th>
                     <th>Surge</th>
                     <th>Hours</th>
+<!--                    <th class="text-center">Used In</th>-->
                     <th>Efficient</th>
                     <th>Status</th>
                     <th width="170">Actions</th>
@@ -102,6 +103,19 @@
                     <td>{{ appliance.surge_factor }}x</td>
 
                     <td>{{ appliance.default_hours }} hrs</td>
+
+<!--                    <td class="text-center">-->
+<!--                        {% if appliance.assessment_count %}-->
+<!--                            <span class="badge bg-primary">-->
+<!--                                {{ appliance.assessment_count }}-->
+<!--                            </span>-->
+<!--                        {% else %}-->
+<!--                            <span class="text-muted">-->
+<!--                                —-->
+<!--                            </span>-->
+<!--                        {% endif %}-->
+
+<!--                    </td>-->
 
                     <td>
 
