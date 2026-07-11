@@ -1,5 +1,7 @@
-from django.db.models import Count
+from django.db.models.deletion import ProtectedError
+from django.shortcuts import redirect
 from django.db.models import Q
+from django.db.models import Count
 
 from .models import Appliance
 from .forms import ApplianceForm
@@ -475,8 +477,18 @@ class ApplianceListView(ListView):
     context_object_name = "appliances"
     paginate_by = 15
 
+
     def get_queryset(self):
-        queryset = Appliance.objects.order_by("category", "name")
+        queryset = (
+            Appliance.objects
+            .annotate(
+                assessment_count=Count("assessment_appliances")
+            )
+            .order_by(
+                "category",
+                "name"
+            )
+        )
 
         q = self.request.GET.get("q")
 
@@ -487,6 +499,7 @@ class ApplianceListView(ListView):
             )
 
         return queryset
+
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -549,14 +562,38 @@ class ApplianceUpdateView(UpdateView):
 
 class ApplianceDeleteView(DeleteView):
     model = Appliance
+
     template_name = (
         "equipment/appliances/appliance_confirm_delete.html"
     )
-    success_url = reverse_lazy("equipment:appliance-list")
 
-    def delete(self, request, *args, **kwargs):
-        messages.success(
-            request,
-            "Appliance deleted successfully."
-        )
-        return super().delete(request, *args, **kwargs)
+    success_url = reverse_lazy(
+        "equipment:appliance-list"
+    )
+
+    def post(self, request, *args, **kwargs):
+
+        self.object = self.get_object()
+
+        try:
+
+            self.object.delete()
+
+            messages.success(
+                request,
+                "Appliance deleted successfully."
+            )
+
+        except ProtectedError:
+
+            messages.error(
+                request,
+                (
+                    "This appliance cannot be deleted because it "
+                    "is currently used in one or more engineering "
+                    "assessments. Remove it from those assessments "
+                    "first or mark it as inactive."
+                )
+            )
+
+        return redirect(self.success_url)

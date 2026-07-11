@@ -58,15 +58,10 @@ class Assessment(models.Model):
     STATUS_CHOICES = [
 
         ("Draft", "Draft"),
-
         ("In Progress", "In Progress"),
-
         ("Completed", "Completed"),
-
         ("Quoted", "Quoted"),
-
         ("Installed", "Installed"),
-
         ("Commissioned", "Commissioned"),
 
     ]

@@ -135,9 +135,40 @@
                                 <i class="bi bi-pencil"></i>
                             </a>
 
-                            <a href="{% url 'equipment:appliance-delete' appliance.pk %}" class="btn btn-outline-danger btn-sm">
+                            {% if appliance.assessment_count > 0 %}
+
+                            <span
+                                class="badge bg-warning text-dark"
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="Used in {{ appliance.assessment_count }} assessment{{ appliance.assessment_count|pluralize }}">
+
+                                {{ appliance.assessment_count }}
+
+                            </span>
+
+                            <button
+                                class="btn btn-outline-secondary btn-sm"
+                                disabled
+                                data-bs-toggle="tooltip"
+                                data-bs-placement="top"
+                                title="Cannot delete because this appliance is already used in {{ appliance.assessment_count }} assessment{{ appliance.assessment_count|pluralize }}.">
+
+                                <i class="bi bi-lock-fill"></i>
+
+                            </button>
+
+                            {% else %}
+
+                            <a
+                                href="{% url 'equipment:appliance-delete' appliance.pk %}"
+                                class="btn btn-outline-danger btn-sm">
+
                                 <i class="bi bi-trash"></i>
+
                             </a>
+
+                            {% endif %}
 
                         </div>
 

@@ -78,7 +78,7 @@ class CustomerForm(forms.ModelForm):
             "city": forms.TextInput(
                 attrs={
                     "class": "form-control",
-                    "placeholder": "Legacy field (to be retired)",
+                    "placeholder": "Legacy field (Feature in Progress)",
                 }
             ),
 
