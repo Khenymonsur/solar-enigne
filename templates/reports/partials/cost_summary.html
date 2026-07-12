@@ -1,0 +1,93 @@
+{% load humanize %}
+
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header bg-dark text-white">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-cash-stack"></i>
+
+            Cost Summary
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-bordered mb-0">
+
+            <tbody>
+
+                <tr>
+
+                    <th width="60%">
+
+                        Equipment Items
+
+                    </th>
+
+                    <td class="text-end">
+
+                        {{ bom.item_count }}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+
+                        Subtotal
+
+                    </th>
+
+                    <td class="text-end">
+
+                        ₦{{ bom.subtotal|floatformat:2|intcomma }}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+
+                        VAT
+
+                    </th>
+
+                    <td class="text-end">
+
+                        ₦{{ bom.vat|floatformat:2|intcomma }}
+
+                    </td>
+
+                </tr>
+
+                <tr class="table-success">
+
+                    <th>
+
+                        Grand Total
+
+                    </th>
+
+                    <th class="text-end">
+
+                        ₦{{ bom.grand_total|floatformat:2|intcomma }}
+
+                    </th>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

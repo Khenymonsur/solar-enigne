@@ -62,4 +62,5 @@ urlpatterns = [
         ApplianceDeleteView,
         name="appliance-delete",
     ),
+
 ]

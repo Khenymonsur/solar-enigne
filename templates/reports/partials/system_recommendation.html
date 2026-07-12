@@ -1,0 +1,327 @@
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header bg-success text-white">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-sun-fill"></i>
+
+            Solar Array Recommendation
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if recommendation.panel %}
+
+        <table class="table table-bordered table-sm mb-0">
+
+            <tr>
+
+                <th width="35%">Manufacturer</th>
+
+                <td>{{ recommendation.panel.manufacturer }}</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Model</th>
+
+                <td>{{ recommendation.panel.model }}</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Rated Power</th>
+
+                <td>{{ recommendation.panel.wattage }} W</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Quantity</th>
+
+                <td>{{ recommendation.panel_quantity }}</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Installed Capacity</th>
+
+                <td>
+
+                    {{ recommendation.panel_installed_capacity|floatformat:2 }} W
+
+                </td>
+
+            </tr>
+
+            <tr>
+
+                <th>Reserve Capacity</th>
+
+                <td>
+
+                    {{ recommendation.panel_excess_capacity|floatformat:2 }} W
+
+                </td>
+
+            </tr>
+
+        </table>
+
+        {% else %}
+
+        <div class="alert alert-warning mb-0">
+
+            {{ recommendation.panel_message }}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<----------------------BATTERY ---------------------------------->
+
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header bg-primary text-white">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-battery-full"></i>
+
+            Battery Bank Recommendation
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if recommendation.battery %}
+
+        <table class="table table-bordered table-sm mb-0">
+
+            <tr>
+
+                <th width="35%">Manufacturer</th>
+
+                <td>{{ recommendation.battery.manufacturer }}</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Model</th>
+
+                <td>{{ recommendation.battery.model }}</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Voltage</th>
+
+                <td>{{ recommendation.battery.voltage }} V</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Capacity</th>
+
+                <td>{{ recommendation.battery.capacity_ah }} Ah</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Quantity</th>
+
+                <td>{{ recommendation.battery_quantity }}</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Installed Capacity</th>
+
+                <td>{{ recommendation.battery_installed_capacity|floatformat:2 }} Ah</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Reserve</th>
+
+                <td>{{ recommendation.battery_reserve_capacity|floatformat:2 }} Ah</td>
+
+            </tr>
+
+        </table>
+
+        {% else %}
+
+        <div class="alert alert-warning mb-0">
+
+            {{ recommendation.battery_message }}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<----------------------INVERTER --------------------------------->
+
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header bg-dark text-white">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-cpu-fill"></i>
+
+            Inverter Recommendation
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if recommendation.inverter %}
+
+        <table class="table table-bordered table-sm mb-0">
+
+            <tr>
+
+                <th width="35%">Manufacturer</th>
+
+                <td>{{ recommendation.inverter.manufacturer }}</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Model</th>
+
+                <td>{{ recommendation.inverter.model }}</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Capacity</th>
+
+                <td>{{ recommendation.inverter.capacity_kva }} kVA</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Reserve Capacity</th>
+
+                <td>{{ recommendation.inverter_reserve_kva|floatformat:2 }} kVA</td>
+
+            </tr>
+
+        </table>
+
+        {% else %}
+
+        <div class="alert alert-warning mb-0">
+
+            {{ recommendation.inverter_message }}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+
+<-------------------------- CHARGE CONTROLLER ------------------->
+
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header bg-secondary text-white">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-lightning"></i>
+
+            Charge Controller Recommendation
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if recommendation.controller %}
+
+        <table class="table table-bordered table-sm mb-0">
+
+            <tr>
+
+                <th width="35%">Manufacturer</th>
+
+                <td>{{ recommendation.controller.manufacturer }}</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Model</th>
+
+                <td>{{ recommendation.controller.model }}</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Current Rating</th>
+
+                <td>{{ recommendation.controller.current_rating }} A</td>
+
+            </tr>
+
+            <tr>
+
+                <th>Spare Capacity</th>
+
+                <td>{{ recommendation.controller_spare_current|floatformat:2 }} A</td>
+
+            </tr>
+
+        </table>
+
+        {% else %}
+
+        <div class="alert alert-warning mb-0">
+
+            {{ recommendation.controller_message }}
+
+        </div>
+
+        {% endif %}
+
+    </div>
+
+</div>

@@ -1,0 +1,45 @@
+<div class="card border-success shadow-sm mb-4">
+
+    <div class="card-header bg-success text-white">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-check2-circle"></i>
+
+            Engineering Recommendation
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <p>
+
+            Based on the customer's electrical load assessment and the engineering calculations performed, the proposed solar power system is suitable for the stated energy requirements.
+
+        </p>
+
+        <ul>
+
+            {% if recommendation.panel %}
+                <li>{{ recommendation.panel_quantity }} × {{ recommendation.panel.model }} Solar Panels</li>
+            {% endif %}
+
+            {% if recommendation.battery %}
+                <li>{{ recommendation.battery_quantity }} × {{ recommendation.battery.model }} Batteries</li>
+            {% endif %}
+
+            {% if recommendation.inverter %}
+                <li>1 × {{ recommendation.inverter.model }} Inverter</li>
+            {% endif %}
+
+            {% if recommendation.controller %}
+                <li>1 × {{ recommendation.controller.model }} Charge Controller</li>
+            {% endif %}
+
+        </ul>
+
+    </div>
+
+</div>

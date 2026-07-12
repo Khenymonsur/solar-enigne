@@ -22,6 +22,12 @@ class RecommendationEngine:
 
         connected_load = self.load.connected_load()
 
+        from decimal import Decimal
+
+        connected_load_kw = (
+                connected_load / Decimal("1000")
+        )
+
         # Returns Wh
         daily_energy_wh = self.load.daily_energy()
 
@@ -168,6 +174,7 @@ class RecommendationEngine:
             # =====================================================
 
             "connected_load": connected_load,
+            "connected_load_kw": connected_load_kw,
             "daily_energy": daily_energy,
             "required_solar": solar_required,
             "required_battery_ah": battery_ah,

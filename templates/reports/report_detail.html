@@ -1,0 +1,86 @@
+{% extends "layouts/base.html" %}
+
+{% load static humanize %}
+
+{% block title %}
+Engineering Report
+{% endblock %}
+
+{% load static %}
+
+<link
+    rel="stylesheet"
+    href="{% static 'css/report.css' %}">
+
+
+
+{% block content %}
+
+<div class="container-fluid py-4 report-wrapper">
+
+    <!-- Report Toolbar -->
+    <div class="d-flex justify-content-between align-items-center mb-3">
+
+        <a
+            href="{% url 'audits:detail' assessment.pk %}"
+            class="btn btn-outline-secondary">
+
+            <i class="bi bi-arrow-left"></i>
+
+            Back
+
+        </a>
+
+        <div>
+
+            <button
+                onclick="window.print()"
+                class="btn btn-outline-dark">
+
+                <i class="bi bi-printer"></i>
+
+                Print
+
+            </button>
+
+            <a
+                href="{% url 'reports:pdf' assessment.pk %}"
+                class="btn btn-danger">
+
+                <i class="bi bi-file-earmark-pdf"></i>
+
+                Download PDF
+
+            </a>
+
+        </div>
+
+    </div>
+
+    {% include "reports/partials/cover.html" %}
+
+    {% include "reports/partials/customer_information.html" %}
+
+    {% include "reports/partials/project_information.html" %}
+
+    {% include "reports/partials/load_summary.html" %}
+
+    {% include "reports/partials/appliance_schedule.html" %}
+
+    {% include "reports/partials/system_recommendation.html" %}
+
+    {% include "reports/partials/bill_of_materials.html" %}
+
+    {% include "reports/partials/cost_summary.html" %}
+
+    {% include "reports/partials/engineering_notes.html" %}
+
+    {% include "reports/partials/final_recommendation.html" %}
+
+    {% include "reports/partials/signature.html" %}
+
+    {% include "reports/partials/footer.html" %}
+
+</div>
+
+{% endblock %}

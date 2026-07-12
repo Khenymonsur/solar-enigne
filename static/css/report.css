@@ -1,0 +1,110 @@
+@media print {
+
+    body {
+        background: white !important;
+    }
+
+    .btn {
+        display: none !important;
+    }
+
+    .card {
+        border: none !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+
+    }
+
+    .card-header {
+        background: #f8f9fa !important;
+        color: #000 !important;
+    }
+
+    a {
+        text-decoration: none;
+        color: black;
+    }
+
+    /* ==========================================
+   Watermark
+    ========================================== */
+
+.report-wrapper {
+    position: relative;
+}
+
+.report-wrapper::before {
+
+    content: "CLOUD ENERGY";
+
+    position: fixed;
+
+    top: 45%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%) rotate(-30deg);
+
+    font-size: 90px;
+
+    font-weight: 700;
+
+    color: rgba(0, 120, 60, 0.06);
+
+    letter-spacing: 8px;
+
+    z-index: 0;
+
+    pointer-events: none;
+
+    white-space: nowrap;
+}
+
+/* Ensure report content stays above watermark */
+
+.report-wrapper > * {
+
+    position: relative;
+
+    z-index: 1;
+
+}
+
+@page {
+
+    size: A4;
+
+    margin: 15mm;
+
+}
+
+@media print {
+
+    .btn,
+    .navbar,
+    .sidebar,
+    .footer {
+
+        display: none !important;
+
+    }
+
+    body {
+
+        background: white;
+
+    }
+
+    .card {
+
+        border: none !important;
+
+        box-shadow: none !important;
+
+        page-break-inside: avoid;
+
+    }
+
+}
+
+}

@@ -1,0 +1,167 @@
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header bg-warning">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-lightning-charge-fill"></i>
+
+            Load Assessment Summary
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-bordered table-sm align-middle">
+
+            <thead class="table-light">
+
+                <tr>
+
+                    <th width="60%">
+
+                        Parameter
+
+                    </th>
+
+                    <th class="text-end">
+
+                        Value
+
+                    </th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                <tr>
+
+                    <td>
+
+                        Connected Load
+
+                    </td>
+
+                    <td class="text-end">
+
+                        {{ recommendation.connected_load|floatformat:2 }} W
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+
+                        Connected Load
+
+                    </td>
+
+                    <td class="text-end">
+
+                        {{ recommendation.connected_load_kw|floatformat:2 }} kW
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+
+                        Daily Energy Consumption
+
+                    </td>
+
+                    <td class="text-end">
+
+                        {{ recommendation.daily_energy|floatformat:2 }} kWh/day
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+
+                        Required Backup
+
+                    </td>
+
+                    <td class="text-end">
+
+                        {{ assessment.backup_hours }}
+
+                        Hours
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+
+                        Required Backup Energy
+
+                    </td>
+
+                    <td class="text-end">
+
+                        {{ recommendation.backup_energy|floatformat:2 }}
+
+                        kWh
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+
+                        System Voltage
+
+                    </td>
+
+                    <td class="text-end">
+
+                        {{ assessment.system_voltage }}
+
+                        V
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <td>
+
+                        Peak Sun Hours
+
+                    </td>
+
+                    <td class="text-end">
+
+                        {{ assessment.peak_sun_hours }}
+
+                        hrs/day
+
+                    </td>
+
+                </tr>
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>

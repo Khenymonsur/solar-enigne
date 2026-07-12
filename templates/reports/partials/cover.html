@@ -1,0 +1,283 @@
+{% load static %}
+
+<div class="card shadow-sm border-0 mb-3">
+
+    <div class="card-body">
+
+        <div class="row align-items-center">
+
+            <!-- Company Logo -->
+            <div class="col-md-2 text-center">
+
+                <img
+                    src="{% static 'images/logo.png' %}"
+                    alt="Cloud Energy"
+                    class="img-fluid"
+                    style="max-height:110px;">
+
+            </div>
+
+
+            <!-- Company Details -->
+
+            <div class="col-md-7">
+
+                <h2 class="fw-bold text-success mb-1">
+
+                    Cloud Energy Photoelectric Ltd.
+
+                </h2>
+
+                <div class="border-start border-4 border-success ps-3 mt-3">
+
+                    <h3 class="fw-bold text-uppercase mb-1">
+
+                        Solar PV System
+
+                    </h3>
+
+                    <h4 class="fw-light text-uppercase mb-2">
+
+                        Engineering Design Report
+
+                    </h4>
+
+                    <p class="text-muted mb-0">
+
+                        Renewable Energy Engineering Division
+
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <!-- Report Details -->
+            <div class="col-md-3">
+
+                <table class="table table-sm table-borderless mb-0">
+
+                    <tr>
+
+                        <th width="45%">
+
+                            Report No.
+
+                        </th>
+
+                        <td>
+
+                            {{ report_number }}
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Revision
+
+                        </th>
+
+                        <td>
+
+                            Rev.00
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+                        <th>
+                            Version
+                        </th>
+                        <td>
+                            v1.0
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <th>
+                            Classification
+                        </th>
+                        <td>
+                            Customer Copy
+                        </td>
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Issue Date
+
+                        </th>
+
+                        <td>
+
+                            {{ assessment.created_at|date:"d F Y" }}
+
+                        </td>
+
+                    </tr>
+
+                    <tr>
+
+                        <th>
+
+                            Status
+
+                        </th>
+
+                        <td>
+
+                            {% if assessment.status == "Completed" %}
+                                <span class="badge bg-success">
+                            {% elif assessment.status == "Draft" %}
+                                <span class="badge bg-secondary">
+                            {% elif assessment.status == "In Progress" %}
+                                <span class="badge bg-warning text-dark">
+                            {% elif assessment.status == "Quoted" %}
+                                <span class="badge bg-info text-dark">
+                            {% elif assessment.status == "Installed" %}
+                                <span class="badge bg-primary">
+                            {% elif assessment.status == "Commissioned" %}
+                                <span class="badge bg-dark">
+                            {% else %}
+                                <span class="badge bg-secondary">
+                            {% endif %}
+
+                                {{ assessment.status }}
+
+                            </span>
+
+                        </td>
+
+                    </tr>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <!-- Engineering Statement -->
+
+        <div class="alert alert-light border mb-0">
+
+            <h6 class="fw-bold mb-2">
+
+                <i class="bi bi-info-circle-fill text-primary"></i>
+
+                Engineering Assessment Statement
+
+            </h6>
+
+            <p class="mb-2">
+
+                This report has been prepared by
+                <strong>Cloud Energy Photoelectric Ltd.</strong>
+                based on the customer's declared electrical load,
+                operating requirements, and site assessment information.
+
+            </p>
+
+            <p class="mb-0">
+
+                The proposed system design and equipment recommendations
+                are valid only for the information supplied during this
+                assessment. Any significant changes to the electrical load,
+                operating hours, or installation conditions may require
+                a revised engineering assessment.
+
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="alert alert-success mt-3">
+
+    <div class="row align-items-center">
+
+        <div class="col-md-9">
+
+            <h6 class="mb-1">
+
+                <i class="bi bi-check-circle-fill"></i>
+
+                Engineering Report Successfully Generated
+
+            </h6>
+
+            <small>
+
+                This report reflects the latest engineering calculations,
+                equipment recommendations and bill of materials for this
+                assessment.
+
+            </small>
+
+        </div>
+
+        <div class="col-md-3 text-end">
+
+            <span class="badge bg-success fs-6">
+
+                {{ assessment.status }}
+
+            </span>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Report Toolbar -->
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+
+    <a
+        href="{% url 'audits:detail' assessment.pk %}"
+        class="btn btn-outline-secondary">
+
+        <i class="bi bi-arrow-left"></i>
+
+        Back to Assessment
+
+    </a>
+
+    <div>
+
+        <button
+            onclick="window.print()"
+            class="btn btn-outline-dark">
+
+            <i class="bi bi-printer"></i>
+
+            Print
+
+        </button>
+
+        <a
+            href="{% url 'reports:pdf' assessment.pk %}"
+            class="btn btn-danger">
+
+            <i class="bi bi-file-earmark-pdf"></i>
+
+            Download PDF
+
+        </a>
+
+    </div>
+
+</div>

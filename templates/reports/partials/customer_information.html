@@ -1,0 +1,163 @@
+<div class="card shadow-sm border-0 mb-4">
+
+    <div class="card-header bg-success text-white">
+
+        <h5 class="mb-0">
+
+            <i class="bi bi-person-vcard-fill"></i>
+
+            Customer Information
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <table class="table table-bordered table-sm align-middle mb-0">
+
+            <tbody>
+
+                <tr>
+
+                    <th width="25%">
+
+                        Customer Name
+
+                    </th>
+
+                    <td>
+
+                        {{ assessment.customer.full_name }}
+
+                    </td>
+
+                </tr>
+
+                {% if assessment.customer.company_name %}
+
+                <tr>
+
+                    <th>
+
+                        Company
+
+                    </th>
+
+                    <td>
+
+                        {{ assessment.customer.company_name }}
+
+                    </td>
+
+                </tr>
+
+                {% endif %}
+
+                <tr>
+
+                    <th>
+
+                        Phone Number
+
+                    </th>
+
+                    <td>
+
+                        {{ assessment.customer.phone }}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+
+                        Email Address
+
+                    </th>
+
+                    <td>
+
+                        {{ assessment.customer.email }}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+
+                        Address
+
+                    </th>
+
+                    <td>
+
+                        {{ assessment.customer.address }}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+
+                        State
+
+                    </th>
+
+                    <td>
+
+                        {{ assessment.customer.state }}
+
+                    </td>
+
+                </tr>
+
+                <tr>
+
+                    <th>
+
+                        Local Government
+
+                    </th>
+
+                    <td>
+
+                        {{ assessment.customer.lga }}
+
+                    </td>
+
+                </tr>
+
+                {% if assessment.customer.area %}
+
+                <tr>
+
+                    <th>
+
+                        Area / District
+
+                    </th>
+
+                    <td>
+
+                        {{ assessment.customer.area }}
+
+                    </td>
+
+                </tr>
+
+                {% endif %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
