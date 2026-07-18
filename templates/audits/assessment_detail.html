@@ -12,13 +12,13 @@ Assessment Workspace
 
 <div class="row mb-4">
 
-    {% include "components/metric_card.html" with title="Connected Load" value=connected_load icon="bi-lightning-fill" footer="Watts" %}
+    {% include "components/cards/metric_card.html" with title="Connected Load" value=connected_load icon="bi-lightning-fill" footer="Watts" %}
 
-    {% include "components/metric_card.html" with title="Daily Energy" value=daily_energy icon="bi-battery-full" footer="Wh/day" %}
+    {% include "components/cards/metric_card.html" with title="Daily Energy" value=daily_energy icon="bi-battery-full" footer="Wh/day" %}
 
-    {% include "components/metric_card.html" with title="Peak Load" value=peak_load icon="bi-speedometer2" footer="Watts" %}
+    {% include "components/cards/metric_card.html" with title="Peak Load" value=peak_load icon="bi-speedometer2" footer="Watts" %}
 
-    {% include "components/metric_card.html" with title="Appliances" value=total_appliances icon="bi-list-ul" footer="Connected" %}
+    {% include "components/cards/metric_card.html" with title="Appliances" value=total_appliances icon="bi-list-ul" footer="Connected" %}
 
 </div>
 
@@ -98,11 +98,15 @@ Assessment Workspace
     <a
         href="{% url 'reports:detail' assessment.pk %}"
         class="btn btn-primary">
-
         <i class="bi bi-file-earmark-text"></i>
-
         Generate Report
 
+    </a>
+
+    <a href="{% url 'quotations:generate' assessment.pk %}"
+       class="btn btn-success">
+        <i class="bi bi-file-earmark-text"></i>
+        Generate Quotation
     </a>
 
 </div>

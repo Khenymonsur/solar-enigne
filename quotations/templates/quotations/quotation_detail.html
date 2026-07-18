@@ -1,0 +1,233 @@
+{% extends "layouts/base.html" %}
+{% load humanize %}
+
+{% block title %}Quotation {{ quotation.quotation_no }}{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2>{{ quotation.quotation_no }}</h2>
+            <p class="text-muted mb-0">
+                Generated quotation for {{ quotation.customer }}
+            </p>
+        </div>
+
+        <div>
+
+            <a href="{% url 'quotations:update' quotation.pk %}"
+               class="btn btn-warning">
+
+                <i class="bi bi-pencil"></i>
+                Edit
+
+            </a>
+
+            <a href="{% url 'quotations:delete' quotation.pk %}"
+               class="btn btn-danger">
+
+                <i class="bi bi-trash"></i>
+                Delete
+
+            </a>
+
+            <a
+                href="{% url 'quotations:pdf' quotation.pk %}"
+                class="btn btn-primary"
+                target="_blank">
+
+                <i class="bi bi-file-earmark-pdf"></i>
+
+                PDF
+
+            </a>
+
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm mb-3">
+
+                <div class="card-header">
+                    Customer Information
+                </div>
+
+                <div class="card-body">
+
+                    <p><strong>Customer:</strong> {{ quotation.customer }}</p>
+
+                    <p><strong>Assessment:</strong> {{ quotation.assessment }}</p>
+
+                    <p><strong>Status:</strong> {{ quotation.get_status_display }}</p>
+
+                    <p><strong>Issue Date:</strong> {{ quotation.issue_date }}</p>
+
+                    <p><strong>Valid Until:</strong> {{ quotation.valid_until }}</p>
+
+                </div>
+
+            </div>
+
+
+        <div class="card shadow-sm mb-4">
+
+    <div class="card-header">
+        <strong>Quotation Items</strong>
+    </div>
+
+    <div class="table-responsive">
+
+        <table class="table table-bordered table-hover mb-0 align-middle">
+
+            <thead class="table-light">
+
+                <tr>
+
+                    <th style="width:60px;">#</th>
+
+                    <th>Category</th>
+
+                    <th>Description</th>
+
+                    <th>Specification</th>
+
+                    <th class="text-center">Qty</th>
+
+                    <th class="text-end">Unit Price</th>
+
+                    <th class="text-end">Total</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for item in quotation.items.all %}
+
+                <tr>
+
+                    <td>{{ forloop.counter }}</td>
+
+                    <td>{{ item.category }}</td>
+
+                    <td>{{ item.description }}</td>
+
+                    <td>{{ item.specification }}</td>
+
+                    <td class="text-center">
+                        {{ item.quantity }}
+                    </td>
+
+                    <td class="text-end">
+                        ₦{{ item.unit_price|floatformat:2|intcomma }}
+                    </td>
+
+                    <td class="text-end fw-bold">
+                        ₦{{ item.total|floatformat:2|intcomma }}
+                    </td>
+
+                </tr>
+
+            {% empty %}
+
+                <tr>
+
+                    <td colspan="7" class="text-center text-muted py-4">
+
+                        No quotation items available.
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+
+
+        </div>
+
+        <div class="col-lg-6">
+
+            <div class="card shadow-sm mb-3">
+
+                <div class="card-header">
+                    Financial Summary
+                </div>
+
+                <div class="card-body">
+
+                    <p>
+                        <strong>Subtotal:</strong>
+
+                        ₦{{ quotation.subtotal|floatformat:2|intcomma }}
+                    </p>
+
+                    <p>
+                        <strong>Installation:</strong>
+
+                        ₦{{ quotation.installation_cost|floatformat:2|intcomma }}
+                    </p>
+
+                    <p>
+                        <strong>Transport:</strong>
+
+                        ₦{{ quotation.transport_cost|floatformat:2|intcomma }}
+                    </p>
+
+                    <p>
+                        <strong>VAT:</strong>
+
+                        ₦{{ quotation.vat|floatformat:2|intcomma }}
+                    </p>
+
+                    <p>
+                        <strong>Discount:</strong>
+
+                        ₦{{ quotation.discount|floatformat:2|intcomma }}
+                    </p>
+
+                    <hr>
+
+                    <div class="alert alert-primary">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <strong class="fs-5">
+                                Grand Total
+                            </strong>
+
+                            <strong class="fs-4">
+                                ₦{{ quotation.grand_total|floatformat:2|intcomma }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

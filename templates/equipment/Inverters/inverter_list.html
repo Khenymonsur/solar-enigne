@@ -11,13 +11,13 @@
 <!-- Metric Cards -->
 <div class="row mb-4">
 
-        {% include "components/metric_card.html" with title="Total Inverters" value=page_obj.paginator.count icon="bi-lightning-charge-fill" footer="Registered Inverters" %}
+        {% include "components/cards/metric_card.html" with title="Total Inverters" value=page_obj.paginator.count icon="bi-lightning-charge-fill" footer="Registered Inverters" %}
 
-        {% include "components/metric_card.html" with title="Manufacturers" value=manufacturers_count icon="bi-building" footer="Active Brands" %}
+        {% include "components/cards/metric_card.html" with title="Manufacturers" value=manufacturers_count icon="bi-building" footer="Active Brands" %}
 
-        {% include "components/metric_card.html" with title="Active Inverters" value=active_count icon="bi-check-circle-fill" footer="Available Products" %}
+        {% include "components/cards/metric_card.html" with title="Active Inverters" value=active_count icon="bi-check-circle-fill" footer="Available Products" %}
 
-        {% include "components/metric_card.html" with title="Largest Capacity" value=max_capacity icon="bi-battery-half" footer="kVA" %}
+        {% include "components/cards/metric_card.html" with title="Largest Capacity" value=max_capacity icon="bi-battery-half" footer="kVA" %}
 
 
 </div>

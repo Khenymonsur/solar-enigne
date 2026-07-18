@@ -1,0 +1,121 @@
+{% extends "layouts/customer_base.html" %}
+
+{% block title %}
+Energy Assessment | Step 1
+{% endblock %}
+
+{% block customer_content %}
+
+<div class="container py-4">
+
+    {% include "includes/customer/progress.html" with step=1 total_steps=5 progress=20 %}
+
+    <div class="row g-4">
+
+        <!-- Main Form -->
+
+        <div class="col-lg-8">
+
+            <div class="customer-card">
+
+                <div class="card-body p-4">
+
+                    {% include "includes/customer/page_header.html" with title="Tell us about yourself" subtitle="We'll use this information to prepare your preliminary solar assessment." %}
+
+                    <form method="post" novalidate>
+
+                        {% csrf_token %}
+
+                        <div class="row">
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label fw-semibold">
+                                    {{ form.full_name.label }}
+                                </label>
+
+                                {{ form.full_name }}
+
+                                <div class="text-danger small">
+                                    {{ form.full_name.errors }}
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label fw-semibold">
+                                    {{ form.email.label }}
+                                </label>
+
+                                {{ form.email }}
+
+                                <div class="text-danger small">
+                                    {{ form.email.errors }}
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label fw-semibold">
+                                    Mobile Number
+                                </label>
+
+                                {{ form.phone }}
+
+                                <div class="text-danger small">
+                                    {{ form.phone.errors }}
+                                </div>
+
+                            </div>
+
+                            <div class="col-md-6 mb-4">
+
+                                <label class="form-label fw-semibold">
+                                    WhatsApp Number
+                                </label>
+
+                                {{ form.whatsapp }}
+
+                                <div class="text-danger small">
+                                    {{ form.whatsapp.errors }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="border-top pt-4 mt-2">
+
+                            <small class="text-muted">
+
+                                🔒 Your information is kept confidential and is only used to prepare your solar assessment.
+
+                            </small>
+
+                        </div>
+
+                        {% include "includes/customer/wizard_buttons.html" with next_text="Continue to Property Information" %}
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Help Panel -->
+
+        <div class="col-lg-4">
+
+            {% include "includes/customer/help_card.html" with title="Why do we need this?" body="Your contact information allows our engineering team to prepare an accurate proposal and communicate with you after your assessment." tip="The assessment usually takes less than 5 minutes." %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -41,40 +41,44 @@
 
 }
 
-.logo{
+.sidebar-logo{
+    width:24px;
+    height:24px;
+    object-fit:contain;
+    display:block;
+    flex-shrink:0;
+}}
 
+.logo div{
     display:flex;
-
-    align-items:center;
-
-    gap:15px;
-
-    text-decoration:none;
-
-    color:white;
-
-}
-
-.logo i{
-
-    font-size:34px;
-
-    color:#FFD54F;
+    flex-direction:column;
+    justify-content:center;
 
 }
 
 .logo h4{
-
     margin:0;
-
     font-size:18px;
+    font-weight:700;
+    line-height:1.1;
 
+}
+
+.logo small{
+    margin-top:2px;
+    color:#ddd;
+    font-size:13px;
+
+}
+
+.logo h4{
+    margin:0;
+    font-size:18px;
     font-weight:700;
 
 }
 
 .logo small{
-
     color:#ddd;
 
 }

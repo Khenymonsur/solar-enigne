@@ -53,6 +53,12 @@ INSTALLED_APPS = [
     "api",
 
     "django.contrib.humanize",
+    "customer_portal",
+    "website",
+    "core",
+    "crm",
+    "quotations",
+
 ]
 
 # -------------------------------------------------

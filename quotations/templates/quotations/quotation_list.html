@@ -1,0 +1,141 @@
+{% extends "layouts/base.html" %}
+{% load humanize %}
+
+{% block title %}Quotations{% endblock %}
+
+{% block content %}
+
+{% include "components/page_header.html" with title="Quotation Dashboard" subtitle="Manage customer quotations" %}
+
+<div class="d-flex justify-content-end mb-3">
+
+    <div class="alert alert-info">
+        <i class="bi bi-info-circle"></i>
+        Quotations are generated automatically from completed assessments.
+    </div>
+
+</div>
+
+{% include "components/forms/search_box.html" %}
+
+<div class="row">
+
+    {% include "components/cards/metric_card.html" with title="Quotations" value=quotation_count icon="bi-file-earmark-text" footer="Total Quotations" %}
+
+    {% include "components/cards/metric_card.html" with title="Draft" value=draft_count icon="bi-pencil-square" footer="Awaiting Review" %}
+
+    {% include "components/cards/metric_card.html" with title="Sent" value=sent_count icon="bi-send-fill" footer="Sent to Customers" %}
+
+    {% include "components/cards/metric_card.html" with title="Accepted" value=accepted_count icon="bi-check-circle-fill" footer="Approved Quotations" %}
+
+</div>
+
+<div class="card shadow-sm">
+
+    <div class="table-responsive">
+
+        <table class="table table-hover align-middle">
+
+            <thead>
+
+                <tr>
+
+                    <th>No</th>
+                    <th>Customer</th>
+                    <th>Assessment</th>
+                    <th>Status</th>
+                    <th>Date</th>
+                    <th class="text-end">Total</th>
+                    <th class="text-center">Actions</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for quotation in quotations %}
+
+                <tr>
+
+                    <td>
+
+                        <strong>{{ quotation.quotation_no }}</strong>
+
+                    </td>
+
+                    <td>{{ quotation.customer.full_name }}</td>
+
+                    <td>{{ quotation.assessment.project_name }}</td>
+
+                    <td>
+
+                        <span class="badge bg-primary">
+
+                            {{ quotation.get_status_display }}
+
+                        </span>
+
+                    </td>
+
+                    <td>{{ quotation.issue_date }}</td>
+
+                    <td class="text-end">
+
+                        ₦{{ quotation.grand_total|floatformat:2|intcomma }}
+
+                    </td>
+
+                    <td class="text-center">
+
+                        <a
+                           href="{% url 'quotations:detail' quotation.pk %}"
+                           class="btn btn-sm btn-outline-primary">
+
+                            <i class="bi bi-eye"></i>
+
+                        </a>
+
+                        <a
+                           href="{% url 'quotations:update' quotation.pk %}"
+                           class="btn btn-sm btn-outline-warning">
+
+                            <i class="bi bi-pencil"></i>
+
+                        </a>
+
+                        <a
+                           href="{% url 'quotations:delete' quotation.pk %}"
+                           class="btn btn-sm btn-outline-danger">
+
+                            <i class="bi bi-trash"></i>
+
+                        </a>
+
+                    </td>
+
+                </tr>
+
+            {% empty %}
+
+                <tr>
+
+                    <td colspan="7" class="text-center text-muted">
+
+                        No quotations found.
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}

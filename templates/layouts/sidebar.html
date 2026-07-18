@@ -1,3 +1,5 @@
+{% load static %}
+
 <div id="sidebar" class="sidebar">
 
     <!-- Logo -->
@@ -6,15 +8,10 @@
 
         <a href="{% url 'dashboard:index' %}" class="logo">
 
-            <i class="bi bi-lightning-charge-fill"></i>
-
-            <div>
-
-                <h4>Cloud Energy</h4>
-
-                <small>Solar Engineering</small>
-
-            </div>
+            <img
+                src="{% static 'images/logo.png' %}"
+                alt="Cloud Energy"
+                class="sidebar-logo-full">
 
         </a>
 
@@ -161,7 +158,7 @@
 
         <li>
 
-            <a href="#">
+            <a href="{% url 'quotations:list' %}">
 
                 <i class="bi bi-file-earmark-text"></i>
 

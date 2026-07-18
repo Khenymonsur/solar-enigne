@@ -10,13 +10,13 @@ Assessments
 
 <div class="row mb-4">
 
-    {% include "components/metric_card.html" with title="Assessments" value=assessment_count icon="bi-clipboard-data" footer="Total Projects" %}
+    {% include "components/cards/metric_card.html" with title="Assessments" value=assessment_count icon="bi-clipboard-data" footer="Total Projects" %}
 
-    {% include "components/metric_card.html" with title="Draft" value=draft_count icon="bi-pencil-square" footer="Pending Work" %}
+    {% include "components/cards/metric_card.html" with title="Draft" value=draft_count icon="bi-pencil-square" footer="Pending Work" %}
 
-    {% include "components/metric_card.html" with title="Completed" value=completed_count icon="bi-check-circle-fill" footer="Finished Projects" %}
+    {% include "components/cards/metric_card.html" with title="Completed" value=completed_count icon="bi-check-circle-fill" footer="Finished Projects" %}
 
-    {% include "components/metric_card.html" with title="Reports" value=report_count icon="bi-file-earmark-pdf-fill" footer="Generated Reports" %}
+    {% include "components/cards/metric_card.html" with title="Reports" value=report_count icon="bi-file-earmark-pdf-fill" footer="Generated Reports" %}
 
 </div>
 

@@ -1,0 +1,223 @@
+{% extends "layouts/customer_base.html" %}
+
+{% block title %}
+Your Preliminary Solar Assessment
+{% endblock %}
+
+{% block customer_content %}
+
+<div class="container py-5">
+
+    <div class="text-center mb-5">
+
+        <span class="badge bg-success px-3 py-2 mb-3">
+
+            Preliminary Assessment Complete
+
+        </span>
+
+        <h1 class="fw-bold display-5">
+
+            Your Solar Recommendation Is Ready
+
+        </h1>
+
+        <p class="lead text-muted">
+
+            Based on the information you provided, we've estimated the ideal
+            solar system for your property.
+
+            Create your free account to unlock the complete engineering report.
+
+        </p>
+
+    </div>
+
+    <div class="row g-4">
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <small>Connected Load</small>
+
+                    <h3>
+
+                        {{ estimate.connected_load }} W
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <small>Daily Energy</small>
+
+                    <h3>
+
+                        {{ estimate.daily_energy }} kWh
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <div class="card shadow-sm">
+
+                <div class="card-body">
+
+                    <small>Recommended Inverter</small>
+
+                    <h3>
+
+                        {{ estimate.recommended_inverter }} kVA
+
+                    </h3>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="row mt-4 g-4">
+
+        <div class="col-md-6">
+
+            <div class="card border-success">
+
+                <div class="card-body">
+
+                    <small>
+
+                        Battery Storage
+
+                    </small>
+
+                    <h2>
+
+                        {{ estimate.recommended_battery }} kWh
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <div class="card border-warning">
+
+                <div class="card-body">
+
+                    <small>
+
+                        Solar Capacity
+
+                    </small>
+
+                    <h2>
+
+                        {{ estimate.recommended_solar }} kW
+
+                    </h2>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="card mt-5 shadow">
+
+        <div class="card-body text-center">
+
+            <h3>
+
+                Estimated Investment
+
+            </h3>
+
+            <h1 class="display-6">
+
+                ₦{{ estimate.budget.low|floatformat:0 }}
+
+                -
+
+                ₦{{ estimate.budget.high|floatformat:0 }}
+
+            </h1>
+
+            <hr>
+
+            <p>
+
+                This is a preliminary estimate based on
+                the information you supplied.
+
+            </p>
+
+            <p>
+
+                Create a free account to receive:
+
+            </p>
+
+            <ul class="list-unstyled">
+
+                <li>✔ Full Engineering Design</li>
+
+                <li>✔ Bill of Materials</li>
+
+                <li>✔ Official Quotation</li>
+
+                <li>✔ Engineer Consultation</li>
+
+                <li>✔ Project Tracking</li>
+
+            </ul>
+
+            <div class="mt-4">
+
+                <a href="{% url 'customer_portal:register' %}"
+                   class="btn btn-success btn-lg">
+                    Create Free Account
+                </a>
+
+                <a href="{% url 'customer_portal:login' %}"
+                   class="btn btn-outline-primary btn-lg">
+
+                    Login
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

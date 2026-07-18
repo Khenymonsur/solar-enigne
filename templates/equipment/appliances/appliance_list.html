@@ -8,13 +8,13 @@
 
 <div class="row mb-4">
 
-        {% include "components/metric_card.html" with title="Total Appliances" value=page_obj.paginator.count icon="bi-lightbulb-fill" footer="Registered Appliances" %}
+        {% include "components/cards/metric_card.html" with title="Total Appliances" value=page_obj.paginator.count icon="bi-lightbulb-fill" footer="Registered Appliances" %}
 
-        {% include "components/metric_card.html" with title="Categories" value=categories_count icon="bi-grid-fill" footer="Appliance Groups" %}
+        {% include "components/cards/metric_card.html" with title="Categories" value=categories_count icon="bi-grid-fill" footer="Appliance Groups" %}
 
-        {% include "components/metric_card.html" with title="Active" value=active_count icon="bi-check-circle-fill" footer="Available Appliances" %}
+        {% include "components/cards/metric_card.html" with title="Active" value=active_count icon="bi-check-circle-fill" footer="Available Appliances" %}
 
-        {% include "components/metric_card.html" with title="Average Wattage" value=average_wattage|floatformat:0 icon="bi-lightning-charge-fill" footer="Watts" %}
+        {% include "components/cards/metric_card.html" with title="Average Wattage" value=average_wattage|floatformat:0 icon="bi-lightning-charge-fill" footer="Watts" %}
 
 </div>
 

@@ -10,13 +10,13 @@
 
 <div class="row mb-4">
 
-        {% include "components/metric_card.html" with title="Total Controllers" value=page_obj.paginator.count icon="bi-cpu" footer="Registered Controllers" %}
+        {% include "components/cards/metric_card.html" with title="Total Controllers" value=page_obj.paginator.count icon="bi-cpu" footer="Registered Controllers" %}
 
-        {% include "components/metric_card.html" with title="Manufacturers" value=manufacturers_count icon="bi-building" footer="Active Brands" %}
+        {% include "components/cards/metric_card.html" with title="Manufacturers" value=manufacturers_count icon="bi-building" footer="Active Brands" %}
 
-        {% include "components/metric_card.html" with title="Active Controllers" value=active_count icon="bi-check-circle-fill" footer="Available Products" %}
+        {% include "components/cards/metric_card.html" with title="Active Controllers" value=active_count icon="bi-check-circle-fill" footer="Available Products" %}
 
-        {% include "components/metric_card.html" with title="Highest Current" value=max_current icon="bi-lightning-charge-fill" footer="Amps" %}
+        {% include "components/cards/metric_card.html" with title="Highest Current" value=max_current icon="bi-lightning-charge-fill" footer="Amps" %}
 
 </div>
 

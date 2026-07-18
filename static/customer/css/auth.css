@@ -1,0 +1,264 @@
+/* ==========================================================
+   AUTHENTICATION
+========================================================== */
+
+.auth-section{
+
+    padding:70px 0;
+
+}
+
+.auth-card{
+
+    background:#fff;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    box-shadow:var(--shadow);
+
+}
+
+
+.auth-form{
+
+    padding:60px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    height:100%;
+
+}
+
+.auth-form h3{
+
+    font-weight:700;
+
+    margin-bottom:10px;
+
+    font-size:2rem;
+
+    color:var(--primary);
+
+}
+
+.auth-links{
+
+    text-align:center;
+
+}
+
+.auth-links a{
+
+    text-decoration:none;
+
+    color:var(--primary);
+
+    font-weight:500;
+
+}
+
+.auth-links a:hover{
+
+    text-decoration:underline;
+
+}
+
+.auth-form p{
+
+    color:var(--muted);
+
+}
+
+/* ==========================================================
+   AUTH FORM ENHANCEMENTS
+========================================================== */
+
+.auth-form .form-control{
+
+    min-height:52px;
+
+    border-radius:12px;
+
+    border:1px solid var(--border);
+
+    transition:.25s;
+
+}
+
+.auth-form .form-control:focus{
+
+    border-color:var(--primary);
+
+    box-shadow:0 0 0 .2rem rgba(15,76,129,.15);
+
+}
+
+.auth-form label{
+
+    font-weight:600;
+
+    margin-bottom:8px;
+
+    color:var(--text);
+
+}
+
+.auth-form .btn{
+
+    min-height:52px;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+}
+
+.auth-divider{
+
+    position:relative;
+
+    text-align:center;
+
+    margin:30px 0;
+
+}
+
+.auth-divider::before{
+
+    content:"";
+
+    position:absolute;
+
+    left:0;
+
+    top:50%;
+
+    width:100%;
+
+    height:1px;
+
+    background:var(--border);
+
+}
+
+.auth-divider span{
+
+    position:relative;
+
+    background:#fff;
+
+    padding:0 15px;
+
+    color:var(--muted);
+
+    font-size:.9rem;
+
+}
+
+.auth-logo{
+
+    font-size:3rem;
+
+}
+
+.auth-title{
+
+    font-size:2.4rem;
+
+    font-weight:700;
+
+    margin-top:20px;
+
+    color:var(--text);
+
+}
+
+.auth-subtitle{
+
+    color:var(--muted);
+
+    font-size:1rem;
+
+    margin-top:12px;
+
+    margin-bottom:0;
+
+}
+
+.auth-card{
+
+    border:none;
+
+    border-radius:24px;
+
+    box-shadow:0 15px 45px rgba(0,0,0,.08);
+
+    background:#fff;
+
+}
+
+.auth-form{
+
+    padding:50px;
+
+}
+
+/* ==========================================================
+   CUSTOMER SUMMARY
+========================================================== */
+
+.customer-summary{
+
+    background:#F8FAFC;
+
+    border:1px solid var(--border);
+
+    border-radius:16px;
+
+    padding:24px;
+
+    margin-bottom:20px;
+
+}
+
+.summary-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:12px 0;
+
+    border-bottom:1px solid #E5E7EB;
+
+}
+
+.summary-item:last-child{
+
+    border-bottom:none;
+
+}
+
+.summary-item span{
+
+    color:var(--muted);
+
+    font-size:.95rem;
+
+}
+
+.summary-item strong{
+
+    color:var(--text);
+
+    font-weight:600;
+
+}

@@ -1,0 +1,95 @@
+<nav class="navbar navbar-expand-lg customer-navbar">
+
+    <div class="container">
+
+        <a class="navbar-brand fw-bold"
+           href="{% url 'customer_portal:dashboard' %}">
+
+            <i class="bi bi-sun-fill text-warning me-2"></i>
+
+            Cloud Energy
+
+        </a>
+
+        <div class="ms-auto">
+
+            {% if user.is_authenticated %}
+
+                <div class="dropdown">
+
+                    <button
+                        class="btn btn-light rounded-pill px-4"
+                        data-bs-toggle="dropdown">
+
+                        <i class="bi bi-person-circle me-2"></i>
+
+                        {{ user.first_name|default:user.username }}
+
+                    </button>
+
+                    <ul class="dropdown-menu dropdown-menu-end">
+
+                        <li>
+
+                            <a class="dropdown-item"
+                               href="#">
+
+                                My Profile
+
+                            </a>
+
+                        </li>
+
+                        <li>
+
+                            <a class="dropdown-item"
+                               href="#">
+
+                                Notifications
+
+                            </a>
+
+                        </li>
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <li>
+
+                            <a class="dropdown-item text-danger"
+                               href="{% url 'accounts:logout' %}">
+
+                                Logout
+
+                            </a>
+
+                        </li>
+
+                    </ul>
+
+                </div>
+
+            {% else %}
+
+                <a
+                    href="{% url 'customer_portal:login' %}"
+                    class="btn btn-outline-primary me-2">
+
+                    Login
+
+                </a>
+
+                <a
+                    href="{% url 'customer_portal:register' %}"
+                    class="btn btn-primary">
+
+                    Register
+
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</nav>

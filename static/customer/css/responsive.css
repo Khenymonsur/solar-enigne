@@ -1,0 +1,33 @@
+@media (max-width:991px){
+
+    .auth-info{
+
+        padding:40px 30px;
+
+        text-align:center;
+
+    }
+
+    .auth-form{
+
+        padding:35px;
+
+    }
+
+}
+
+@media (max-width:576px){
+
+    .auth-form{
+
+        padding:25px;
+
+    }
+
+    .auth-info h2{
+
+        font-size:1.6rem;
+
+    }
+
+}

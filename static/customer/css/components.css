@@ -1,0 +1,101 @@
+/* ==========================================================
+   PRIMARY BUTTON
+========================================================== */
+
+.btn-primary{
+
+    background:var(--primary);
+
+    border:1px solid var(--primary);
+
+    color:#fff;
+
+    border-radius:12px;
+
+    font-weight:600;
+
+    transition:.25s ease;
+
+
+}
+
+.btn-primary:hover{
+
+    background:var(--primary-dark);
+
+    border-color:var(--primary-dark);
+
+    transform:translateY(-2px);
+
+    box-shadow:0 10px 25px rgba(21,122,110,.18);
+
+}
+
+.btn-outline-primary{
+
+    color:var(--primary);
+
+    border:1px solid var(--primary);
+
+    border-radius:12px;
+
+}
+
+.btn-outline-primary:hover{
+
+    background:var(--primary);
+
+    color:#fff;
+
+}
+
+/* ==========================================================
+   CUSTOMER CARDS
+========================================================== */
+
+.customer-card{
+
+    background:#fff;
+
+    border:none;
+
+    border-radius:22px;
+
+    box-shadow:0 10px 35px rgba(0,0,0,.06);
+
+    padding:35px;
+
+}
+.section-title{
+
+    font-size:2rem;
+
+    font-weight:700;
+
+    color:var(--text);
+
+    margin-bottom:10px;
+
+}
+
+.section-subtitle{
+
+    color:var(--muted);
+
+    font-size:1rem;
+
+    margin-bottom:30px;
+
+}
+
+.btn-lg{
+
+    min-height:54px;
+
+    border-radius:12px;
+
+    font-size:1rem;
+
+    font-weight:600;
+
+}

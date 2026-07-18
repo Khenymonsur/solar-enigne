@@ -5,39 +5,69 @@ from django.urls import include, path
 
 urlpatterns = [
 
+    # -------------------------
+    # Django Administration
+    # -------------------------
     path(
         "admin/",
         admin.site.urls,
     ),
 
+    # -------------------------
+    # Public Website
+    # -------------------------
     path(
         "",
-        include("dashboard.urls"),
+        include("website.urls"),
     ),
 
+    # -------------------------
+    # Customer Portal
+    # -------------------------
+    path(
+        "portal/",
+        include("customer_portal.urls"),
+    ),
+
+    # -------------------------
+    # Authentication
+    # -------------------------
     path(
         "accounts/",
         include("accounts.urls"),
     ),
 
+    # -------------------------
+    # Staff Portal
+    # -------------------------
     path(
-        "customers/",
+        "staff/",
+        include("dashboard.urls"),
+    ),
+
+    path(
+        "staff/customers/",
         include("customers.urls"),
     ),
 
     path(
-        "assessments/",
+        "staff/assessments/",
         include("audits.urls"),
     ),
 
     path(
-        "equipment/",
+        "staff/equipment/",
         include("equipment.urls"),
     ),
 
     path(
-        "reports/",
+        "staff/reports/",
         include("reports.urls"),
+    ),
+
+    path(
+        "staff/quotations/",
+        include(("quotations.urls", "quotations"), namespace="quotations"),
     ),
 
 ]

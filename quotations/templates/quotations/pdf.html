@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>{{ quotation.quotation_no }}</title>
+
+    <style>
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            font-size:13px;
+            color:#333;
+            margin:35px;
+        }
+
+        h1,h2,h3,h4,p{
+            margin:0;
+        }
+
+        .header{
+            width:100%;
+            margin-bottom:30px;
+        }
+
+        .left{
+            float:left;
+            width:60%;
+        }
+
+        .right{
+            float:right;
+            width:35%;
+            text-align:right;
+        }
+
+        .clearfix{
+            clear:both;
+        }
+
+        .title{
+            font-size:28px;
+            font-weight:bold;
+            color:#0d6efd;
+        }
+
+        .section{
+            margin-top:25px;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:10px;
+        }
+
+        table th{
+
+            background:#0d6efd;
+            color:white;
+            padding:8px;
+            border:1px solid #ddd;
+            text-align:left;
+        }
+
+        table td{
+
+            padding:8px;
+            border:1px solid #ddd;
+        }
+
+        .text-center{
+            text-align:center;
+        }
+
+        .text-end{
+            text-align:right;
+        }
+
+        .summary{
+
+            width:45%;
+            float:right;
+            margin-top:20px;
+        }
+
+        .summary td{
+
+            border:none;
+            padding:6px;
+        }
+
+        .grand{
+
+            font-size:18px;
+            font-weight:bold;
+            background:#f3f7ff;
+        }
+
+        .footer{
+
+            margin-top:80px;
+            text-align:center;
+            font-size:11px;
+            color:#777;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+    <div class="left">
+
+        <div class="title">
+
+            Cloud Energy Photoelectric Ltd
+
+        </div>
+
+        <p>Solar Engineering Division</p>
+
+        <p>Lagos, Nigeria</p>
+
+        <p>info@cloudenergy.com.ng</p>
+
+        <p>www.cloudenergy.com.ng</p>
+
+    </div>
+
+    <div class="right">
+
+        <h2>QUOTATION</h2>
+
+        <p><strong>No:</strong> {{ quotation.quotation_no }}</p>
+
+        <p><strong>Issue Date:</strong> {{ quotation.issue_date }}</p>
+
+        <p><strong>Valid Until:</strong> {{ quotation.valid_until }}</p>
+
+        <p><strong>Status:</strong> {{ quotation.get_status_display }}</p>
+
+    </div>
+
+    <div class="clearfix"></div>
+
+</div>
+
+<hr>
+
+<div class="section">
+
+    <h3>Customer Information</h3>
+
+    <table>
+
+        <tr>
+
+            <td width="30%"><strong>Customer</strong></td>
+
+            <td>{{ quotation.customer }}</td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Assessment</strong></td>
+
+            <td>{{ quotation.assessment }}</td>
+
+        </tr>
+
+    </table>
+
+</div>
+
+<div class="section">
+
+    <h3>Equipment Schedule</h3>
+
+    <table>
+
+        <thead>
+
+        <tr>
+
+            <th>#</th>
+
+            <th>Category</th>
+
+            <th>Description</th>
+
+            <th>Specification</th>
+
+            <th class="text-center">Qty</th>
+
+            <th class="text-end">Unit Price</th>
+
+            <th class="text-end">Total</th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for item in quotation.items.all %}
+
+        <tr>
+
+            <td>{{ forloop.counter }}</td>
+
+            <td>{{ item.category }}</td>
+
+            <td>{{ item.description }}</td>
+
+            <td>{{ item.specification }}</td>
+
+            <td class="text-center">
+
+                {{ item.quantity }}
+
+            </td>
+
+            <td class="text-end">
+
+                ₦{{ item.unit_price|floatformat:2 }}
+
+            </td>
+
+            <td class="text-end">
+
+                ₦{{ item.total|floatformat:2 }}
+
+            </td>
+
+        </tr>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<div class="summary">
+
+    <table>
+
+        <tr>
+
+            <td><strong>Subtotal</strong></td>
+
+            <td class="text-end">
+
+                ₦{{ quotation.subtotal|floatformat:2 }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Installation</strong></td>
+
+            <td class="text-end">
+
+                ₦{{ quotation.installation_cost|floatformat:2 }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Transportation</strong></td>
+
+            <td class="text-end">
+
+                ₦{{ quotation.transport_cost|floatformat:2 }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>VAT</strong></td>
+
+            <td class="text-end">
+
+                ₦{{ quotation.vat|floatformat:2 }}
+
+            </td>
+
+        </tr>
+
+        <tr>
+
+            <td><strong>Discount</strong></td>
+
+            <td class="text-end">
+
+                ₦{{ quotation.discount|floatformat:2 }}
+
+            </td>
+
+        </tr>
+
+        <tr class="grand">
+
+            <td>Grand Total</td>
+
+            <td class="text-end">
+
+                ₦{{ quotation.grand_total|floatformat:2 }}
+
+            </td>
+
+        </tr>
+
+    </table>
+
+</div>
+
+<div class="clearfix"></div>
+
+<div class="section">
+
+    <h3>Notes</h3>
+
+    {% if quotation.notes %}
+
+        <p>{{ quotation.notes|linebreaks }}</p>
+
+    {% else %}
+
+        <p>No additional notes.</p>
+
+    {% endif %}
+
+</div>
+
+<div class="footer">
+
+    Thank you for choosing Cloud Energy Photoelectric Ltd.
+
+    <br>
+
+    This quotation was generated automatically by the Cloud Energy Solar Engineering Platform.
+
+</div>
+
+</body>
+
+</html>

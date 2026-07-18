@@ -1,0 +1,7 @@
+.customer-card-header{
+    background: var(--primary);
+    color:#fff;
+    border-bottom:none;
+    padding:1rem 1.25rem;
+    font-weight:600;
+}

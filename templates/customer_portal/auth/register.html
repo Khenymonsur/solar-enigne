@@ -1,0 +1,260 @@
+{% extends "layouts/customer_base.html" %}
+
+{% block title %}
+Create Your Free Account
+{% endblock %}
+
+{% block customer_content %}
+
+<div class="container py-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-6">
+
+            <div class="customer-card">
+
+                <div class="card-body p-5">
+
+                    <h2 class="mb-2">
+
+                        🎉 Assessment Completed
+
+                    </h2>
+
+                    <p class="text-muted mb-4">
+
+                        Congratulations! Your solar assessment has been completed successfully.
+
+                        Create your free account to unlock your full engineering report,
+                        professional quotation, customer dashboard, and project tracking.
+
+                    </p>
+
+                    <!-- Assessment Completed -->
+
+                    <div class="customer-summary mb-4">
+
+                        <div class="d-flex align-items-center mb-4">
+
+                            <i class="bi bi-check-circle-fill text-success fs-3 me-3"></i>
+
+                            <div>
+
+                                <h5 class="mb-1">
+
+                                    Assessment Completed
+
+                                </h5>
+
+                                <small class="text-muted">
+
+                                    Your contact information has been captured successfully.
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                        <div class="summary-item">
+
+                            <span>Full Name</span>
+
+                            <strong>{{ customer.full_name }}</strong>
+
+                        </div>
+
+                        <div class="summary-item">
+
+                            <span>Email Address</span>
+
+                            <strong>{{ customer.email }}</strong>
+
+                        </div>
+
+                        <div class="summary-item">
+
+                            <span>Phone Number</span>
+
+                            <strong>{{ customer.phone }}</strong>
+
+                        </div>
+
+                    </div>
+
+                    <!-- Information Notice -->
+
+                    <div class="alert alert-info mb-4">
+
+                        <i class="bi bi-info-circle-fill me-2"></i>
+
+                        Need to change your contact details?
+
+                        <a
+                            href="{% url 'customer_portal:assessment_step1' %}"
+                            class="alert-link">
+
+                            Edit Assessment
+
+                        </a>
+
+                        before creating your account.
+
+                    </div>
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+                        <!-- Password -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+
+                                Password
+
+                            </label>
+
+                            <div class="input-group">
+
+                                {{ form.password1 }}
+
+                                <button
+                                    class="btn btn-outline-secondary"
+                                    type="button"
+                                    onclick="togglePassword('id_password1', this)">
+
+                                    Show
+
+                                </button>
+
+                            </div>
+
+                            <div class="text-danger small mt-2">
+
+                                {{ form.password1.errors }}
+
+                            </div>
+
+                        </div>
+
+                        <!-- Confirm Password -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-semibold">
+
+                                Confirm Password
+
+                            </label>
+
+                            <div class="input-group">
+
+                                {{ form.password2 }}
+
+                                <button
+                                    class="btn btn-outline-secondary"
+                                    type="button"
+                                    onclick="togglePassword('id_password2', this)">
+
+                                    Show
+
+                                </button>
+
+                            </div>
+
+                            <div class="text-danger small mt-2">
+
+                                {{ form.password2.errors }}
+
+                            </div>
+
+                        </div>
+
+                        <!-- Terms -->
+
+                        <div class="form-check mb-4">
+
+                            <input
+                                class="form-check-input"
+                                type="checkbox"
+                                required
+                                id="agree">
+
+                            <label
+                                class="form-check-label"
+                                for="agree">
+
+                                I agree to the
+
+                                <a href="#">Terms of Service</a>
+
+                                and
+
+                                <a href="#">Privacy Policy</a>.
+
+                            </label>
+
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="btn btn-success btn-lg w-100">
+
+                            Create My Free Account
+
+                        </button>
+
+                    </form>
+
+                    <hr class="my-4">
+
+                    <p class="text-center mb-0">
+
+                        Already have an account?
+
+                        <a href="{% url 'customer_portal:login' %}">
+
+                            Sign In
+
+                        </a>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+function togglePassword(id, button){
+
+    const input = document.getElementById(id);
+
+    if(input.type === "password"){
+
+        input.type = "text";
+
+        button.innerHTML = "Hide";
+
+    }else{
+
+        input.type = "password";
+
+        button.innerHTML = "Show";
+
+    }
+
+}
+
+</script>
+
+{% endblock %}

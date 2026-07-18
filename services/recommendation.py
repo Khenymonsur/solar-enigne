@@ -22,8 +22,6 @@ class RecommendationEngine:
 
         connected_load = self.load.connected_load()
 
-        from decimal import Decimal
-
         connected_load_kw = (
                 connected_load / Decimal("1000")
         )

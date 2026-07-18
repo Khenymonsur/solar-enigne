@@ -22,21 +22,21 @@ Customers
 
 </div>
 
-{% include "components/search_box.html" %}
+{% include "components/forms/search_box.html" %}
 
 <div class="row">
 
-{% include "components/metric_card.html" with title="Customers" value=customer_count icon="bi-people-fill" footer="Registered Customers" %}
+{% include "components/cards/metric_card.html" with title="Customers" value=customer_count icon="bi-people-fill" footer="Registered Customers" %}
 
-{% include "components/metric_card.html" with title="Assessments" value=assessment_count icon="bi-clipboard-data-fill" footer="Total Assessments" %}
+{% include "components/cards/metric_card.html" with title="Assessments" value=assessment_count icon="bi-clipboard-data-fill" footer="Total Assessments" %}
 
-{% include "components/metric_card.html" with title="Residential" value=residential_count icon="bi-house-fill" footer="Residential Buildings" %}
+{% include "components/cards/metric_card.html" with title="Residential" value=residential_count icon="bi-house-fill" footer="Residential Buildings" %}
 
-{% include "components/metric_card.html" with title="Commercial" value=commercial_count icon="bi-building-fill" footer="Commercial Projects" %}
+{% include "components/cards/metric_card.html" with title="Commercial" value=commercial_count icon="bi-building-fill" footer="Commercial Projects" %}
 
-{% include "components/metric_card.html" with title="Industrial" value=industrial_count icon="bi-factory" footer="Industrial Projects" %}
+{% include "components/cards/metric_card.html" with title="Industrial" value=industrial_count icon="bi-factory" footer="Industrial Projects" %}
 
-{% include "components/metric_card.html" with title="Completed" value=completed_designs icon="bi-patch-check-fill" footer="Design Ready" %}
+{% include "components/cards/metric_card.html" with title="Completed" value=completed_designs icon="bi-patch-check-fill" footer="Design Ready" %}
 
 </div>
 

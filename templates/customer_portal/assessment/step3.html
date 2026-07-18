@@ -1,0 +1,177 @@
+{% extends "layouts/customer_base.html" %}
+
+{% block title %}
+Energy Assessment | Energy Requirements
+{% endblock %}
+
+{% block customer_content %}
+
+<div class="container py-4">
+
+    {% include "includes/customer/progress.html" with step=3 total_steps=5 progress=60 %}
+
+    <div class="row g-4">
+
+        <!-- Main Form -->
+
+        <div class="col-lg-8">
+
+            <div class="customer-card">
+
+                <div class="card-body p-4">
+
+                    {% include "includes/customer/page_header.html" with title="How would you like your solar system to perform?" subtitle="These questions help us estimate the battery capacity, inverter size and expected solar performance." %}
+
+                    <form method="post">
+
+                        {% csrf_token %}
+
+                        <!-- Backup Hours -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-bold">
+
+                                Desired Backup Duration
+
+                            </label>
+
+                            <p class="text-muted small">
+
+                                During a power outage, how long would you like your solar system to provide electricity before the batteries require recharging?
+
+                            </p>
+
+                            {{ form.backup_hours }}
+
+                            <div class="text-danger small">
+
+                                {{ form.backup_hours.errors }}
+
+                            </div>
+
+                        </div>
+
+                        <!-- Grid Electricity -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-bold">
+
+                                Is your property connected to the public electricity grid?
+
+                            </label>
+
+                            <p class="text-muted small">
+
+                                Select <strong>Yes</strong> if your property receives electricity from the national grid, even if the supply is not always available.
+
+                            </p>
+
+                            <div class="mt-2">
+
+                                {{ form.grid_available }}
+
+                                <div class="text-danger small">
+
+                                    {{ form.grid_available.errors }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Generator -->
+
+                        <!-- Generator -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-bold">
+
+                                Do you currently use a generator?
+
+                            </label>
+
+                            <p class="text-muted small">
+
+                                Select <strong>Yes</strong> if you regularly use a generator as an alternative source of electricity during power outages.
+
+                            </p>
+
+                            <div class="mt-2">
+
+                                {{ form.generator_available }}
+
+                                <div class="text-danger small">
+
+                                    {{ form.generator_available.errors }}
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <!-- Future Expansion -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label fw-bold">
+
+                                What would you like the solar system to power?
+
+                            </label>
+
+                            <p class="text-muted small">
+
+                                Choose whether the system should supply electricity to your entire property or only your essential appliances during outages.
+
+                            </p>
+
+                            <div class="mt-2">
+
+                                {{ form.power_scope }}
+
+                                <div class="text-danger small">
+                                    {{ form.power_scope.errors }}
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="border-top pt-4">
+
+                            <small class="text-muted">
+
+                                💡 Don't worry if you're unsure. Our engineers will review your answers and recommend the most suitable solution.
+
+                            </small>
+
+                        </div>
+
+                        {% include "includes/customer/wizard_buttons.html" with back_url="/portal/assessment/property/" next_text="Continue to Appliance Schedule" %}
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Help -->
+
+        <div class="col-lg-4">
+
+            {% include "includes/customer/help_card.html" with title="Why do we ask these questions?" body="Your answers help us estimate battery storage, inverter capacity and the amount of solar energy required." tip="Most residential customers choose between 6 and 10 hours of backup power." %}
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

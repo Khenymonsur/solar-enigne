@@ -12,13 +12,13 @@ Solar Panel Catalogue
 
 <div class="row mb-4">
 
-    {% include "components/metric_card.html" with title="Total Panels" value=page_obj.paginator.count icon="bi-grid-3x3-gap-fill" footer="Registered Panels" %}
+    {% include "components/cards/metric_card.html" with title="Total Panels" value=page_obj.paginator.count icon="bi-grid-3x3-gap-fill" footer="Registered Panels" %}
 
-    {% include "components/metric_card.html" with title="Manufacturers" value=manufacturers_count icon="bi-building" footer="Active Brands" %}
+    {% include "components/cards/metric_card.html" with title="Manufacturers" value=manufacturers_count icon="bi-building" footer="Active Brands" %}
 
-    {% include "components/metric_card.html" with title="Active Panels" value=active_count icon="bi-check-circle-fill" footer="Available Products" %}
+    {% include "components/cards/metric_card.html" with title="Active Panels" value=active_count icon="bi-check-circle-fill" footer="Available Products" %}
 
-    {% include "components/metric_card.html" with title="Average Wattage" value=average_wattage icon="bi-lightning-charge-fill" footer="Watts" %}
+    {% include "components/cards/metric_card.html" with title="Average Wattage" value=average_wattage icon="bi-lightning-charge-fill" footer="Watts" %}
 
 </div>
 

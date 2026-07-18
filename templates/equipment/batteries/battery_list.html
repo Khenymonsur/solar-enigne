@@ -10,13 +10,13 @@
 
 <div class="row mb-4">
 
-        {% include "components/metric_card.html" with title="Total Batteries" value=page_obj.paginator.count icon="bi-battery-full" footer="Registered Batteries" %}
+        {% include "components/cards/metric_card.html" with title="Total Batteries" value=page_obj.paginator.count icon="bi-battery-full" footer="Registered Batteries" %}
 
-        {% include "components/metric_card.html" with title="Manufacturers" value=manufacturers_count icon="bi-building" footer="Active Brands" %}
+        {% include "components/cards/metric_card.html" with title="Manufacturers" value=manufacturers_count icon="bi-building" footer="Active Brands" %}
 
-        {% include "components/metric_card.html" with title="Active Batteries" value=active_count icon="bi-check-circle-fill" footer="Available Products" %}
+        {% include "components/cards/metric_card.html" with title="Active Batteries" value=active_count icon="bi-check-circle-fill" footer="Available Products" %}
 
-        {% include "components/metric_card.html" with title="Largest Capacity" value=max_capacity icon="bi-lightning-charge-fill" footer="Ah" %}
+        {% include "components/cards/metric_card.html" with title="Largest Capacity" value=max_capacity icon="bi-lightning-charge-fill" footer="Ah" %}
 
 </div>
 

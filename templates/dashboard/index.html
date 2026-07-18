@@ -10,13 +10,13 @@ Dashboard
 
 <div class="row">
 
-{% include "components/metric_card.html" with title="Customers" value=customer_count icon="bi-people-fill" footer="Registered Customers" %}
+{% include "components/cards/metric_card.html" with title="Customers" value=customer_count icon="bi-people-fill" footer="Registered Customers" %}
 
-{% include "components/metric_card.html" with title="Assessments" value=assessment_count icon="bi-clipboard-data" footer="Completed Projects" %}
+{% include "components/cards/metric_card.html" with title="Assessments" value=assessment_count icon="bi-clipboard-data" footer="Completed Projects" %}
 
-{% include "components/metric_card.html" with title="Equipment" value=equipment_count icon="bi-box-seam" footer="Products" %}
+{% include "components/cards/metric_card.html" with title="Equipment" value=equipment_count icon="bi-box-seam" footer="Products" %}
 
-{% include "components/metric_card.html" with title="Reports" value=report_count icon="bi-file-earmark-pdf" footer="Generated PDFs" %}
+{% include "components/cards/metric_card.html" with title="Reports" value=report_count icon="bi-file-earmark-pdf" footer="Generated PDFs" %}
 
 </div>
 
