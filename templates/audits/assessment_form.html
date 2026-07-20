@@ -1,4 +1,4 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/dashboard_base.html" %}
 
 {% block title %}
 {% if object %}
@@ -8,7 +8,7 @@ New Assessment
 {% endif %}
 {% endblock %}
 
-{% block content %}
+{% block dashboard_content %}
 
 {% include "components/page_header.html" with title="Assessment Wizard" subtitle="Create a new solar engineering assessment" %}
 

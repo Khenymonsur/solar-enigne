@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from customers.models import Customer
@@ -9,7 +10,7 @@ from equipment.models import (
     ChargeController,
 )
 
-
+@login_required(login_url="accounts:login")
 def dashboard(request):
 
     equipment_count = (
@@ -20,18 +21,11 @@ def dashboard(request):
     )
 
     context = {
-
         "customer_count": Customer.objects.count(),
-
         "assessment_count": Assessment.objects.count(),
-
         "equipment_count": equipment_count,
-
         "report_count": 0,
-
-        "recent_assessments": Assessment.objects.order_by(
-            "-created_at"
-        )[:10],
+        "recent_assessments": Assessment.objects.order_by("-created_at")[:10],
     }
 
     return render(

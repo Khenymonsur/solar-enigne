@@ -1,10 +1,10 @@
-{% extends "layouts/base.html" %}
+{% extends "layouts/dashboard_base.html" %}
 
 {% block title %}
 {{ object.full_name }}
 {% endblock %}
 
-{% block content %}
+{% block dashboard_content %}
 
 {% include "components/page_header.html" with title=object.full_name subtitle=object.building_type %}
 

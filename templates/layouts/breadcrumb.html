@@ -1,0 +1,34 @@
+{% if request.resolver_match %}
+
+<nav aria-label="breadcrumb" class="mb-4">
+
+    <ol class="breadcrumb">
+
+        <li class="breadcrumb-item">
+
+            <a href="{% url 'dashboard:index' %}">
+
+                <i class="bi bi-house-door-fill"></i>
+
+                Dashboard
+
+            </a>
+
+        </li>
+
+        {% if page_title %}
+
+            <li class="breadcrumb-item active"
+                aria-current="page">
+
+                {{ page_title }}
+
+            </li>
+
+        {% endif %}
+
+    </ol>
+
+</nav>
+
+{% endif %}
