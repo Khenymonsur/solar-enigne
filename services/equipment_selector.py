@@ -79,23 +79,6 @@ class EquipmentSelector:
 
     def get_battery(self, voltage, required_ah):
 
-        print("Voltage:", voltage)
-        print("Required AH:", required_ah)
-
-        batteries = Battery.objects.filter(
-            active=True,
-            voltage=voltage,
-        )
-
-        print("Batteries:", list(batteries))
-
-        battery = batteries.order_by("-capacity_ah").first()
-
-        print("Selected:", battery)
-
-        required_ah = Decimal(required_ah)
-
-
         required_ah = Decimal(required_ah)
 
         battery = (
