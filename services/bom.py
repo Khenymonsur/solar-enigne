@@ -14,17 +14,16 @@ class BillOfMaterialsService:
 
     def _build_item(self, product, quantity):
         """
-        Create a BOM item dictionary.
+        Create a single BOM line item.
         """
 
-        if not product:
+        if not product or quantity <= 0:
             return None
 
-        unit_price = getattr(product, "price", 0) or 0
-        total = Decimal(str(unit_price)) * quantity
+        unit_price = Decimal(str(getattr(product, "price", 0) or 0))
+        line_total = unit_price * Decimal(quantity)
 
         return {
-
             "category": (
                 product._meta.verbose_name.title()
                 if hasattr(product, "_meta")
@@ -39,12 +38,17 @@ class BillOfMaterialsService:
             "description": str(product),
             "specification": self._get_specification(product),
             "quantity": quantity,
-            "unit_price": Decimal(str(unit_price)),
-            "total": total,
-
+            "unit": "pcs",
+            "unit_price": unit_price,
+            "line_total": line_total,
+            "currency": "NGN",
+            "warranty": getattr(product, "warranty", None),
         }
 
     def _get_specification(self, product):
+        """
+        Return a human-readable specification.
+        """
 
         if hasattr(product, "wattage"):
             return f"{product.wattage}W"
@@ -66,54 +70,56 @@ class BillOfMaterialsService:
 
         return "-"
 
-
-
-
     def generate(self):
+        """
+        Generate the complete Bill of Materials.
+        """
 
         items = []
 
-        # Solar Panels
-        panel = self.recommendation.get("panel")
-        panel_qty = self.recommendation.get("panel_quantity", 0)
+        components = [
 
-        item = self._build_item(panel, panel_qty)
-        if item:
-            items.append(item)
+            (
+                self.recommendation.get("panel"),
+                self.recommendation.get("panel_quantity", 0),
+            ),
 
-        # Battery
-        battery = self.recommendation.get("battery")
-        battery_qty = self.recommendation.get("battery_quantity", 1)
+            (
+                self.recommendation.get("battery"),
+                self.recommendation.get("battery_quantity", 0),
+            ),
 
-        item = self._build_item(battery, battery_qty)
-        if item:
-            items.append(item)
+            (
+                self.recommendation.get("inverter"),
+                self.recommendation.get("inverter_quantity", 0),
+            ),
 
-        # Inverter
-        inverter = self.recommendation.get("inverter")
+            (
+                self.recommendation.get("controller"),
+                self.recommendation.get("controller_quantity", 0),
+            ),
 
-        item = self._build_item(inverter, 1)
-        if item:
-            items.append(item)
+        ]
 
-        # Charge Controller
-        controller = self.recommendation.get("controller")
+        for product, quantity in components:
 
-        item = self._build_item(controller, 1)
-        if item:
-            items.append(item)
+            item = self._build_item(product, quantity)
 
-        subtotal = sum(item["total"] for item in items)
+            if item:
+                items.append(item)
+
+        subtotal = sum(
+            (item["line_total"] for item in items),
+            Decimal("0"),
+        )
 
         vat = subtotal * self.VAT_RATE
 
         grand_total = subtotal + vat
 
-        item_count = len(items)
-
         return {
             "items": items,
-            "item_count": item_count,
+            "item_count": len(items),
             "subtotal": subtotal,
             "vat": vat,
             "grand_total": grand_total,
