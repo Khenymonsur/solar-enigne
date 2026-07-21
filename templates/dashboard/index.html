@@ -8,6 +8,55 @@ Dashboard
 
 {% include "components/page_header.html" with title="Dashboard" subtitle="Cloud Energy Solar Engineering Platform" %}
 
+<div class="card border-0 shadow-sm mb-4">
+
+    <div class="card-body">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-8">
+
+                <h3 class="fw-bold mb-2">
+
+                    Welcome back,
+
+                    {{ request.user.get_full_name|default:request.user.username }}
+
+                    👋
+
+                </h3>
+
+                <p class="text-muted mb-0">
+
+                    Manage customers, assessments, equipment and quotations
+                    from one place.
+
+                </p>
+
+            </div>
+
+            <div class="col-lg-4 text-lg-end mt-3 mt-lg-0">
+
+                <span class="badge bg-success fs-6">
+
+                    Staff Portal
+
+                </span>
+
+                <div class="text-muted mt-2">
+
+                    {{ now|date:"l, d F Y" }}
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
 <div class="row">
 
 {% include "components/cards/metric_card.html" with title="Customers" value=customer_count icon="bi-people-fill" footer="Registered Customers" %}
@@ -114,57 +163,165 @@ No assessments yet.
 
 <div class="col-lg-4">
 
-<div class="card">
+<div class="card shadow-sm border-0 h-100">
 
-<div class="card-header">
+    <div class="card-header bg-white border-0 pb-0">
 
-Quick Actions
+        <h5 class="fw-bold mb-0">
+            Quick Actions
+        </h5>
 
-</div>
+    </div>
 
-<div class="card-body d-grid gap-3">
+    <div class="card-body">
 
-<a
-href="{% url 'customers:create' %}"
-class="btn btn-success">
+        <div class="list-group list-group-flush">
 
-<i class="bi bi-person-plus-fill"></i>
+            <a href="{% url 'customers:create' %}"
+               class="list-group-item list-group-item-action border-0 rounded mb-2">
 
-New Customer
+                <div class="d-flex">
 
-</a>
+                    <div class="action-icon bg-success-subtle text-success">
 
-<a
-href="{% url 'audits:list' %}"
-class="btn btn-primary">
+                        <i class="bi bi-person-plus-fill"></i>
 
-<i class="bi bi-clipboard-plus"></i>
+                    </div>
 
-Assessments
+                    <div class="ms-3 flex-grow-1">
 
-</a>
+                        <h6 class="mb-1 fw-semibold">
 
-<a
-href="#"
-class="btn btn-warning">
+                            Add Customer
 
-<i class="bi bi-calculator-fill"></i>
+                        </h6>
 
-New Engineering Design
+                        <small class="text-muted">
 
-</a>
+                            Register a new customer.
 
-<a
-href="#"
-class="btn btn-dark">
+                        </small>
 
-<i class="bi bi-file-earmark-pdf"></i>
+                    </div>
 
-Generate Report
+                    <i class="bi bi-chevron-right align-self-center"></i>
 
-</a>
+                </div>
 
-</div>
+            </a>
+
+            <a href="{% url 'customers:list' %}"
+               class="list-group-item list-group-item-action border-0 rounded mb-2">
+
+                <div class="d-flex">
+
+                    <div class="action-icon bg-primary-subtle text-primary">
+
+                        <i class="bi bi-people-fill"></i>
+
+                    </div>
+
+                    <div class="ms-3 flex-grow-1">
+
+                        <h6 class="mb-1 fw-semibold">
+
+                            Customer List
+
+                        </h6>
+
+                        <small class="text-muted">
+
+                            Select a customer to start a new assessment.
+
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right align-self-center"></i>
+
+                </div>
+
+            </a>
+
+            <a href="{% url 'audits:list' %}"
+               class="list-group-item list-group-item-action border-0 rounded mb-2">
+
+                <div class="d-flex">
+
+                    <div class="action-icon bg-warning-subtle text-warning">
+                        <i class="bi bi-clipboard-data"></i>
+                    </div>
+
+                    <div class="ms-3 flex-grow-1">
+
+                        <h6 class="mb-1 fw-semibold">
+                            Assessments
+                        </h6>
+
+                        <small class="text-muted">
+                            View and manage customer assessments.
+                        </small>
+
+                    </div>
+
+                    <div class="ms-3 flex-grow-1">
+
+                        <h6 class="mb-1 fw-semibold">
+
+                            Equipment Catalogue
+
+                        </h6>
+
+                        <small class="text-muted">
+
+                            Manage products and inventory.
+
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right align-self-center"></i>
+
+                </div>
+
+            </a>
+
+            <a href="{% url 'reports:list' %}"
+               class="list-group-item list-group-item-action border-0 rounded">
+
+                <div class="d-flex">
+
+                    <div class="action-icon bg-danger-subtle text-danger">
+
+                        <i class="bi bi-file-earmark-bar-graph-fill"></i>
+
+                    </div>
+
+                    <div class="ms-3 flex-grow-1">
+
+                        <h6 class="mb-1 fw-semibold">
+
+                            Reports
+
+                        </h6>
+
+                        <small class="text-muted">
+
+                            View engineering reports.
+
+                        </small>
+
+                    </div>
+
+                    <i class="bi bi-chevron-right align-self-center"></i>
+
+                </div>
+
+            </a>
+
+        </div>
+
+    </div>
 
 </div>
 

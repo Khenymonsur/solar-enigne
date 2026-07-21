@@ -10,6 +10,9 @@ from equipment.models import (
     ChargeController,
 )
 
+from django.utils import timezone
+
+
 @login_required(login_url="accounts:login")
 def dashboard(request):
 
@@ -26,6 +29,7 @@ def dashboard(request):
         "equipment_count": equipment_count,
         "report_count": 0,
         "recent_assessments": Assessment.objects.order_by("-created_at")[:10],
+        "now": timezone.now(),
     }
 
     return render(

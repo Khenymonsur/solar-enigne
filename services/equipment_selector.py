@@ -13,48 +13,90 @@ class EquipmentSelector:
 
     def get_panel(self, required_watts):
 
-        panel = (
+        required_watts = Decimal(required_watts)
+
+        panels = (
             SolarPanel.objects
             .filter(active=True)
-            .order_by("-wattage")
-            .first()
+            .order_by("wattage")
         )
 
-        if panel is None:
+        if not panels.exists():
             return {
                 "found": False,
                 "item": None,
                 "quantity": 0,
-                "required": Decimal(required_watts),
+                "required": required_watts,
                 "installed": Decimal("0"),
                 "reserve": Decimal("0"),
                 "status": "NOT_FOUND",
                 "message": "No active solar panel found.",
             }
 
-        quantity = math.ceil(
-            Decimal(required_watts)
-            / Decimal(panel.wattage)
-        )
+        best = None
 
-        installed = Decimal(quantity) * Decimal(panel.wattage)
+        for panel in panels:
 
-        reserve = installed - Decimal(required_watts)
+            quantity = math.ceil(
+                required_watts / Decimal(panel.wattage)
+            )
 
-        return {
-            "found": True,
-            "item": panel,
-            "quantity": quantity,
-            "required": Decimal(required_watts),
-            "installed": installed,
-            "reserve": reserve,
-            "status": "OK",
-            "message": None,
-        }
+            installed = Decimal(quantity) * Decimal(panel.wattage)
+
+            reserve = installed - required_watts
+
+            total_cost = Decimal(quantity) * Decimal(panel.price)
+
+            candidate = {
+                "found": True,
+                "item": panel,
+                "quantity": quantity,
+                "required": required_watts,
+                "installed": installed,
+                "reserve": reserve,
+                "total_cost": total_cost,
+                "status": "OK",
+                "message": None,
+            }
+
+            if best is None:
+                best = candidate
+                continue
+
+            if candidate["total_cost"] < best["total_cost"]:
+                best = candidate
+                continue
+
+            if (
+                    candidate["total_cost"] == best["total_cost"]
+                    and candidate["reserve"] < best["reserve"]
+            ):
+                best = candidate
+
+        return best
 
 
 
     def get_battery(self, voltage, required_ah):
+
+        print("Voltage:", voltage)
+        print("Required AH:", required_ah)
+
+        batteries = Battery.objects.filter(
+            active=True,
+            voltage=voltage,
+        )
+
+        print("Batteries:", list(batteries))
+
+        battery = batteries.order_by("-capacity_ah").first()
+
+        print("Selected:", battery)
+
+        required_ah = Decimal(required_ah)
+
+
+        required_ah = Decimal(required_ah)
 
         battery = (
             Battery.objects
@@ -68,21 +110,18 @@ class EquipmentSelector:
 
         if battery is None:
             return {
-
                 "found": False,
                 "item": None,
                 "quantity": 0,
-                "required": Decimal(required_ah),
+                "required": required_ah,
                 "installed": Decimal("0"),
                 "reserve": Decimal("0"),
                 "status": "NOT_FOUND",
                 "message": f"No active {voltage}V battery found.",
-
             }
 
         quantity = math.ceil(
-            Decimal(required_ah)
-            / Decimal(battery.capacity_ah)
+            required_ah / Decimal(battery.capacity_ah)
         )
 
         installed = (
@@ -90,21 +129,18 @@ class EquipmentSelector:
                 * Decimal(battery.capacity_ah)
         )
 
-        reserve = installed - Decimal(required_ah)
+        reserve = installed - required_ah
 
         return {
-
             "found": True,
             "item": battery,
             "quantity": quantity,
-            "required": Decimal(required_ah),
+            "required": required_ah,
             "installed": installed,
             "reserve": reserve,
             "status": "OK",
             "message": None,
-
         }
-
 
 
     def get_inverter(self, required_watts):
@@ -114,10 +150,10 @@ class EquipmentSelector:
         ) / Decimal("1000")
 
         inverter = (
-            Inverter.objects
-            .filter(active=True)
-            .order_by("-capacity_kva")
-            .first()
+            Inverter.objects.filter(
+                active=True,
+                capacity_kva__gte=required_kva,
+            ).order_by("capacity_kva").first()
         )
 
         if inverter is None:
@@ -162,8 +198,9 @@ class EquipmentSelector:
 
 
 
+    def get_controller(self, voltage, required_current):
 
-    def get_controller(self, voltage, current):
+        required_current = Decimal(required_current)
 
         controller = (
             ChargeController.objects
@@ -180,37 +217,31 @@ class EquipmentSelector:
                 "found": False,
                 "item": None,
                 "quantity": 0,
-                "required": Decimal(current),
+                "required": required_current,
                 "installed": Decimal("0"),
                 "reserve": Decimal("0"),
                 "status": "NOT_FOUND",
                 "message": f"No active {voltage}V controller found.",
             }
 
-        installed = Decimal(controller.current_rating)
-        reserve = installed - Decimal(current)
-
-        status = (
-            "OK"
-            if installed >= Decimal(current)
-            else "UNDERSIZED"
+        quantity = math.ceil(
+            required_current / Decimal(controller.current_rating)
         )
 
-        message = None
+        installed = (
+                Decimal(quantity)
+                * Decimal(controller.current_rating)
+        )
 
-        if status == "UNDERSIZED":
-            message = (
-                f"Required: {Decimal(current):.0f}A. "
-                f"Largest available: {installed:.0f}A."
-            )
+        reserve = installed - required_current
 
         return {
             "found": True,
             "item": controller,
-            "quantity": 1,
-            "required": Decimal(current),
+            "quantity": quantity,
+            "required": required_current,
             "installed": installed,
             "reserve": reserve,
-            "status": status,
-            "message": message,
+            "status": "OK",
+            "message": None,
         }

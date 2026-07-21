@@ -1,36 +1,56 @@
 <div class="col-xl-3 col-lg-6 col-md-6 mb-4">
 
-    <div class="metric-card">
+    <div class="card metric-card border-0 shadow-sm h-100">
 
-        <div class="metric-icon">
+        <div class="card-body">
 
-            <i class="bi {{ icon }}"></i>
+            <div class="d-flex justify-content-between align-items-start">
+
+                <div>
+
+                    <h6 class="text-muted text-uppercase fw-semibold mb-2">
+
+                        {{ title }}
+
+                    </h6>
+
+                    <h2 class="fw-bold mb-1">
+
+                        {{ value }}
+
+                    </h2>
+
+                    {% if footer %}
+
+                        <small class="text-muted">
+
+                            {{ footer }}
+
+                        </small>
+
+                    {% endif %}
+
+                </div>
+
+                <div class="metric-icon">
+
+                    <i class="bi {{ icon }}"></i>
+
+                </div>
+
+            </div>
 
         </div>
 
-        <div class="metric-content">
+        <div class="card-footer bg-transparent border-0 pt-0">
 
-            <h6>
+            <small class="text-primary fw-semibold">
 
-                {{ title }}
+                View Details
 
-            </h6>
+                <i class="bi bi-arrow-right-short"></i>
 
-            <h3>
-
-                {{ value }}
-
-            </h3>
-
-            {% if footer %}
-
-                <small>
-
-                    {{ footer }}
-
-                </small>
-
-            {% endif %}
+            </small>
 
         </div>
 
