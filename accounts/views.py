@@ -35,8 +35,10 @@ def login_view(request):
 
         messages.error(
             request,
-            "Invalid username or password.",
+            "❌ Invalid username or password.",
         )
+
+        print("LOGIN ERROR MESSAGE ADDED")
 
     return render(
         request,

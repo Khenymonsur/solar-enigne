@@ -181,11 +181,11 @@ CRISPY_TEMPLATE_PACK = "bootstrap5"
 # -------------------------------------------------
 # Authentication
 # -------------------------------------------------
-LOGIN_REDIRECT_URL = "/"
+LOGIN_REDIRECT_URL = "/staff/"
 
-LOGOUT_REDIRECT_URL = "/"
+LOGOUT_REDIRECT_URL = "/accounts/login/"
 
-LOGIN_URL = "/login/"
+LOGIN_URL = "/accounts/login/"
 
 # -------------------------------------------------
 # Default PK
