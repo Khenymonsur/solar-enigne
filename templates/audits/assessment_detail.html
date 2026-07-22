@@ -95,19 +95,25 @@ Assessment Workspace
 
     </div>
 
-    <a
-        href="{% url 'reports:detail' assessment.pk %}"
-        class="btn btn-primary">
-        <i class="bi bi-file-earmark-text"></i>
+    <div class="d-flex justify-content-end gap-3 mt-4">
+
+    <a href="{% url 'reports:detail' assessment.pk %}"
+       class="btn btn-outline-primary px-4 py-2">
+
+        <i class="bi bi-file-earmark-text me-2"></i>
         Generate Report
 
     </a>
 
     <a href="{% url 'quotations:generate' assessment.pk %}"
-       class="btn btn-success">
-        <i class="bi bi-file-earmark-text"></i>
+       class="btn btn-success px-4 py-2">
+
+        <i class="bi bi-file-earmark-check me-2"></i>
         Generate Quotation
+
     </a>
+
+</div>
 
 </div>
 
