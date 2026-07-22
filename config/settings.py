@@ -188,6 +188,19 @@ LOGOUT_REDIRECT_URL = "/accounts/login/"
 LOGIN_URL = "/accounts/login/"
 
 # -------------------------------------------------
+# Session Timeout
+# -------------------------------------------------
+
+# 2 hours
+SESSION_COOKIE_AGE = 60 * 60 * 2
+
+# Extend session on every request (sliding timeout)
+SESSION_SAVE_EVERY_REQUEST = True
+
+# Don't logout when browser closes
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False
+
+# -------------------------------------------------
 # Default PK
 # -------------------------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"

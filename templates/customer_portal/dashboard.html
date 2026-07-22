@@ -22,6 +22,17 @@ Customer Dashboard
 
     </p>
 
+    {% if assessment %}
+
+    <a href="{% url 'customer_portal:assessment-detail' assessment.pk %}"
+       class="btn btn-success">
+
+        View My Assessment
+
+    </a>
+
+{% endif %}
+
 </div>
 
 {% endblock %}

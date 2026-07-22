@@ -1,13 +1,30 @@
 from django.urls import path
+from django.views.generic import RedirectView
 
 from . import views
 
 app_name = "customer_portal"
 
+# urlpatterns = [
+#
+#     path(
+#         "",
+#         views.CustomerDashboardView.as_view(),
+#         name="dashboard",
+#     ),
+
 urlpatterns = [
 
     path(
         "",
+        RedirectView.as_view(
+            pattern_name="customer_portal:login",
+            permanent=False,
+        ),
+    ),
+
+    path(
+        "dashboard/",
         views.CustomerDashboardView.as_view(),
         name="dashboard",
     ),
@@ -36,11 +53,6 @@ urlpatterns = [
 
 
 # Assessment Wizard
-    path(
-        "register/",
-        views.CustomerRegisterView.as_view(),
-        name="register",
-    ),
 
     path(
         "assessment/",
@@ -83,6 +95,19 @@ urlpatterns = [
         views.AssessmentPreviewView.as_view(),
         name="assessment_preview",
     ),
+
+    path(
+        "assessment/<int:pk>/",
+        views.CustomerAssessmentDetailView.as_view(),
+        name="assessment-detail",
+    ),
+
+    path(
+        "keep-alive/",
+        views.keep_alive,
+        name="keep_alive",
+    ),
+
 
 
 ]

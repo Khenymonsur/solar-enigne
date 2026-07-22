@@ -1,0 +1,202 @@
+{% extends "layouts/customer_base.html" %}
+
+{% block title %}
+My Assessment
+{% endblock %}
+
+{% block customer_content %}
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                Submitted Assessment
+            </h2>
+
+            <p class="text-muted mb-0">
+                Thank you. Your assessment has been submitted successfully.
+            </p>
+        </div>
+
+        <span class="badge bg-success fs-6">
+            {{ assessment.status }}
+        </span>
+
+    </div>
+
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-primary text-white">
+            Customer Information
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <small class="text-muted">Full Name</small>
+                    <h6>{{ assessment.customer.full_name }}</h6>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <small class="text-muted">Phone</small>
+                    <h6>{{ assessment.customer.phone }}</h6>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <small class="text-muted">State</small>
+                    <h6>{{ assessment.customer.state }}</h6>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <small class="text-muted">LGA</small>
+                    <h6>{{ assessment.customer.lga }}</h6>
+                </div>
+
+                <div class="col-12">
+                    <small class="text-muted">Address</small>
+                    <h6>{{ assessment.customer.address }}</h6>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-success text-white">
+            Project Information
+        </div>
+
+        <div class="card-body">
+
+            <div class="row">
+
+                <div class="col-md-6">
+                    <small class="text-muted">
+                        Project Name
+                    </small>
+
+                    <h6>
+                        {{ assessment.project_name }}
+                    </h6>
+                </div>
+
+                <div class="col-md-6">
+                    <small class="text-muted">
+                        Backup Hours
+                    </small>
+
+                    <h6>
+                        {{ assessment.backup_hours }} Hours
+                    </h6>
+                </div>
+
+                <div class="col-12 mt-3">
+
+                    <small class="text-muted">
+                        Notes
+                    </small>
+
+                    <p class="mb-0">
+                        {{ assessment.notes }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="card shadow-sm mb-4">
+
+        <div class="card-header bg-dark text-white">
+            Selected Appliances
+        </div>
+
+        <div class="card-body p-0">
+
+            <table class="table table-hover mb-0">
+
+                <thead>
+
+                <tr>
+
+                    <th>Appliance</th>
+                    <th class="text-center">Qty</th>
+                    <th class="text-end">Power (W)</th>
+                    <th class="text-end">Hours/Day</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody>
+
+                {% for appliance in assessment.appliance_set.all %}
+
+                    <tr>
+
+                        <td>{{ appliance.appliance_name }}</td>
+
+                        <td class="text-center">
+                            {{ appliance.quantity }}
+                        </td>
+
+                        <td class="text-end">
+                            {{ appliance.power_rating }}
+                        </td>
+
+                        <td class="text-end">
+                            {{ appliance.hours_per_day }}
+                        </td>
+
+                    </tr>
+
+                {% empty %}
+
+                    <tr>
+
+                        <td colspan="4" class="text-center py-4">
+
+                            No appliances found.
+
+                        </td>
+
+                    </tr>
+
+                {% endfor %}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <div class="text-end">
+
+        <a href="{% url 'customer_portal:dashboard' %}"
+           class="btn btn-primary">
+
+            Back to Dashboard
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,263 @@
+{% extends "layouts/dashboard_base.html" %}
+
+{% block title %}
+Customer Assessment
+{% endblock %}
+
+{% block dashboard_content %}
+
+<div class="card shadow-sm border-0">
+
+    <div class="card-body">
+
+        <!-- Header -->
+        <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+
+            <div>
+
+                <h2 class="fw-bold mb-1">
+                    Customer Assessment
+                </h2>
+
+                <p class="text-muted mb-0">
+                    This document contains the information submitted by the customer during the assessment process.
+                </p>
+
+            </div>
+
+            <div class="text-end">
+
+                <span class="badge bg-success fs-6">
+                    {{ assessment.status }}
+                </span>
+
+                <div class="small text-muted mt-2">
+                    Submitted:
+                    {{ assessment.created_at|date:"d F Y" }}
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Customer Information -->
+        <div class="card mb-4">
+
+            <div class="card-header fw-bold">
+                Customer Information
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Customer Name</strong><br>
+                        {{ assessment.customer.full_name }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Phone Number</strong><br>
+                        {{ assessment.customer.phone }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Email Address</strong><br>
+                        {{ assessment.customer.email }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Address</strong><br>
+                        {{ assessment.customer.address }}
+                    </div>
+
+                    <div class="col-md-6">
+                        <strong>State</strong><br>
+                        {{ assessment.customer.state }}
+                    </div>
+
+                    <div class="col-md-6">
+                        <strong>City</strong><br>
+                        {{ assessment.customer.city }}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Property Information -->
+        <div class="card mb-4">
+
+            <div class="card-header fw-bold">
+                Property Information
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Project Name</strong><br>
+                        {{ assessment.project_name }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Property Type</strong><br>
+                        {{ assessment.property_type }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Apartment Size</strong><br>
+                        {{ assessment.apartment_size }}
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <strong>Building Floors</strong><br>
+                        {{ assessment.building_stories }}
+                    </div>
+
+                    <div class="col-md-6">
+                        <strong>Roof Type</strong><br>
+                        {% if assessment.flat_roof %}
+                            Flat Roof
+                        {% else %}
+                            Pitched Roof
+                        {% endif %}
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Power Availability -->
+        <div class="card mb-4">
+
+            <div class="card-header fw-bold">
+                Power Availability
+            </div>
+
+            <div class="card-body">
+
+                <div class="row">
+
+                    <div class="col-md-4">
+                        <strong>Grid Hours</strong><br>
+                        {{ assessment.grid_hours }} hrs/day
+                    </div>
+
+                    <div class="col-md-4">
+                        <strong>Generator Hours</strong><br>
+                        {{ assessment.generator_hours }} hrs/day
+                    </div>
+
+                    <div class="col-md-4">
+                        <strong>Backup Hours Required</strong><br>
+                        {{ assessment.night_backup_hours }} hrs
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Appliance Schedule -->
+        <div class="card mb-4">
+
+            <div class="card-header fw-bold">
+                Appliance Schedule
+            </div>
+
+            <div class="card-body p-0">
+
+                <table class="table table-striped table-hover mb-0">
+
+                    <thead class="table-light">
+
+                        <tr>
+
+                            <th>#</th>
+                            <th>Appliance</th>
+                            <th class="text-center">Quantity</th>
+                            <th class="text-end">Power Rating (W)</th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+
+                        {% for item in assessment.appliance_items.all %}
+
+                        <tr>
+
+                            <td>{{ forloop.counter }}</td>
+
+                            <td>{{ item.appliance.name }}</td>
+
+                            <td class="text-center">
+                                {{ item.quantity }}
+                            </td>
+
+                            <td class="text-end">
+                                {{ item.power_rating }}
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td colspan="4" class="text-center py-4">
+                                No appliances were submitted.
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="d-flex justify-content-between mt-4">
+
+            <a href="{% url 'customer_portal:assessment-appliances' %}"
+               class="btn btn-outline-secondary">
+
+                Back
+
+            </a>
+
+            <form method="post"
+                  action="{% url 'customer_portal:submit-assessment' assessment.pk %}">
+
+                {% csrf_token %}
+
+                <button class="btn btn-success">
+
+                    <i class="bi bi-check-circle"></i>
+
+                    Submit Assessment
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

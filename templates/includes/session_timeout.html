@@ -1,0 +1,69 @@
+<div class="modal fade"
+     id="sessionTimeoutModal"
+     tabindex="-1"
+     data-bs-backdrop="static"
+     data-bs-keyboard="false">
+
+    <div class="modal-dialog modal-dialog-centered">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-warning">
+
+                <h5 class="modal-title">
+                    <i class="bi bi-clock-history"></i>
+                    Session Expiring
+                </h5>
+
+            </div>
+
+            <div class="modal-body text-center">
+
+                <p class="mb-3">
+
+                    Your session will expire due to inactivity.
+
+                </p>
+
+                <h1
+                    id="countdown"
+                    class="display-4 text-danger">
+
+                    05:00
+
+                </h1>
+
+                <small class="text-muted">
+
+                    Click <strong>Stay Logged In</strong>
+                    to continue working.
+
+                </small>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    id="stayLoggedIn"
+                    class="btn btn-success">
+
+                    Stay Logged In
+
+                </button>
+
+                <a
+                    href="/portal/logout/"
+                    class="btn btn-danger">
+
+                    Logout Now
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

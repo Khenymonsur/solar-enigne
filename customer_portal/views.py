@@ -28,6 +28,10 @@ from django.contrib.auth.views import LoginView
 from customer_portal.services.registration import RegistrationService
 
 
+from django.views.generic import DetailView
+from audits.models import Assessment
+from django.contrib.auth.mixins import LoginRequiredMixin
+from customers.models import Customer
 
 
 
@@ -119,11 +123,8 @@ class CustomerRegisterView(FormView):
         )
 
         assessment = RegistrationService.complete_registration(
-
             self.request,
-
             user,
-
         )
 
         messages.success(
@@ -135,24 +136,8 @@ class CustomerRegisterView(FormView):
         )
 
         return redirect(
-            self.success_url,
-        )
-
-    def dispatch(self, request, *args, **kwargs):
-
-        assessment = AssessmentSessionService.get(request)
-
-        customer = assessment.get("customer")
-
-        if not customer:
-            return redirect(
-                "customer_portal:assessment_step1"
-            )
-
-        return super().dispatch(
-            request,
-            *args,
-            **kwargs,
+            "customer_portal:assessment-detail",
+            pk=assessment.pk,
         )
 
 # ----------------------------------------------------------
@@ -166,7 +151,6 @@ class CustomerLoginView(LoginView):
     redirect_authenticated_user = True
 
     def get_success_url(self):
-
         return reverse_lazy(
             "customer_portal:dashboard"
         )
@@ -203,11 +187,6 @@ class ForgotPasswordView(TemplateView):
 # ----------------------------------------------------------
 # Dashboard
 # ----------------------------------------------------------
-
-from django.contrib.auth.mixins import LoginRequiredMixin
-from customers.models import Customer
-from audits.models import Assessment
-
 
 class CustomerDashboardView(LoginRequiredMixin, TemplateView):
 
@@ -510,3 +489,31 @@ class AssessmentPreviewView(TemplateView):
         )
 
         return context
+
+
+
+class CustomerAssessmentDetailView(
+    LoginRequiredMixin,
+    DetailView,
+):
+    model = Assessment
+
+    template_name = (
+        "customer_portal/assessment/customer_assessment.html"
+    )
+
+    context_object_name = "assessment"
+
+    def get_queryset(self):
+
+        return Assessment.objects.filter(
+            customer__user=self.request.user
+        )
+
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
+
+
+@login_required
+def keep_alive(request):
+    return JsonResponse({"status": "ok"})
