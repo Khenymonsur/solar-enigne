@@ -1,5 +1,16 @@
 from pathlib import Path
 from decouple import config
+import environ
+import os
+
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+environ.Env.read_env(BASE_DIR / ".env")
+
+print("Google Key:", env("GOOGLE_MAPS_API_KEY"))
 
 # -------------------------------------------------
 # Base Directory
@@ -100,6 +111,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.debug",
+                "core.context_processors.google_maps",
             ],
         },
     },
@@ -204,3 +216,9 @@ SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # Default PK
 # -------------------------------------------------
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+
+#-----------------------------------------------------
+# Google Autocomplete Location
+#-----------------------------------------------------
+GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")

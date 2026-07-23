@@ -123,27 +123,68 @@ class AssessmentStepTwoForm(forms.Form):
         ),
     )
 
-    state = forms.CharField(
-        widget=forms.TextInput(
+    state = forms.ChoiceField(
+        label="State",
+        choices=[
+            ("", "Select State"),
+        ],
+        widget=forms.Select(
             attrs={
-                "class": "form-control",
+                "class": "form-select",
+                "id": "id_state",
             }
         ),
     )
 
-    lga = forms.CharField(
+    lga = forms.ChoiceField(
+        label="Local Government Area",
+        choices=[
+            ("", "Select LGA"),
+        ],
+        widget=forms.Select(
+            attrs={
+                "class": "form-select",
+                "id": "id_lga",
+            }
+        ),
+    )
+
+    city = forms.CharField(
+        label="City / Town",
         widget=forms.TextInput(
             attrs={
                 "class": "form-control",
+                "placeholder": "Enter city or town",
             }
         ),
     )
 
     address = forms.CharField(
-        widget=forms.Textarea(
+        label="Property Address",
+        widget=forms.TextInput(
             attrs={
                 "class": "form-control",
-                "rows": 3,
+                "id": "id_address",
+                "placeholder": "Start typing your address...",
+                "autocomplete": "off",
+            }
+        ),
+    )
+
+    latitude = forms.CharField(
+        required=False,
+        widget=forms.HiddenInput(
+            attrs={
+                "id": "id_latitude",
+            }
+        ),
+    )
+
+    longitude = forms.CharField(
+        required=False,
+        widget=forms.HiddenInput(
+            attrs={
+                "id": "id_longitude",
             }
         ),
     )

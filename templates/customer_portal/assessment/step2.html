@@ -1,4 +1,5 @@
 {% extends "layouts/customer_base.html" %}
+{% load static %}
 
 {% block title %}
 Energy Assessment | Your Property
@@ -26,77 +27,111 @@ Energy Assessment | Your Property
 
                         {% csrf_token %}
 
-                        <div class="row">
+                    <div class="row">
 
-                            <div class="col-md-6 mb-3">
+                        <div class="col-md-6 mb-3">
 
-                                <label class="form-label fw-semibold">
+                            <label class="form-label fw-semibold">
+                                Property Type
+                            </label>
 
-                                    Property Type
+                            {{ form.property_type }}
 
-                                </label>
-
-                                {{ form.property_type }}
-
-                                <div class="text-danger small">
-
-                                    {{ form.property_type.errors }}
-
-                                </div>
-
+                            <div class="text-danger small">
+                                {{ form.property_type.errors }}
                             </div>
 
-                            <div class="col-md-6 mb-3">
+                        </div>
 
-                                <label class="form-label fw-semibold">
-                                    Building Type
-                                </label>
+                        <div class="col-md-6 mb-3">
 
-                                {{ form.building_type }}
+                            <label class="form-label fw-semibold">
+                                Building Type
+                            </label>
 
-                                <div class="text-danger small">
-                                    {{ form.building_type.errors }}
-                                </div>
+                            {{ form.building_type }}
 
+                            <div class="text-danger small">
+                                {{ form.building_type.errors }}
                             </div>
 
-                            <div class="col-md-6 mb-3">
+                        </div>
 
-                                <label class="form-label fw-semibold">
+                        <div class="col-md-6 mb-3">
 
-                                    State
+                            <label class="form-label fw-semibold">
+                                State
+                            </label>
 
-                                </label>
+                            {{ form.state }}
 
-                                {{ form.state }}
-
+                            <div class="text-danger small">
+                                {{ form.state.errors }}
                             </div>
 
-                            <div class="col-md-6 mb-3">
+                        </div>
 
-                                <label class="form-label fw-semibold">
+                        <div class="col-md-6 mb-3">
 
-                                    Local Government
+                            <label class="form-label fw-semibold">
+                                Local Government Area
+                            </label>
 
-                                </label>
+                            {{ form.lga }}
 
-                                {{ form.lga }}
-
+                            <div class="text-danger small">
+                                {{ form.lga.errors }}
                             </div>
 
-                            <div class="col-12 mb-4">
+                        </div>
 
-                                <label class="form-label fw-semibold">
+                        <div class="col-md-6 mb-3">
 
-                                    Installation Address
+                            <label class="form-label fw-semibold">
+                                City / Town
+                            </label>
 
-                                </label>
+                            {{ form.city }}
 
-                                {{ form.address }}
+                            <div class="text-danger small">
+                                {{ form.city.errors }}
+                            </div>
+
+                        </div>
+
+                        <div class="col-12 mb-3">
+
+                            <label class="form-label fw-semibold">
+                                Property Address
+                            </label>
+
+                            {{ form.address }}
+
+                            <small class="text-muted">
+                                Start typing your address. Google Maps will suggest matching locations.
+                            </small>
+
+                            <div class="text-danger small">
+                                {{ form.address.errors }}
+                            </div>
+
+                        </div>
+
+                        {{ form.latitude }}
+                        {{ form.longitude }}
+
+                        <div class="col-12 mb-4">
+
+                            <div
+                                id="property-map"
+                                class="border rounded"
+                                style="height:350px; display:none;">
 
                             </div>
 
                         </div>
+
+                    </div>
 
                         <div class="border-top pt-4">
 
@@ -130,4 +165,19 @@ Energy Assessment | Your Property
 
 </div>
 
-{% endblock %}
+{% endblock customer_content %}
+
+{% block extra_js %}
+
+<script src="{% static 'js/nigeria.js' %}"></script>
+
+<script src="https://maps.googleapis.com/maps/api/js?key={{ GOOGLE_MAPS_API_KEY }}&libraries=places"></script>
+
+<script src="{% static 'customer/js/location.js' %}"></script>
+
+<script>
+    console.log("Google Maps API Key:", "{{ GOOGLE_MAPS_API_KEY }}");
+    console.log("Google Object:", typeof google);
+</script>
+{% endblock extra_js %}
+
