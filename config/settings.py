@@ -10,7 +10,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env(BASE_DIR / ".env")
 
-print("Google Key:", env("GOOGLE_MAPS_API_KEY"))
 
 # -------------------------------------------------
 # Base Directory
@@ -221,4 +220,5 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 #-----------------------------------------------------
 # Google Autocomplete Location
 #-----------------------------------------------------
-GOOGLE_MAPS_API_KEY = os.getenv("GOOGLE_MAPS_API_KEY")
+
+GOOGLE_MAPS_API_KEY = env("GOOGLE_MAPS_API_KEY")

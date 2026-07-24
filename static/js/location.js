@@ -1,87 +1,126 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    // -------------------------------------------------------
+    // Elements
+    // -------------------------------------------------------
+
     const stateSelect = document.getElementById("id_state");
     const lgaSelect = document.getElementById("id_lga");
+    const addressInput = document.getElementById("id_address");
+    const latitudeInput = document.getElementById("id_latitude");
+    const longitudeInput = document.getElementById("id_longitude");
 
-    if (!stateSelect || !lgaSelect) {
-        return;
-    }
+    // -------------------------------------------------------
+    // State → LGA
+    // -------------------------------------------------------
 
-    function populateLGAs(selected = "") {
+    if (stateSelect && lgaSelect) {
 
-        const state = stateSelect.value;
+        function populateLGAs(selected = "") {
 
-        lgaSelect.innerHTML = "";
+            const state = stateSelect.value;
 
-        const defaultOption = document.createElement("option");
-        defaultOption.value = "";
-        defaultOption.textContent = "Select LGA";
-        lgaSelect.appendChild(defaultOption);
+            lgaSelect.innerHTML = "";
 
-        if (!STATE_LGAS[state]) {
-            return;
-        }
+            const defaultOption = document.createElement("option");
+            defaultOption.value = "";
+            defaultOption.textContent = "Select LGA";
+            lgaSelect.appendChild(defaultOption);
 
-        STATE_LGAS[state].forEach(function (lga) {
-
-            const option = document.createElement("option");
-
-            option.value = lga;
-            option.textContent = lga;
-
-            if (lga === selected) {
-                option.selected = true;
+            if (!STATE_LGAS[state]) {
+                return;
             }
 
-            lgaSelect.appendChild(option);
+            STATE_LGAS[state].forEach(function (lga) {
+
+                const option = document.createElement("option");
+
+                option.value = lga;
+                option.textContent = lga;
+
+                if (lga === selected) {
+                    option.selected = true;
+                }
+
+                lgaSelect.appendChild(option);
+
+            });
+
+        }
+
+        // Preserve selected LGA when editing
+        const savedLGA = lgaSelect.dataset.selected || lgaSelect.value;
+
+        populateLGAs(savedLGA);
+
+        stateSelect.addEventListener("change", function () {
+
+            populateLGAs();
 
         });
 
-        const addressInput = document.getElementById("id_address");
+    }
 
-        if (addressInput && window.google) {
+    // -------------------------------------------------------
+    // Google Places Autocomplete
+    // -------------------------------------------------------
 
-            const autocomplete = new google.maps.places.Autocomplete(addressInput, {
+    if (
+        addressInput &&
+        latitudeInput &&
+        longitudeInput &&
+        window.google &&
+        google.maps &&
+        google.maps.places
+    ) {
 
-                componentRestrictions: {
-                    country: "ng"
-                },
+        const autocomplete = new google.maps.places.Autocomplete(addressInput, {
 
-                fields: [
-                    "formatted_address",
-                    "geometry"
-                ]
+            componentRestrictions: {
+                country: "ng"
+            },
 
-            });
+            fields: [
+                "formatted_address",
+                "geometry"
+            ]
 
-            autocomplete.addListener("place_changed", () => {
+        });
 
-                const place = autocomplete.getPlace();
+        autocomplete.addListener("place_changed", function () {
 
-                if (!place.geometry)
-                    return;
+            const place = autocomplete.getPlace();
 
-                document.getElementById("id_latitude").value =
-                    place.geometry.location.lat();
+            if (!place.geometry) {
 
-                document.getElementById("id_longitude").value =
-                    place.geometry.location.lng();
+                alert("Please choose an address from the Google suggestions.");
 
-            });
+                return;
 
-        }
+            }
 
+            // Fill address
 
+            addressInput.value = place.formatted_address;
 
-    // Preserve saved LGA when editing
-    const savedLGA = lgaSelect.dataset.selected || lgaSelect.value;
+            // Store coordinates
 
-    populateLGAs(savedLGA);
+            latitudeInput.value = place.geometry.location.lat();
 
-    stateSelect.addEventListener("change", function () {
+            longitudeInput.value = place.geometry.location.lng();
 
-        populateLGAs();
+            console.log("Address:", place.formatted_address);
+            console.log("Latitude:", latitudeInput.value);
+            console.log("Longitude:", longitudeInput.value);
 
-    });
+        });
+
+        console.log("✅ Google Places Autocomplete Initialized");
+
+    } else {
+
+        console.warn("Google Places API not available.");
+
+    }
 
 });
